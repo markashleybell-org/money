@@ -9,7 +9,31 @@
     <system.web>
         <compilation debug="true" targetFramework="4.7" />
         <httpRuntime targetFramework="4.7" />
+        <sessionState mode="StateServer" stateConnectionString="tcpip=localhost:42424" cookieless="false" timeout="60" />
+        <customErrors mode="Off" />
+        <httpCookies httpOnlyCookies="true" requireSSL="true" />
     </system.web>
+    <system.webServer>
+        <rewrite>
+            <rules>
+                <rule name="CanonicalHTTPSHostName">
+                    <match url="(.*)" />
+                    <conditions logicalGrouping="MatchAny">
+                        <!--<add input="{HTTP_HOST}" pattern="^localhost$" negate="true" />-->
+                        <add input="{HTTPS}" pattern="^OFF$" />
+                    </conditions>
+                    <action type="Redirect" url="https://localhost:44368/{R:1}" redirectType="Permanent" />
+                </rule>
+            </rules>
+        </rewrite>
+        <httpProtocol>
+            <customHeaders>
+                <add name="X-Frame-Options" value="SAMEORIGIN" />
+                <add name="Strict-Transport-Security" value="max-age=31536000"/>
+                <add name="X-Content-Type-Options" value="nosniff" />
+            </customHeaders>
+        </httpProtocol>
+    </system.webServer>
     <runtime>
         <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
             <dependentAssembly>
