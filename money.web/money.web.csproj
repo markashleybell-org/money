@@ -136,7 +136,7 @@
     <Compile Include="Models\DTO\MonthlyBudgetDTO.cs" />
     <Compile Include="Models\DTO\PartyDTO.cs" />
     <Compile Include="Models\DTO\UserDTO.cs" />
-    <Compile Include="Models\IndexViewModel.cs" />
+    <Compile Include="Models\Home\IndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +176,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.config.TEMPLATE" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
