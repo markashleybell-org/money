@@ -1,8 +1,10 @@
 ﻿using money.web.Abstract;
 using money.web.Concrete;
+using money.web.Support;
 using Ninject;
 using Ninject.Web.Common;
 using Ninject.Web.Common.WebHost;
+using Ninject.Web.Mvc.FilterBindingSyntax;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -39,6 +41,9 @@ namespace money.web
                 .To<QueryHelper>()
                 .InRequestScope()
                 .WithConstructorArgument("connectionString", connectionString);
+
+            kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0)
+                .WhenControllerHas<AuthAttribute>();
 
             return kernel;
         }

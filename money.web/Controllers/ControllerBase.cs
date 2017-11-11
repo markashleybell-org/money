@@ -1,4 +1,5 @@
 ﻿using money.web.Abstract;
+using money.web.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace money.web.Controllers
 {
+    [Auth]
     public class ControllerBase : Controller
     {
         protected readonly IUnitOfWork _unitOfWork;

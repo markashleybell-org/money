@@ -1,0 +1,18 @@
+﻿@model LoginViewModel
+
+@{
+    ViewBag.Title = "Log In";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Log In</h1>
+        @using (Html.BeginForm())
+        {
+            @Html.TextBoxFor(x => x.Email)
+            @Html.PasswordFor(x => x.Password)
+
+            <input type="submit" value="Log In" />
+        }
+    </div>
+</div>
