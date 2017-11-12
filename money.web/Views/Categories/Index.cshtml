@@ -1,0 +1,16 @@
+﻿@model ListCategoriesViewModel
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Categories</h1>
+        @foreach(var category in Model.Categories)
+        {
+            <p>@category.Name @Html.ActionLink("Edit", "Update", new { id = category.ID })</p>
+        }
+        @Html.ActionLink("New", "Create")
+    </div>
+</div>

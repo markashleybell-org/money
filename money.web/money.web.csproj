@@ -146,6 +146,7 @@
     <Compile Include="Concrete\QueryHelper.cs" />
     <Compile Include="Concrete\RequestContext.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\MonthlyBudgetsController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
@@ -154,6 +155,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Categories\CreateCategoryViewModel.cs" />
+    <Compile Include="Models\Categories\ListCategoriesViewModel.cs" />
+    <Compile Include="Models\Categories\UpdateCategoryViewModel.cs" />
     <Compile Include="Models\MonthlyBudgets\UpdateMonthlyBudgetViewModel.cs" />
     <Compile Include="Models\MonthlyBudgets\CreateMonthlyBudgetViewModel.cs" />
     <Compile Include="Models\MonthlyBudgets\ListMonthlyBudgetsViewModel.cs" />
@@ -215,6 +219,9 @@
     <Content Include="Views\MonthlyBudgets\Create.cshtml" />
     <Content Include="Views\MonthlyBudgets\Index.cshtml" />
     <Content Include="Views\MonthlyBudgets\Update.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Categories\Update.cshtml" />
     <None Include="Web.config.TEMPLATE" />
   </ItemGroup>
   <ItemGroup>

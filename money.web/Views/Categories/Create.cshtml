@@ -1,0 +1,16 @@
+﻿@model CreateCategoryViewModel
+
+@{
+    ViewBag.Title = "Create Category";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Create Category</h1>
+        @using (Html.BeginForm())
+        {
+            @Html.EditorForModel()
+            <input type="submit" value="Create" />
+        }
+    </div>
+</div>

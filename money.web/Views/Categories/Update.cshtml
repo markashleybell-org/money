@@ -1,0 +1,22 @@
+﻿@model UpdateCategoryViewModel
+
+@{
+    ViewBag.Title = "Update Category";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Update Category</h1>
+        @using (Html.BeginForm())
+        {
+            @Html.EditorForModel()
+            <input type="submit" value="Update" />
+        }
+
+        @using (Html.BeginForm("Delete", "Categories"))
+        {
+            @Html.HiddenFor(x => x.ID)
+            <input type="submit" value="Delete" />
+        }
+    </div>
+</div>
