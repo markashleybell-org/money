@@ -143,15 +143,20 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Concrete\AccountType.cs" />
     <Compile Include="Concrete\QueryHelper.cs" />
     <Compile Include="Concrete\RequestContext.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Accounts\CreateAccountViewModel.cs" />
+    <Compile Include="Models\Accounts\ListAccountsViewModel.cs" />
+    <Compile Include="Models\Accounts\UpdateAccountViewModel.cs" />
     <Compile Include="Models\DTO\AccountDTO.cs" />
     <Compile Include="Models\DTO\CategoryDTO.cs" />
     <Compile Include="Models\DTO\Category_MonthlyBudgetDTO.cs" />
@@ -201,6 +206,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
+    <Content Include="Views\Accounts\Index.cshtml" />
+    <Content Include="Views\Accounts\Create.cshtml" />
+    <Content Include="Views\Accounts\Update.cshtml" />
     <None Include="Web.config.TEMPLATE" />
   </ItemGroup>
   <ItemGroup>

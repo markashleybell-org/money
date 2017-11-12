@@ -20,6 +20,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Accounts", "Index", "Accounts")</li>
                     @if (HttpContext.Current.Session[Globals.USER_SESSION_VARIABLE_NAME] == null)
                     {
                     <li>@Html.ActionLink("Log In", "Login", "Users")</li>

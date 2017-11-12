@@ -1,0 +1,16 @@
+﻿@model ListAccountsViewModel
+
+@{
+    ViewBag.Title = "Accounts";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Accounts</h1>
+        @foreach(var account in Model.Accounts)
+        {
+            <p>@account.Name @Html.ActionLink("Edit", "Update", new { id = account.ID })</p>
+        }
+        @Html.ActionLink("New", "Create")
+    </div>
+</div>
