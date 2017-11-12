@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.AspNet.Identity;
+using money.common;
 using money.web.Abstract;
 using money.web.Models;
 using money.web.Models.DTO;
@@ -40,14 +41,14 @@ namespace money.web.Controllers
             if (verificationResult != PasswordVerificationResult.Success)
                 return View(model);
 
-            HttpContext.Session["USERID"] = user.ID;
+            _context.SetSessionItem(Globals.USER_SESSION_VARIABLE_NAME, user.ID);
 
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Logout()
         {
-            HttpContext.Session["USERID"] = null;
+            _context.DeleteSessionItem(Globals.USER_SESSION_VARIABLE_NAME);
 
             return RedirectToAction("Index", "Home");
         }

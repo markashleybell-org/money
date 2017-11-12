@@ -1,4 +1,5 @@
-﻿using System;
+﻿using money.common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,7 +14,7 @@ namespace money.web.Support
 
         public void OnAuthorization(AuthorizationContext filterContext)
         {
-            var session = filterContext.HttpContext.Session["USERID"];
+            var session = filterContext.HttpContext.Session[Globals.USER_SESSION_VARIABLE_NAME];
 
             if (session == null)
                 filterContext.Result = new RedirectResult("/Users/Login");
