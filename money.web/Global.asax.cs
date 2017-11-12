@@ -42,6 +42,10 @@ namespace money.web
                 .InRequestScope()
                 .WithConstructorArgument("connectionString", connectionString);
 
+            kernel.Bind<IRequestContext>()
+                .To<Concrete.RequestContext>()
+                .InRequestScope();
+
             kernel.BindFilter<AuthFilter>(FilterScope.Controller, 0)
                 .WhenControllerHas<AuthAttribute>();
 

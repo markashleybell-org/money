@@ -1,4 +1,5 @@
-﻿using money.web.Abstract;
+﻿using money.common;
+using money.web.Abstract;
 using money.web.Support;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,13 @@ namespace money.web.Controllers
     {
         protected readonly IUnitOfWork _unitOfWork;
         protected readonly IQueryHelper _db;
+        protected readonly IRequestContext _context;
 
-        public ControllerBase(IUnitOfWork unitOfWork, IQueryHelper db)
+        public ControllerBase(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
         {
             _unitOfWork = unitOfWork;
             _db = db;
+            _context = context;
         }
 
         protected override void Dispose(bool disposing)

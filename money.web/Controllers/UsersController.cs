@@ -14,7 +14,7 @@ namespace money.web.Controllers
 {
     public class UsersController : ControllerBase
     {
-        public UsersController(IUnitOfWork unitOfWork, IQueryHelper db) : base(unitOfWork, db) { }
+        public UsersController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
         [OverrideAuthorization]
         public ActionResult Login()

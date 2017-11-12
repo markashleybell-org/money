@@ -9,7 +9,7 @@ namespace money.web.Controllers
 {
     public class HomeController : ControllerBase
     {
-        public HomeController(IUnitOfWork unitOfWork, IQueryHelper db) : base(unitOfWork, db) { }
+        public HomeController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
         public ActionResult Index()
         {
