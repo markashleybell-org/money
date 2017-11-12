@@ -51,9 +51,7 @@ let categories = {
     dtoBaseClassName = Some("Abstract.IDTO")
     columnSpecifications = [Identity("ID", INT, 1, 1)
                             NotNull("AccountID", INT, NONE)
-                            NotNull("Name", CHR(64), NONE)
-                            NotNull("CategoryType", INT, NONE)
-                            Null("ExpenseType", INT)] 
+                            NotNull("Name", CHR(64), NONE)] 
     constraintSpecifications = [PrimaryKey(["ID"])
                                 ForeignKey("AccountID", "Accounts", "ID")]
     indexSpecifications = []

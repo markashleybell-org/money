@@ -27,9 +27,7 @@ CREATE TABLE [Accounts] (
 CREATE TABLE [Categories] (
     [ID] INT IDENTITY(1,1) NOT NULL,
     [AccountID] INT NOT NULL,
-    [Name] NVARCHAR(64) NOT NULL,
-    [CategoryType] INT NOT NULL,
-    [ExpenseType] INT NULL
+    [Name] NVARCHAR(64) NOT NULL
 )
 
 -- Create Parties

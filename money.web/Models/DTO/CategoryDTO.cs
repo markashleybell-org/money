@@ -12,7 +12,5 @@ namespace money.web.Models.DTO
         public int AccountID { get; set; }
         [StringLength(64)]
         public string Name { get; set; }
-        public int CategoryType { get; set; }
-        public int? ExpenseType { get; set; }
     }
 }
