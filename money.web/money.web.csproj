@@ -143,7 +143,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Concrete\AccountType.cs" />
     <Compile Include="Concrete\QueryHelper.cs" />
     <Compile Include="Concrete\RequestContext.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />

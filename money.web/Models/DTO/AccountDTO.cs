@@ -12,7 +12,6 @@ namespace money.web.Models.DTO
         public int UserID { get; set; }
         [StringLength(64)]
         public string Name { get; set; }
-        public int Type { get; set; }
         public bool IsMainAccount { get; set; }
         public bool IsIncludedInNetWorth { get; set; }
         public int DisplayOrder { get; set; }

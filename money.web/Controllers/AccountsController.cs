@@ -36,7 +36,6 @@ namespace money.web.Controllers
             _db.InsertOrUpdate(new AccountDTO {
                 UserID = _userID,
                 Name = model.Name,
-                Type = (int)model.Type,
                 IsMainAccount = model.IsMainAccount,
                 IsIncludedInNetWorth = model.IncludeInNetWorth,
                 DisplayOrder = model.DisplayOrder,

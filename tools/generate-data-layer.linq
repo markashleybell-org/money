@@ -32,7 +32,6 @@ let accounts = {
     columnSpecifications = [Identity("ID", INT, 1, 1)
                             NotNull("UserID", INT, NONE)
                             NotNull("Name", CHR(64), NONE)
-                            NotNull("Type", INT, NONE)
                             NotNull("IsMainAccount", BIT, NONE)
                             NotNull("IsIncludedInNetWorth", BIT, NONE)
                             NotNull("DisplayOrder", INT, NONE)
