@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.web", "money.web\money.web.csproj", "{14B06209-7360-47FE-8B0C-E2337A34C904}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "money.common", "money.common\money.common.csproj", "{18F701A9-88E0-4B2A-91F5-CF2CD7A6C660}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{14B06209-7360-47FE-8B0C-E2337A34C904}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14B06209-7360-47FE-8B0C-E2337A34C904}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14B06209-7360-47FE-8B0C-E2337A34C904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18F701A9-88E0-4B2A-91F5-CF2CD7A6C660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18F701A9-88E0-4B2A-91F5-CF2CD7A6C660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18F701A9-88E0-4B2A-91F5-CF2CD7A6C660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18F701A9-88E0-4B2A-91F5-CF2CD7A6C660}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

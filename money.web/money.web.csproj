@@ -201,7 +201,12 @@
     <Content Include="Views\Users\Login.cshtml" />
     <None Include="Web.config.TEMPLATE" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\money.common\money.common.csproj">
+      <Project>{18f701a9-88e0-4b2a-91f5-cf2cd7a6c660}</Project>
+      <Name>money.common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
