@@ -9,8 +9,7 @@
         <h1>Log In</h1>
         @using (Html.BeginForm())
         {
-            @Html.TextBoxFor(x => x.Email)
-            @Html.PasswordFor(x => x.Password)
+            @Html.EditorForModel()
 
             <input type="submit" value="Log In" />
         }
