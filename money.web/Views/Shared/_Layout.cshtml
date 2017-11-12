@@ -21,7 +21,6 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Accounts", "Index", "Accounts")</li>
-                    <li>@Html.ActionLink("Budgets", "Index", "MonthlyBudgets")</li>
                     <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
                     @if (HttpContext.Current.Session[Globals.USER_SESSION_VARIABLE_NAME] == null)
                     {

@@ -11,6 +11,7 @@ namespace money.web.Models
     {
         [HiddenInput(DisplayValue = false)]
         public int ID { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public int AccountID { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -19,6 +20,6 @@ namespace money.web.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
-        public IEnumerable<SelectListItem> Accounts { get; set; }
+        public IEnumerable<MonthlyBudgetCategoryViewModel> Categories { get; set; }
     }
 }

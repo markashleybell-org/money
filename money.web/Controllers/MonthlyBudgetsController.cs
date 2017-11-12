@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using money.common;
 using money.web.Abstract;
 using money.web.Models;
@@ -15,19 +16,21 @@ namespace money.web.Controllers
     {
         public MonthlyBudgetsController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
             return View(new ListMonthlyBudgetsViewModel {
-                MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudgetDTO>("SELECT * FROM MonthlyBudgets"))
+                AccountID = id,
+                MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudgetDTO>("SELECT * FROM MonthlyBudgets WHERE AccountID = @ID", new { id }))
             });
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
             return View(new CreateMonthlyBudgetViewModel {
-                Accounts = AccountsSelectListItems(),
+                AccountID = id,
                 StartDate = DateTime.Now.FirstDayOfMonth(),
-                EndDate = DateTime.Now.LastDayOfMonth()
+                EndDate = DateTime.Now.LastDayOfMonth(),
+                Categories = Categories(accountID: id)
             });
         }
 
@@ -36,19 +39,28 @@ namespace money.web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Accounts = AccountsSelectListItems();
+                model.Categories = Categories(accountID: model.AccountID);
                 return View(model);
             }
 
-            _db.InsertOrUpdate(new MonthlyBudgetDTO {
+            var monthlyBudgetID = _db.InsertOrUpdate(new MonthlyBudgetDTO {
                 AccountID = model.AccountID,
                 StartDate = model.StartDate.ZeroTime(),
                 EndDate = model.EndDate.SetTime(23, 59, 59)
             });
 
+            var categories = model.Categories.Where(c => c.Amount != 0).Select(c => new Category_MonthlyBudgetDTO {
+                MonthlyBudgetID = monthlyBudgetID,
+                CategoryID = c.CategoryID,
+                Amount = c.Amount
+            });
+
+            foreach (var category in categories)
+                _db.Execute((conn, tran) => conn.Insert(category, tran));
+
             _unitOfWork.CommitChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { id = model.AccountID });
         }
 
         public ActionResult Update(int id)
@@ -60,7 +72,7 @@ namespace money.web.Controllers
                 AccountID = dto.AccountID,
                 StartDate = dto.StartDate,
                 EndDate = dto.EndDate,
-                Accounts = AccountsSelectListItems()
+                Categories = Categories(accountID: dto.AccountID, monthlyBudgetID: dto.ID)
             });
         }
 
@@ -69,7 +81,7 @@ namespace money.web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Accounts = AccountsSelectListItems();
+                model.Categories = Categories(accountID: model.AccountID, monthlyBudgetID: model.ID);
                 return View(model);
             }
 
@@ -81,9 +93,20 @@ namespace money.web.Controllers
 
             _db.InsertOrUpdate(dto);
 
+            _db.Execute((conn, tran) => conn.Execute("DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID", new { model.ID }, tran));
+
+            var categories = model.Categories.Where(c => c.Amount != 0).Select(c => new Category_MonthlyBudgetDTO {
+                MonthlyBudgetID = model.ID,
+                CategoryID = c.CategoryID,
+                Amount = c.Amount
+            });
+
+            foreach (var category in categories)
+                _db.Execute((conn, tran) => conn.Insert(category, tran));
+
             _unitOfWork.CommitChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { id = model.AccountID });
         }
 
         [HttpPost]
@@ -95,13 +118,29 @@ namespace money.web.Controllers
 
             _unitOfWork.CommitChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { id = dto.AccountID });
         }
 
-        private IEnumerable<SelectListItem> AccountsSelectListItems()
+        private IEnumerable<MonthlyBudgetCategoryViewModel> Categories(int accountID, int monthlyBudgetID = 0)
         {
-            return _db.Query(conn => conn.Query<AccountDTO>("SELECT * FROM Accounts"))
-                .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
+            var sql = @"SELECT 
+                            c.ID AS CategoryID,
+                            c.Name,
+                            b.Amount
+                        FROM
+                            Categories c
+                        LEFT JOIN
+                            Categories_MonthlyBudgets b
+                        ON
+                            b.CategoryID = c.ID
+                        AND
+                            b.MonthlyBudgetID = @MonthlyBudgetID
+                        WHERE
+                            c.AccountID = @AccountID";
+
+            var parameters = new { accountID, monthlyBudgetID };
+
+            return _db.Query(conn => conn.Query<MonthlyBudgetCategoryViewModel>(sql, parameters));
         }
     }
 }
