@@ -14,6 +14,7 @@ namespace money.web.Concrete
         private IUnitOfWork _unitOfWork;
         private string _connectionString;
 
+        // TODO: Inject user ID, lock down queries
         public QueryHelper(IUnitOfWork unitOfWork, string connectionString)
         {
             _unitOfWork = unitOfWork;
