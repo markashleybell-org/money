@@ -1,0 +1,22 @@
+﻿@model UpdateMonthlyBudgetViewModel
+
+@{
+    ViewBag.Title = "Update Monthly Budget";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Update Monthly Budget</h1>
+        @using (Html.BeginForm())
+        {
+            @Html.EditorForModel()
+            <input type="submit" value="Update" />
+        }
+
+        @using (Html.BeginForm("Delete", "MonthlyBudgets"))
+        {
+            @Html.HiddenFor(x => x.ID)
+            <input type="submit" value="Delete" />
+        }
+    </div>
+</div>
