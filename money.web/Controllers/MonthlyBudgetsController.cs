@@ -114,6 +114,8 @@ namespace money.web.Controllers
         {
             var dto = _db.Get<MonthlyBudgetDTO>(id);
 
+            _db.Execute((conn, tran) => conn.Execute("DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID", new { id }, tran));
+
             _db.Delete(dto);
 
             _unitOfWork.CommitChanges();
