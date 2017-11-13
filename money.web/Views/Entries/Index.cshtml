@@ -1,0 +1,16 @@
+﻿@model ListEntriesViewModel
+
+@{
+    ViewBag.Title = "Entries";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Entries</h1>
+        @foreach(var entry in Model.Entries)
+        {
+            <p>@entry.Date @entry.Amount @Html.ActionLink("Edit", "Update", new { id = entry.ID })</p>
+        }
+        @Html.ActionLink("New", "Create")
+    </div>
+</div>
