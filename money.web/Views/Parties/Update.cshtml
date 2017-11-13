@@ -1,0 +1,22 @@
+﻿@model UpdatePartyViewModel
+
+@{
+    ViewBag.Title = "Update Party";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Update Party</h1>
+        @using (Html.BeginForm())
+        {
+            @Html.EditorForModel()
+            <input type="submit" value="Update" />
+        }
+
+        @using (Html.BeginForm("Delete", "Parties"))
+        {
+            @Html.HiddenFor(x => x.ID)
+            <input type="submit" value="Delete" />
+        }
+    </div>
+</div>

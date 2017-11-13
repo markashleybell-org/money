@@ -1,0 +1,16 @@
+﻿@model CreatePartyViewModel
+
+@{
+    ViewBag.Title = "Create Party";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Create Party</h1>
+        @using (Html.BeginForm())
+        {
+            @Html.EditorForModel()
+            <input type="submit" value="Create" />
+        }
+    </div>
+</div>

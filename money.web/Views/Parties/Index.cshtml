@@ -1,0 +1,16 @@
+﻿@model ListPartiesViewModel
+
+@{
+    ViewBag.Title = "Parties";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Parties</h1>
+        @foreach(var party in Model.Parties)
+        {
+            <p>@party.Name @Html.ActionLink("Edit", "Update", new { id = party.ID })</p>
+        }
+        @Html.ActionLink("New", "Create")
+    </div>
+</div>
