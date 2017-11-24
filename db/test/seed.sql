@@ -8,15 +8,15 @@ VALUES
     ('test@test.com', 'AEZZ5aNVqw55mqQxpbovL3yQIcQMOkIe+6ACUFZUCjh/jE49I4uQ1MMGjVercSayZQ==')
 
 INSERT INTO Accounts 
-    (UserID, Name, Type, IsMainAccount, IsIncludedInNetWorth, StartingBalance, CurrentBalance, DisplayOrder) 
+    (UserID, Name, IsMainAccount, IsIncludedInNetWorth, StartingBalance, CurrentBalance, DisplayOrder) 
 VALUES 
-    (1, 'TEST ACCOUNT', 0, 1, 1, 100, 100, 100)
+    (1, 'TEST ACCOUNT', 1, 1, 100, 100, 100)
 
 INSERT INTO Categories 
-    (AccountID, Name, CategoryType, ExpenseType) 
+    (AccountID, Name) 
 VALUES 
-    (1, 'Salary', 1, NULL),
-    (1, 'Bills', 0, 0)
+    (1, 'Salary'),
+    (1, 'Bills')
 
 INSERT INTO Parties 
     (AccountID, Name) 
