@@ -55,7 +55,7 @@ namespace money.common
 
         public static DateTime ZeroTime(this DateTime dt)
         {
-            return SetTime(dt, 0, 0, 0, 0);
+            return dt.SetTime(0, 0, 0, 0);
         }
 
         public static bool IsLastDayOfMonth(this DateTime dt)
