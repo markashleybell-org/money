@@ -71,6 +71,8 @@ namespace money.web.Controllers
                     TransferGUID = guid
                 });
 
+                // TODO: Get latest monthly budget ID for destination 
+
                 _db.InsertOrUpdate(new EntryDTO {
                     AccountID = destinationAccountID,
                     Date = model.Date,
