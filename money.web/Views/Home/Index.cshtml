@@ -6,7 +6,15 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1>Index</h1>
-        <p>This is the initial screen.</p>
+        <h1>Overview</h1>
+        @foreach(var account in Model.Accounts)
+        {
+            <h2>@account.Name: @account.CurrentBalance.ToString("0.00")</h2>
+            
+            foreach(var category in account.Categories)
+            {
+                <p>@category.Name: @category.Amount.ToString("0.00") @category.Spent.ToString("0.00") @category.Remaining.ToString("0.00")</p>
+            }
+        }
     </div>
 </div>

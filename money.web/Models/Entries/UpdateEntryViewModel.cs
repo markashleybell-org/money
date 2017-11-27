@@ -14,7 +14,7 @@ namespace money.web.Models
         public int AccountID { get; set; }
         public int? MonthlyBudgetID { get; set; }
         public int? CategoryID { get; set; }
-        public int PartyID { get; set; }
+        public int? PartyID { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }

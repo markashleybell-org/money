@@ -160,8 +160,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Entries\CreateEntryViewModel.cs" />
+    <Compile Include="Models\Entries\EntryType.cs" />
     <Compile Include="Models\Entries\ListEntriesViewModel.cs" />
     <Compile Include="Models\Entries\UpdateEntryViewModel.cs" />
+    <Compile Include="Models\Home\CategoryViewModel.cs" />
+    <Compile Include="Models\Home\AccountViewModel.cs" />
     <Compile Include="Models\Parties\CreatePartyViewModel.cs" />
     <Compile Include="Models\Parties\ListPartiesViewModel.cs" />
     <Compile Include="Models\Parties\UpdatePartyViewModel.cs" />

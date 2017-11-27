@@ -25,7 +25,10 @@ namespace money.web.Controllers
         public ActionResult Create()
         {
             return View(new CreateEntryViewModel {
-                Accounts = AccountsSelectListItems()
+                Accounts = AccountsSelectListItems(),
+                MonthlyBudgets = MonthlyBudgetsSelectListItems(),
+                Categories = CategoriesSelectListItems(),
+                Parties = PartiesSelectListItems()
             });
         }
 
@@ -35,18 +38,62 @@ namespace money.web.Controllers
             if (!ModelState.IsValid)
             {
                 model.Accounts = AccountsSelectListItems();
+                model.MonthlyBudgets = MonthlyBudgetsSelectListItems();
+                model.Categories = CategoriesSelectListItems();
+                model.Parties = PartiesSelectListItems();
                 return View(model);
             }
 
-            _db.InsertOrUpdate(new EntryDTO {
-                AccountID = model.AccountID,
-                MonthlyBudgetID = model.MonthlyBudgetID,
-                CategoryID = model.CategoryID,
-                PartyID = model.PartyID,
-                Date = model.Date,
-                Amount = model.Amount,
-                Note = model.Note
-            });
+            var amount = Math.Abs(model.Amount);
+
+            if (model.TransferAccountID.HasValue)
+            {
+                var destinationAccountID = model.TransferAccountID.Value;
+
+                var parameters = new { ids = new[] { model.AccountID, destinationAccountID } };
+
+                var accounts = _db.Query(conn => conn.Query<AccountDTO>("SELECT * FROM Accounts WHERE ID IN @ids", parameters));
+                var sourceAccountName = accounts.Single(a => a.ID == model.AccountID).Name;
+                var destinationAccountName = accounts.Single(a => a.ID == destinationAccountID).Name;
+
+                var guid = Guid.NewGuid();
+
+                // For transfers, we set up separate entries for source and destination accounts
+                // Note that we ignore the credit/debit selection here (a transfer is always a debit)
+
+                _db.InsertOrUpdate(new EntryDTO {
+                    AccountID = model.AccountID,
+                    MonthlyBudgetID = model.MonthlyBudgetID,
+                    CategoryID = model.CategoryID,
+                    Date = model.Date,
+                    Amount = -amount,
+                    Note = $"Transfer to {destinationAccountName}",
+                    TransferGUID = guid
+                });
+
+                _db.InsertOrUpdate(new EntryDTO {
+                    AccountID = destinationAccountID,
+                    Date = model.Date,
+                    Amount = amount,
+                    Note = $"Transfer from {sourceAccountName}",
+                    TransferGUID = guid
+                });
+            }
+            else
+            {
+                if (model.Type == EntryType.Debit)
+                    amount = -amount;
+                
+                _db.InsertOrUpdate(new EntryDTO {
+                    AccountID = model.AccountID,
+                    MonthlyBudgetID = model.MonthlyBudgetID,
+                    CategoryID = model.CategoryID,
+                    PartyID = model.PartyID,
+                    Date = model.Date,
+                    Amount = amount,
+                    Note = model.Note
+                });
+            }
 
             _unitOfWork.CommitChanges();
 
@@ -112,6 +159,24 @@ namespace money.web.Controllers
         {
             return _db.Query(conn => conn.Query<AccountDTO>("SELECT * FROM Accounts"))
                 .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
+        }
+
+        private IEnumerable<SelectListItem> CategoriesSelectListItems()
+        {
+            return _db.Query(conn => conn.Query<AccountDTO>("SELECT * FROM Categories"))
+                .Select(c => new SelectListItem { Value = c.ID.ToString(), Text = c.Name });
+        }
+
+        private IEnumerable<SelectListItem> PartiesSelectListItems()
+        {
+            return _db.Query(conn => conn.Query<AccountDTO>("SELECT * FROM Parties"))
+                .Select(p => new SelectListItem { Value = p.ID.ToString(), Text = p.Name });
+        }
+
+        private IEnumerable<SelectListItem> MonthlyBudgetsSelectListItems()
+        {
+            return _db.Query(conn => conn.Query<MonthlyBudgetDTO>("SELECT * FROM MonthlyBudgets"))
+                .Select(b => new SelectListItem { Value = b.ID.ToString(), Text = b.StartDate.ToString("dd/MM/yyyy") + " - " + b.EndDate.ToString("dd/MM/yyyy") });
         }
     }
 }

@@ -5,8 +5,9 @@ using System.Web;
 
 namespace money.web.Models
 {
-    public class IndexViewModel
+    public enum EntryType
     {
-        public IEnumerable<AccountViewModel> Accounts { get; set; }
+        Debit,
+        Credit
     }
 }
