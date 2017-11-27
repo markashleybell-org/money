@@ -11,7 +11,7 @@ AS
     DECLARE @Accounts TABLE (ID INT, Name NVARCHAR(64), StartingBalance DECIMAL(18,2), CurrentBalance DECIMAL(18,2), LatestMonthlyBudgetID INT, BalanceAtStartOfMonthlyBudget DECIMAL(18,2))
     DECLARE @LatestMonthlyBudgets TABLE (ID INT, AccountID INT, StartDate DATETIME, EndDate DATETIME)
     DECLARE @Entries TABLE (ID INT, AccountID INT, MonthlyBudgetID INT, CategoryID INT, PartyID INT, Amount DECIMAL(18,2))
-    DECLARE @BudgetCategories TABLE (ID INT, AccountID INT, Name NVARCHAR(64), Amount DECIMAL(18,2), Spent DECIMAL(18,2))
+    DECLARE @BudgetCategories TABLE (ID INT, AccountID INT, Name NVARCHAR(64), Amount DECIMAL(18,2), Spent DECIMAL(18,2), DisplayOrder INT)
     DECLARE @BudgetStartBalances TABLE (AccountID INT, Balance DECIMAL(18,2))
 
     -- Populate the accounts table for this user
@@ -110,7 +110,8 @@ AS
         c.AccountID,
         c.Name,
         bc.Amount,
-        ABS(ISNULL(SUM(e.Amount), 0)) AS Spent
+        ABS(ISNULL(SUM(e.Amount), 0)) AS Spent,
+        c.DisplayOrder
     FROM   
         @LatestMonthlyBudgets b
     INNER JOIN 
@@ -123,7 +124,8 @@ AS
         c.ID,
         c.AccountID,
         c.Name,
-        bc.Amount
+        bc.Amount,
+        c.DisplayOrder
 
     INSERT INTO
         @BudgetCategories 
@@ -134,7 +136,8 @@ AS
         ABS((a.BalanceAtStartOfMonthlyBudget +
         ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.Amount > 0), 0)) -
         ISNULL((SELECT SUM(bc.Amount) FROM @BudgetCategories bc WHERE bc.AccountID = a.ID), 0)) AS Amount,
-        ABS(ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.CategoryID IS NULL AND e.Amount < 0), 0)) AS Spent
+        ABS(ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.CategoryID IS NULL AND e.Amount < 0), 0)) AS Spent,
+        1000000 AS DisplayOrder
     FROM
         @Accounts a
     GROUP BY
@@ -144,7 +147,7 @@ AS
         a.LatestMonthlyBudgetID
         
     SELECT * FROM @Accounts
-    SELECT *, Amount - Spent AS Remaining FROM @BudgetCategories
+    SELECT *, Amount - Spent AS Remaining FROM @BudgetCategories ORDER BY AccountID, DisplayOrder
 
 GO
 
