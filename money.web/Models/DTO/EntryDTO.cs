@@ -12,7 +12,7 @@ namespace money.web.Models.DTO
         public int AccountID { get; set; }
         public int? MonthlyBudgetID { get; set; }
         public int? CategoryID { get; set; }
-        public int PartyID { get; set; }
+        public int? PartyID { get; set; }
         public DateTime Date { get; set; }
         public decimal Amount { get; set; }
         [StringLength(64)]

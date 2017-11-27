@@ -32,11 +32,10 @@ let accounts = {
     columnSpecifications = [Identity("ID", INT, 1, 1)
                             NotNull("UserID", INT, NONE)
                             NotNull("Name", CHR(64), NONE)
+                            NotNull("StartingBalance", MONEY, NONE)
                             NotNull("IsMainAccount", BIT, NONE)
                             NotNull("IsIncludedInNetWorth", BIT, NONE)
-                            NotNull("DisplayOrder", INT, NONE)
-                            NotNull("StartingBalance", MONEY, NONE)
-                            NotNull("CurrentBalance", MONEY, NONE)] 
+                            NotNull("DisplayOrder", INT, NONE)] 
     constraintSpecifications = [PrimaryKey(["ID"])
                                 ForeignKey("UserID", "Users", "ID")]
     indexSpecifications = []
@@ -51,7 +50,8 @@ let categories = {
     dtoBaseClassName = Some("Abstract.IDTO")
     columnSpecifications = [Identity("ID", INT, 1, 1)
                             NotNull("AccountID", INT, NONE)
-                            NotNull("Name", CHR(64), NONE)] 
+                            NotNull("Name", CHR(64), NONE)
+                            NotNull("DisplayOrder", INT, NONE)] 
     constraintSpecifications = [PrimaryKey(["ID"])
                                 ForeignKey("AccountID", "Accounts", "ID")]
     indexSpecifications = []
@@ -100,7 +100,7 @@ let entries = {
                             NotNull("AccountID", INT, NONE)
                             Null("MonthlyBudgetID", INT)
                             Null("CategoryID", INT)
-                            NotNull("PartyID", INT, NONE)
+                            Null("PartyID", INT)
                             NotNull("Date", DATE, NONE)
                             NotNull("Amount", MONEY, NONE)
                             Null("Note", CHR(64))
@@ -153,9 +153,9 @@ let brbr = br + br
 Directory.SetCurrentDirectory (Path.GetDirectoryName Util.CurrentQueryPath)
 
 // Load any extra SQL which needs to be executed before/during/after the generated SQL
-let triggerSql = Directory.GetFiles(@"..\db\schema\triggers", "*.sql") 
-                 |> Array.map File.ReadAllText 
-                 |> String.concat brbr
+let procedureSql = Directory.GetFiles(@"..\db\schema\procedures", "*.sql") 
+                   |> Array.map File.ReadAllText 
+                   |> String.concat brbr
 
 let schemaSql = sprintf "%s%s%s%s%s%s%s%s%s%s%s" 
                     "CREATE DATABASE [$(DatabaseName)]" brbr 
@@ -164,7 +164,7 @@ let schemaSql = sprintf "%s%s%s%s%s%s%s%s%s%s%s"
                     tableSql
                     indexSql
                     constraintSql
-                    (sprintf "%s%s%s" triggerSql br "PRINT 'Triggers Created'") br 
+                    (sprintf "%s%s%s" procedureSql br "PRINT 'Procedures Created'") br 
 
 // Write the schema file
 File.WriteAllText(@"..\db\schema\schema.sql", schemaSql)

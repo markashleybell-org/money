@@ -1,12 +1,11 @@
-IF OBJECT_ID('[dbo].[Dashboard]') IS NOT NULL
-BEGIN 
-    DROP PROC [dbo].[Dashboard] 
-END 
+IF OBJECT_ID('[dbo].[Dashboard]') IS NOT NULL DROP PROC [dbo].[Dashboard]
+
 GO
 
 CREATE PROC Dashboard 
     @UserID int
-AS 
+AS
+
     SET NOCOUNT ON 
 
     DECLARE @Accounts TABLE (ID INT, Name NVARCHAR(64), StartingBalance DECIMAL(18,2), CurrentBalance DECIMAL(18,2), LatestMonthlyBudgetID INT, BalanceAtStartOfMonthlyBudget DECIMAL(18,2))
@@ -22,13 +21,20 @@ AS
         a.ID,
         a.Name,
         a.StartingBalance,
-        a.CurrentBalance,
+        a.StartingBalance + ISNULL(SUM(e.Amount), 0),
         0,
         0
     FROM   
         Accounts a
+    LEFT JOIN
+        Entries e ON e.AccountID = a.ID
     WHERE  
         a.UserID = @UserID
+    GROUP BY
+        a.ID,
+        a.Name,
+        a.StartingBalance,
+        a.DisplayOrder
     ORDER BY
         a.DisplayOrder
 
@@ -104,14 +110,14 @@ AS
         c.AccountID,
         c.Name,
         bc.Amount,
-        SUM(e.Amount) AS Spent
+        ABS(ISNULL(SUM(e.Amount), 0)) AS Spent
     FROM   
         @LatestMonthlyBudgets b
     INNER JOIN 
         Categories_MonthlyBudgets bc ON bc.MonthlyBudgetID = b.ID
     INNER JOIN 
         Categories c ON c.ID = bc.CategoryID
-    INNER JOIN
+    LEFT JOIN
         @Entries e ON e.MonthlyBudgetID = b.ID AND e.CategoryID = c.ID
     GROUP BY 
         c.ID,
@@ -125,10 +131,10 @@ AS
         0 AS ID,
         a.ID AS AccountID,
         'Uncategorised' AS Name,
-        (a.BalanceAtStartOfMonthlyBudget +
+        ABS((a.BalanceAtStartOfMonthlyBudget +
         ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.Amount > 0), 0)) -
-        ISNULL((SELECT SUM(bc.Amount) FROM @BudgetCategories bc WHERE bc.AccountID = a.ID), 0) AS Amount,
-        ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.CategoryID IS NULL AND e.Amount < 0), 0) AS Spent
+        ISNULL((SELECT SUM(bc.Amount) FROM @BudgetCategories bc WHERE bc.AccountID = a.ID), 0)) AS Amount,
+        ABS(ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.CategoryID IS NULL AND e.Amount < 0), 0)) AS Spent
     FROM
         @Accounts a
     GROUP BY
@@ -138,7 +144,8 @@ AS
         a.LatestMonthlyBudgetID
         
     SELECT * FROM @Accounts
-    SELECT *, Amount + Spent AS Remaining FROM @BudgetCategories
+    SELECT *, Amount - Spent AS Remaining FROM @BudgetCategories
+
 GO
 
-EXEC Dashboard 1
+-- EXEC Dashboard 1

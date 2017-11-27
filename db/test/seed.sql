@@ -8,9 +8,9 @@ VALUES
     ('test@test.com', 'AEZZ5aNVqw55mqQxpbovL3yQIcQMOkIe+6ACUFZUCjh/jE49I4uQ1MMGjVercSayZQ==')
 
 INSERT INTO Accounts 
-    (UserID, Name, IsMainAccount, IsIncludedInNetWorth, StartingBalance, CurrentBalance, DisplayOrder) 
+    (UserID, Name, IsMainAccount, IsIncludedInNetWorth, StartingBalance, DisplayOrder) 
 VALUES 
-    (1, 'TEST ACCOUNT', 1, 1, 100, 100, 100)
+    (1, 'TEST ACCOUNT', 1, 1, 100, 100)
 
 INSERT INTO Categories 
     (AccountID, Name) 

@@ -16,18 +16,18 @@ CREATE TABLE [Accounts] (
     [ID] INT IDENTITY(1,1) NOT NULL,
     [UserID] INT NOT NULL,
     [Name] NVARCHAR(64) NOT NULL,
+    [StartingBalance] DECIMAL(18,2) NOT NULL,
     [IsMainAccount] BIT NOT NULL,
     [IsIncludedInNetWorth] BIT NOT NULL,
-    [DisplayOrder] INT NOT NULL,
-    [StartingBalance] DECIMAL(18,2) NOT NULL,
-    [CurrentBalance] DECIMAL(18,2) NOT NULL
+    [DisplayOrder] INT NOT NULL
 )
 
 -- Create Categories
 CREATE TABLE [Categories] (
     [ID] INT IDENTITY(1,1) NOT NULL,
     [AccountID] INT NOT NULL,
-    [Name] NVARCHAR(64) NOT NULL
+    [Name] NVARCHAR(64) NOT NULL,
+    [DisplayOrder] INT NOT NULL
 )
 
 -- Create Parties
@@ -51,7 +51,7 @@ CREATE TABLE [Entries] (
     [AccountID] INT NOT NULL,
     [MonthlyBudgetID] INT NULL,
     [CategoryID] INT NULL,
-    [PartyID] INT NOT NULL,
+    [PartyID] INT NULL,
     [Date] DATETIME NOT NULL,
     [Amount] DECIMAL(18,2) NOT NULL,
     [Note] NVARCHAR(64) NULL,
@@ -129,57 +129,156 @@ GO
 
 PRINT 'Constraints Created'
 
--- Create Entries_UpdateAccountBalance trigger
-IF OBJECT_ID(N'[Entries_UpdateAccountBalance]') IS NOT NULL
-BEGIN
-    DROP TRIGGER [Entries_UpdateAccountBalance]
-END
+IF OBJECT_ID('[dbo].[Dashboard]') IS NOT NULL DROP PROC [dbo].[Dashboard]
 
 GO
 
-CREATE TRIGGER 
-    [Entries_UpdateAccountBalance]
-ON 
-    [Entries]
-FOR 
-    INSERT, 
-    UPDATE, 
-    DELETE
+CREATE PROC Dashboard 
+    @UserID int
 AS
-BEGIN
-    
-    DECLARE @AccountsWithChangedEntries TABLE (ID int)
 
+    SET NOCOUNT ON 
+
+    DECLARE @Accounts TABLE (ID INT, Name NVARCHAR(64), StartingBalance DECIMAL(18,2), CurrentBalance DECIMAL(18,2), LatestMonthlyBudgetID INT, BalanceAtStartOfMonthlyBudget DECIMAL(18,2))
+    DECLARE @LatestMonthlyBudgets TABLE (ID INT, AccountID INT, StartDate DATETIME, EndDate DATETIME)
+    DECLARE @Entries TABLE (ID INT, AccountID INT, MonthlyBudgetID INT, CategoryID INT, PartyID INT, Amount DECIMAL(18,2))
+    DECLARE @BudgetCategories TABLE (ID INT, AccountID INT, Name NVARCHAR(64), Amount DECIMAL(18,2), Spent DECIMAL(18,2))
+    DECLARE @BudgetStartBalances TABLE (AccountID INT, Balance DECIMAL(18,2))
+
+    -- Populate the accounts table for this user
     INSERT INTO 
-        @AccountsWithChangedEntries 
+        @Accounts
     SELECT 
-        [AccountID] 
-    FROM 
-        [DELETED] 
-    UNION ALL 
+        a.ID,
+        a.Name,
+        a.StartingBalance,
+        a.StartingBalance + ISNULL(SUM(e.Amount), 0),
+        0,
+        0
+    FROM   
+        Accounts a
+    LEFT JOIN
+        Entries e ON e.AccountID = a.ID
+    WHERE  
+        a.UserID = @UserID
+    GROUP BY
+        a.ID,
+        a.Name,
+        a.StartingBalance,
+        a.DisplayOrder
+    ORDER BY
+        a.DisplayOrder
+
+    -- Get the ID of the latest budget for each account (if one exists)
+    -- Pattern demonstrated here: https://stackoverflow.com/a/8749095/43140
+    INSERT INTO
+        @LatestMonthlyBudgets
     SELECT 
-        [AccountID] 
+        b1.ID,
+        b1.AccountID,
+        b1.StartDate,
+        b1.EndDate
     FROM 
-        [INSERTED]
+        MonthlyBudgets AS b1
+    LEFT OUTER JOIN 
+        MonthlyBudgets AS b2 
+    ON  
+        b1.AccountID = b2.AccountID 
+    AND 
+        (b1.EndDate < b2.EndDate OR (b1.EndDate = b2.EndDate AND b1.Id < b2.Id))
+    WHERE 
+        b2.AccountID IS NULL
+
+    -- Get the balance of each account at the start of this budget period
+    INSERT INTO
+        @BudgetStartBalances
+    SELECT
+        a.ID,
+        a.StartingBalance + ISNULL(SUM(e.Amount), 0)
+    FROM
+        @Accounts a
+    LEFT JOIN
+        @LatestMonthlyBudgets b ON b.AccountID = a.ID
+    LEFT JOIN    
+        -- Note: we don't join onto @Entries because that only includes entries within the current budget
+        Entries e ON e.AccountID = a.ID AND e.Date < b.StartDate 
+    GROUP BY
+        a.ID,
+        a.StartingBalance
 
     UPDATE 
-        [a]
+        a
     SET 
-        [a].[CurrentBalance] = [a].[StartingBalance] + ISNULL((
-            SELECT 
-                SUM([e].[Amount]) 
-            FROM 
-                [Entries] [e] 
-            WHERE 
-                [e].[AccountID] = [a].[ID]
-        ), 0) 
+        a.LatestMonthlyBudgetID = b.ID,
+        a.BalanceAtStartOfMonthlyBudget = s.Balance
     FROM 
-        [Accounts] [a]
+        @Accounts a
+    INNER JOIN 
+        @BudgetStartBalances s ON s.AccountID = a.ID
+    INNER JOIN 
+        @LatestMonthlyBudgets b ON b.AccountID = a.ID
+
+    -- Get all the entries for the current budgets
+    INSERT INTO
+        @Entries
+    SELECT
+        e.ID,
+        e.AccountID,
+        e.MonthlyBudgetID,
+        e.CategoryID,
+        e.PartyID,
+        e.Amount
+    FROM 
+        Entries e
     INNER JOIN
-        @AccountsWithChangedEntries [ac] ON [ac].[ID] = [a].[ID]
-    
-END
+        @Accounts a ON a.LatestMonthlyBudgetID = e.MonthlyBudgetID
+
+    -- List all the categories and totals for each budget
+    INSERT INTO
+        @BudgetCategories
+    SELECT
+        c.ID,
+        c.AccountID,
+        c.Name,
+        bc.Amount,
+        ABS(ISNULL(SUM(e.Amount), 0)) AS Spent
+    FROM   
+        @LatestMonthlyBudgets b
+    INNER JOIN 
+        Categories_MonthlyBudgets bc ON bc.MonthlyBudgetID = b.ID
+    INNER JOIN 
+        Categories c ON c.ID = bc.CategoryID
+    LEFT JOIN
+        @Entries e ON e.MonthlyBudgetID = b.ID AND e.CategoryID = c.ID
+    GROUP BY 
+        c.ID,
+        c.AccountID,
+        c.Name,
+        bc.Amount
+
+    INSERT INTO
+        @BudgetCategories 
+    SELECT
+        0 AS ID,
+        a.ID AS AccountID,
+        'Uncategorised' AS Name,
+        ABS((a.BalanceAtStartOfMonthlyBudget +
+        ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.Amount > 0), 0)) -
+        ISNULL((SELECT SUM(bc.Amount) FROM @BudgetCategories bc WHERE bc.AccountID = a.ID), 0)) AS Amount,
+        ABS(ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.CategoryID IS NULL AND e.Amount < 0), 0)) AS Spent
+    FROM
+        @Accounts a
+    GROUP BY
+        a.ID,
+        a.CurrentBalance,
+        a.BalanceAtStartOfMonthlyBudget,
+        a.LatestMonthlyBudgetID
+        
+    SELECT * FROM @Accounts
+    SELECT *, Amount - Spent AS Remaining FROM @BudgetCategories
 
 GO
 
-PRINT 'Triggers Created'
+-- EXEC Dashboard 1
+
+PRINT 'Procedures Created'
