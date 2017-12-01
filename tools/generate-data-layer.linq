@@ -6,29 +6,33 @@
 let commonColumns = []
 let commonConstraints = []
 
-let dtoNamespace = "money.web.Models.DTO"
+let dtoNamespace = "money.web.Models.Entities"
 
 // Define table specifications
 let users = {
     sqlStatementType = CREATE
     tableName = "Users"
-    dtoClassName = "UserDTO"
+    dtoClassName = "User"
     dtoNamespace = dtoNamespace
-    dtoBaseClassName = Some("Abstract.IDTO")
+    dtoBaseClassName = Some("Abstract.IEntity")
     columnSpecifications = [Identity("ID", INT, 1, 1)
                             NotNull("Email", CHR(256), NONE)
                             NotNull("Password", CHR(2048), NONE)] 
     constraintSpecifications = [PrimaryKey(["ID"])]
     indexSpecifications = []
     addDapperAttributes = true
+    partial = true
+    generateConstructor = true
+    baseConstructorParameters = false
+    setters = PrivateSetter
 }
 
 let accounts = {
     sqlStatementType = CREATE
     tableName = "Accounts"
-    dtoClassName = "AccountDTO"
+    dtoClassName = "Account"
     dtoNamespace = dtoNamespace
-    dtoBaseClassName = Some("Abstract.IDTO")
+    dtoBaseClassName = Some("Abstract.IEntity")
     columnSpecifications = [Identity("ID", INT, 1, 1)
                             NotNull("UserID", INT, NONE)
                             NotNull("Name", CHR(64), NONE)
@@ -40,14 +44,18 @@ let accounts = {
                                 ForeignKey("UserID", "Users", "ID")]
     indexSpecifications = []
     addDapperAttributes = true
+    partial = true
+    generateConstructor = true
+    baseConstructorParameters = false
+    setters = PrivateSetter
 }
 
 let categories = {
     sqlStatementType = CREATE
     tableName = "Categories"
-    dtoClassName = "CategoryDTO"
+    dtoClassName = "Category"
     dtoNamespace = dtoNamespace
-    dtoBaseClassName = Some("Abstract.IDTO")
+    dtoBaseClassName = Some("Abstract.IEntity")
     columnSpecifications = [Identity("ID", INT, 1, 1)
                             NotNull("AccountID", INT, NONE)
                             NotNull("Name", CHR(64), NONE)
@@ -56,14 +64,18 @@ let categories = {
                                 ForeignKey("AccountID", "Accounts", "ID")]
     indexSpecifications = []
     addDapperAttributes = true
+    partial = true
+    generateConstructor = true
+    baseConstructorParameters = false
+    setters = PrivateSetter
 }
 
 let parties = {
     sqlStatementType = CREATE
     tableName = "Parties"
-    dtoClassName = "PartyDTO"
+    dtoClassName = "Party"
     dtoNamespace = dtoNamespace
-    dtoBaseClassName = Some("Abstract.IDTO")
+    dtoBaseClassName = Some("Abstract.IEntity")
     columnSpecifications = [Identity("ID", INT, 1, 1)
                             NotNull("AccountID", INT, NONE)
                             NotNull("Name", CHR(64), NONE)] 
@@ -71,14 +83,18 @@ let parties = {
                                 ForeignKey("AccountID", "Accounts", "ID")]
     indexSpecifications = []
     addDapperAttributes = true
+    partial = true
+    generateConstructor = true
+    baseConstructorParameters = false
+    setters = PrivateSetter
 }
 
 let monthlybudgets = {
     sqlStatementType = CREATE
     tableName = "MonthlyBudgets"
-    dtoClassName = "MonthlyBudgetDTO"
+    dtoClassName = "MonthlyBudget"
     dtoNamespace = dtoNamespace
-    dtoBaseClassName = Some("Abstract.IDTO")
+    dtoBaseClassName = Some("Abstract.IEntity")
     columnSpecifications = [Identity("ID", INT, 1, 1)
                             NotNull("AccountID", INT, NONE)
                             NotNull("StartDate", DATE, NONE)
@@ -88,14 +104,18 @@ let monthlybudgets = {
     indexSpecifications = [NonClustered(["StartDate"; "EndDate"])
                            NonClustered(["EndDate"; "StartDate"])]
     addDapperAttributes = true
+    partial = true
+    generateConstructor = true
+    baseConstructorParameters = false
+    setters = PrivateSetter
 }
 
 let entries = {
     sqlStatementType = CREATE
     tableName = "Entries"
-    dtoClassName = "EntryDTO"
+    dtoClassName = "Entry"
     dtoNamespace = dtoNamespace
-    dtoBaseClassName = Some("Abstract.IDTO")
+    dtoBaseClassName = Some("Abstract.IEntity")
     columnSpecifications = [Identity("ID", INT, 1, 1)
                             NotNull("AccountID", INT, NONE)
                             Null("MonthlyBudgetID", INT)
@@ -112,12 +132,16 @@ let entries = {
                                 ForeignKey("PartyID", "Parties", "ID")]
     indexSpecifications = []   
     addDapperAttributes = true
+    partial = true
+    generateConstructor = true
+    baseConstructorParameters = false
+    setters = PrivateSetter
 }
 
 let categories_monthlybudgets = {
     sqlStatementType = CREATE
     tableName = "Categories_MonthlyBudgets"
-    dtoClassName = "Category_MonthlyBudgetDTO"
+    dtoClassName = "Category_MonthlyBudget"
     dtoNamespace = dtoNamespace
     dtoBaseClassName = None
     columnSpecifications = [NotNull("MonthlyBudgetID", INT, NONE)
@@ -128,6 +152,10 @@ let categories_monthlybudgets = {
                                 ForeignKey("CategoryID", "Categories", "ID")]
     indexSpecifications = []
     addDapperAttributes = true
+    partial = true
+    generateConstructor = true
+    baseConstructorParameters = false
+    setters = PrivateSetter
 }
 
 // Add any new table definitions to this list
@@ -170,7 +198,7 @@ let schemaSql = sprintf "%s%s%s%s%s%s%s%s%s%s%s"
 File.WriteAllText(@"..\db\schema\schema.sql", schemaSql)
 
 let writeFile (name, code) = 
-    File.WriteAllText(@"..\money.web\Models\DTO\" + name + ".cs", code)
+    File.WriteAllText(@"..\money.web\Models\Entities\" + name + ".cs", code)
 
 dtoClasses 
 |> List.map writeFile 

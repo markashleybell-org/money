@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity;
 using money.common;
 using money.web.Abstract;
 using money.web.Models;
-using money.web.Models.DTO;
+using money.web.Models.Entities;
 using money.web.Support;
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace money.web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var user = _db.Query(conn => conn.QuerySingleOrDefault<UserDTO>("SELECT * FROM Users WHERE Email = @Email", new { model.Email }));
+            var user = _db.Query(conn => conn.QuerySingleOrDefault<User>("SELECT * FROM Users WHERE Email = @Email", new { model.Email }));
 
             if (user == null)
                 return View(model);

@@ -2,7 +2,7 @@
 using money.common;
 using money.web.Abstract;
 using money.web.Models;
-using money.web.Models.DTO;
+using money.web.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace money.web.Controllers
         public ActionResult Index()
         {
             return View(new ListCategoriesViewModel {
-                Categories = _db.Query(conn => conn.Query<CategoryDTO>("SELECT * FROM Categories"))
+                Categories = _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories"))
             });
         }
 
@@ -38,10 +38,12 @@ namespace money.web.Controllers
                 return View(model);
             }
 
-            _db.InsertOrUpdate(new CategoryDTO {
-                AccountID = model.AccountID,
-                Name = model.Name
-            });
+            var category = new Category(
+                accountID: model.AccountID,
+                name: model.Name
+            );
+
+            _db.InsertOrUpdate(category);
 
             _unitOfWork.CommitChanges();
 
@@ -50,7 +52,7 @@ namespace money.web.Controllers
 
         public ActionResult Update(int id)
         {
-            var dto = _db.Get<CategoryDTO>(id);
+            var dto = _db.Get<Category>(id);
 
             return View(new UpdateCategoryViewModel {
                 ID = dto.ID,
@@ -69,12 +71,11 @@ namespace money.web.Controllers
                 return View(model);
             }
 
-            var dto = _db.Get<CategoryDTO>(model.ID);
+            var dto = _db.Get<Category>(model.ID);
 
-            dto.AccountID = model.AccountID;
-            dto.Name = model.Name;
+            var updated = dto.WithUpdates(name: model.Name);
 
-            _db.InsertOrUpdate(dto);
+            _db.InsertOrUpdate(updated);
 
             _unitOfWork.CommitChanges();
 
@@ -84,7 +85,7 @@ namespace money.web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var dto = _db.Get<CategoryDTO>(id);
+            var dto = _db.Get<Category>(id);
 
             _db.Delete(dto);
 
@@ -95,7 +96,7 @@ namespace money.web.Controllers
 
         private IEnumerable<SelectListItem> AccountsSelectListItems()
         {
-            return _db.Query(conn => conn.Query<AccountDTO>("SELECT * FROM Accounts"))
+            return _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
                 .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
         }
     }

@@ -22,7 +22,7 @@ namespace money.web.Concrete
         }
 
         public T Get<T>(int id)
-             where T : class, IDTO
+             where T : class, IEntity
         {
             return Query(conn => conn.Get<T>(id));
         }
@@ -64,7 +64,7 @@ namespace money.web.Concrete
         }
 
         public int InsertOrUpdate<T>(T dto)
-            where T : class, IDTO
+            where T : class, IEntity
         {
             Execute((conn, transaction) => {
                 if (dto.ID == 0)
@@ -77,7 +77,7 @@ namespace money.web.Concrete
         }
 
         public void Delete<T>(T dto)
-            where T : class, IDTO
+            where T : class, IEntity
         {
             Execute((conn, transaction) => conn.Delete(dto, transaction));
         }

@@ -3,7 +3,7 @@ using Dapper.Contrib.Extensions;
 using money.common;
 using money.web.Abstract;
 using money.web.Models;
-using money.web.Models.DTO;
+using money.web.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace money.web.Controllers
         {
             return View(new ListMonthlyBudgetsViewModel {
                 AccountID = id,
-                MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudgetDTO>("SELECT * FROM MonthlyBudgets WHERE AccountID = @ID", new { id }))
+                MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @ID", new { id }))
             });
         }
 
@@ -43,17 +43,17 @@ namespace money.web.Controllers
                 return View(model);
             }
 
-            var monthlyBudgetID = _db.InsertOrUpdate(new MonthlyBudgetDTO {
-                AccountID = model.AccountID,
-                StartDate = model.StartDate.ZeroTime(),
-                EndDate = model.EndDate.SetTime(23, 59, 59)
-            });
+            var monthlyBudgetID = _db.InsertOrUpdate(new MonthlyBudget(
+                accountID: model.AccountID,
+                startDate: model.StartDate.ZeroTime(),
+                endDate: model.EndDate.SetTime(23, 59, 59)
+            ));
 
-            var categories = model.Categories.Where(c => c.Amount != 0).Select(c => new Category_MonthlyBudgetDTO {
-                MonthlyBudgetID = monthlyBudgetID,
-                CategoryID = c.CategoryID,
-                Amount = c.Amount
-            });
+            var categories = model.Categories.Where(c => c.Amount != 0).Select(c => new Category_MonthlyBudget(
+                monthlyBudgetID: monthlyBudgetID,
+                categoryID: c.CategoryID,
+                amount: c.Amount
+            ));
 
             foreach (var category in categories)
                 _db.Execute((conn, tran) => conn.Insert(category, tran));
@@ -65,7 +65,7 @@ namespace money.web.Controllers
 
         public ActionResult Update(int id)
         {
-            var dto = _db.Get<MonthlyBudgetDTO>(id);
+            var dto = _db.Get<MonthlyBudget>(id);
 
             return View(new UpdateMonthlyBudgetViewModel {
                 ID = dto.ID,
@@ -85,21 +85,22 @@ namespace money.web.Controllers
                 return View(model);
             }
 
-            var dto = _db.Get<MonthlyBudgetDTO>(model.ID);
+            var dto = _db.Get<MonthlyBudget>(model.ID);
 
-            dto.AccountID = model.AccountID;
-            dto.StartDate = model.StartDate.ZeroTime();
-            dto.EndDate = model.EndDate.SetTime(23, 59, 59);
+            var updated = dto.WithUpdates(
+                startDate: model.StartDate.ZeroTime(),
+                endDate: model.EndDate.SetTime(23, 59, 59)
+            );
 
             _db.InsertOrUpdate(dto);
 
             _db.Execute((conn, tran) => conn.Execute("DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID", new { model.ID }, tran));
 
-            var categories = model.Categories.Where(c => c.Amount != 0).Select(c => new Category_MonthlyBudgetDTO {
-                MonthlyBudgetID = model.ID,
-                CategoryID = c.CategoryID,
-                Amount = c.Amount
-            });
+            var categories = model.Categories.Where(c => c.Amount != 0).Select(c => new Category_MonthlyBudget(
+                monthlyBudgetID: model.ID,
+                categoryID: c.CategoryID,
+                amount: c.Amount
+            ));
 
             foreach (var category in categories)
                 _db.Execute((conn, tran) => conn.Insert(category, tran));
@@ -112,7 +113,7 @@ namespace money.web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var dto = _db.Get<MonthlyBudgetDTO>(id);
+            var dto = _db.Get<MonthlyBudget>(id);
 
             _db.Execute((conn, tran) => conn.Execute("DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID", new { id }, tran));
 

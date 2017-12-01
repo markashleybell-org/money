@@ -2,7 +2,7 @@
 using money.common;
 using money.web.Abstract;
 using money.web.Models;
-using money.web.Models.DTO;
+using money.web.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace money.web.Controllers
         public ActionResult Index()
         {
             return View(new ListPartiesViewModel {
-                Parties = _db.Query(conn => conn.Query<PartyDTO>("SELECT * FROM Parties"))
+                Parties = _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties"))
             });
         }
 
@@ -38,10 +38,10 @@ namespace money.web.Controllers
                 return View(model);
             }
 
-            _db.InsertOrUpdate(new PartyDTO {
-                AccountID = model.AccountID,
-                Name = model.Name
-            });
+            _db.InsertOrUpdate(new Party(
+                accountID: model.AccountID,
+                name: model.Name
+            ));
 
             _unitOfWork.CommitChanges();
 
@@ -50,7 +50,7 @@ namespace money.web.Controllers
 
         public ActionResult Update(int id)
         {
-            var dto = _db.Get<PartyDTO>(id);
+            var dto = _db.Get<Party>(id);
 
             return View(new UpdatePartyViewModel {
                 ID = dto.ID,
@@ -69,12 +69,11 @@ namespace money.web.Controllers
                 return View(model);
             }
 
-            var dto = _db.Get<PartyDTO>(model.ID);
+            var dto = _db.Get<Party>(model.ID);
 
-            dto.AccountID = model.AccountID;
-            dto.Name = model.Name;
-
-            _db.InsertOrUpdate(dto);
+            var updated = dto.WithUpdates(name: model.Name);
+            
+            _db.InsertOrUpdate(updated);
 
             _unitOfWork.CommitChanges();
 
@@ -84,7 +83,7 @@ namespace money.web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var dto = _db.Get<PartyDTO>(id);
+            var dto = _db.Get<Party>(id);
 
             _db.Delete(dto);
 
@@ -95,7 +94,7 @@ namespace money.web.Controllers
 
         private IEnumerable<SelectListItem> AccountsSelectListItems()
         {
-            return _db.Query(conn => conn.Query<AccountDTO>("SELECT * FROM Accounts"))
+            return _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
                 .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
         }
     }

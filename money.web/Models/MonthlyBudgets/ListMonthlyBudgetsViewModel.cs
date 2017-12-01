@@ -1,4 +1,4 @@
-﻿using money.web.Models.DTO;
+﻿using money.web.Models.Entities;
 using System.Collections.Generic;
 
 namespace money.web.Models
@@ -7,6 +7,6 @@ namespace money.web.Models
     {
         public int AccountID { get; set; }
 
-        public IEnumerable<MonthlyBudgetDTO> MonthlyBudgets { get; set; }
+        public IEnumerable<MonthlyBudget> MonthlyBudgets { get; set; }
     }
 }

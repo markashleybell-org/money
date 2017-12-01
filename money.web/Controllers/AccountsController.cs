@@ -2,7 +2,7 @@
 using money.common;
 using money.web.Abstract;
 using money.web.Models;
-using money.web.Models.DTO;
+using money.web.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace money.web.Controllers
         public ActionResult Index()
         {
             return View(new ListAccountsViewModel {
-                Accounts = _db.Query(conn => conn.Query<AccountDTO>("SELECT * FROM Accounts"))
+                Accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
             });
         }
 
@@ -33,14 +33,16 @@ namespace money.web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            _db.InsertOrUpdate(new AccountDTO {
-                UserID = _userID,
-                Name = model.Name,
-                IsMainAccount = model.IsMainAccount,
-                IsIncludedInNetWorth = model.IncludeInNetWorth,
-                DisplayOrder = model.DisplayOrder,
-                StartingBalance = model.StartingBalance
-            });
+            var account = new Account(
+                userID: _userID,
+                name: model.Name,
+                isMainAccount: model.IsMainAccount,
+                isIncludedInNetWorth: model.IncludeInNetWorth,
+                displayOrder: model.DisplayOrder,
+                startingBalance: model.StartingBalance
+            );
+
+            _db.InsertOrUpdate(account);
 
             _unitOfWork.CommitChanges();
 
@@ -49,7 +51,7 @@ namespace money.web.Controllers
 
         public ActionResult Update(int id)
         {
-            var dto = _db.Get<AccountDTO>(id);
+            var dto = _db.Get<Account>(id);
 
             return View(new UpdateAccountViewModel {
                 ID = dto.ID,
@@ -65,13 +67,15 @@ namespace money.web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var dto = _db.Get<AccountDTO>(model.ID);
+            var dto = _db.Get<Account>(model.ID);
 
-            dto.Name = model.Name;
-            dto.IsIncludedInNetWorth = model.IncludeInNetWorth;
-            dto.StartingBalance = model.StartingBalance;
+            var updated = dto.WithUpdates(
+                name: model.Name,
+                isIncludedInNetWorth: model.IncludeInNetWorth,
+                startingBalance: model.StartingBalance
+            );
 
-            _db.InsertOrUpdate(dto);
+            _db.InsertOrUpdate(updated);
 
             _unitOfWork.CommitChanges();
 
@@ -81,7 +85,7 @@ namespace money.web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var dto = _db.Get<AccountDTO>(id);
+            var dto = _db.Get<Account>(id);
 
             _db.Delete(dto);
 

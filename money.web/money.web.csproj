@@ -138,7 +138,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IDTO.cs" />
+    <Compile Include="Abstract\IEntity.cs" />
     <Compile Include="Abstract\IQueryHelper.cs" />
     <Compile Include="Abstract\IRequestContext.cs" />
     <Compile Include="Abstract\IUnitOfWork.cs" />
@@ -159,6 +159,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Account.cs" />
+    <Compile Include="Models\Entities\Category.cs" />
+    <Compile Include="Models\Entities\Category_MonthlyBudget.cs" />
+    <Compile Include="Models\Entities\Entry.cs" />
+    <Compile Include="Models\Entities\MonthlyBudget.cs" />
+    <Compile Include="Models\Entities\Partials\MonthlyBudget.cs" />
+    <Compile Include="Models\Entities\Partials\Party.cs" />
+    <Compile Include="Models\Entities\Partials\Entry.cs" />
+    <Compile Include="Models\Entities\Partials\Category.cs" />
+    <Compile Include="Models\Entities\Partials\Account.cs" />
+    <Compile Include="Models\Entities\Party.cs" />
+    <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entries\CreateEntryViewModel.cs" />
     <Compile Include="Models\Entries\EntryType.cs" />
     <Compile Include="Models\Entries\ListEntriesViewModel.cs" />
@@ -178,13 +190,6 @@
     <Compile Include="Models\Accounts\CreateAccountViewModel.cs" />
     <Compile Include="Models\Accounts\ListAccountsViewModel.cs" />
     <Compile Include="Models\Accounts\UpdateAccountViewModel.cs" />
-    <Compile Include="Models\DTO\AccountDTO.cs" />
-    <Compile Include="Models\DTO\CategoryDTO.cs" />
-    <Compile Include="Models\DTO\Category_MonthlyBudgetDTO.cs" />
-    <Compile Include="Models\DTO\EntryDTO.cs" />
-    <Compile Include="Models\DTO\MonthlyBudgetDTO.cs" />
-    <Compile Include="Models\DTO\PartyDTO.cs" />
-    <Compile Include="Models\DTO\UserDTO.cs" />
     <Compile Include="Models\Home\IndexViewModel.cs" />
     <Compile Include="Models\Users\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace money.web.Abstract
 {
-    public interface IDTO
+    public interface IEntity
     {
         int ID { get; }
     }

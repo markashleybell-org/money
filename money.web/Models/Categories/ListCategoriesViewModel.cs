@@ -1,10 +1,10 @@
-﻿using money.web.Models.DTO;
+﻿using money.web.Models.Entities;
 using System.Collections.Generic;
 
 namespace money.web.Models
 {
     public class ListCategoriesViewModel
     {
-        public IEnumerable<CategoryDTO> Categories { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
     }
 }
