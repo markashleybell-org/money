@@ -22,13 +22,16 @@ namespace money.web.Controllers
             });
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
+            var accountID = id ?? default;
+
             return View(new CreateEntryViewModel {
+                AccountID = accountID,
                 Accounts = AccountsSelectListItems(),
-                MonthlyBudgets = MonthlyBudgetsSelectListItems(),
-                Categories = CategoriesSelectListItems(),
-                Parties = PartiesSelectListItems()
+                MonthlyBudgets = MonthlyBudgetsSelectListItems(accountID),
+                Categories = CategoriesSelectListItems(accountID),
+                Parties = PartiesSelectListItems(accountID)
             });
         }
 
@@ -38,9 +41,9 @@ namespace money.web.Controllers
             if (!ModelState.IsValid)
             {
                 model.Accounts = AccountsSelectListItems();
-                model.MonthlyBudgets = MonthlyBudgetsSelectListItems();
-                model.Categories = CategoriesSelectListItems();
-                model.Parties = PartiesSelectListItems();
+                model.MonthlyBudgets = MonthlyBudgetsSelectListItems(model.AccountID);
+                model.Categories = CategoriesSelectListItems(model.AccountID);
+                model.Parties = PartiesSelectListItems(model.AccountID);
                 return View(model);
             }
 
@@ -163,21 +166,21 @@ namespace money.web.Controllers
                 .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
         }
 
-        private IEnumerable<SelectListItem> CategoriesSelectListItems()
+        private IEnumerable<SelectListItem> CategoriesSelectListItems(int accountID)
         {
-            return _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories"))
+            return _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories WHERE AccountID = @AccountID", new { accountID }))
                 .Select(c => new SelectListItem { Value = c.ID.ToString(), Text = c.Name });
         }
 
-        private IEnumerable<SelectListItem> PartiesSelectListItems()
+        private IEnumerable<SelectListItem> PartiesSelectListItems(int accountID)
         {
-            return _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties"))
+            return _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties WHERE AccountID = @AccountID", new { accountID }))
                 .Select(p => new SelectListItem { Value = p.ID.ToString(), Text = p.Name });
         }
 
-        private IEnumerable<SelectListItem> MonthlyBudgetsSelectListItems()
+        private IEnumerable<SelectListItem> MonthlyBudgetsSelectListItems(int accountID)
         {
-            return _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets"))
+            return _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @AccountID", new { accountID }))
                 .Select(b => new SelectListItem { Value = b.ID.ToString(), Text = b.StartDate.ToString("dd/MM/yyyy") + " - " + b.EndDate.ToString("dd/MM/yyyy") });
         }
     }

@@ -9,7 +9,7 @@
         <h1>Overview</h1>
         @foreach(var account in Model.Accounts)
         {
-            <h2>@account.Name: @account.CurrentBalance.ToString("0.00")</h2>
+            <h2>@account.Name: @account.CurrentBalance.ToString("0.00") | @Html.ActionLink("Add Entry", "Create", "Entries", new { id = account.ID }, null)</h2>
             
             foreach(var category in account.Categories)
             {
