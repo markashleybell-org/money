@@ -241,7 +241,7 @@ AS
         c.AccountID,
         c.Name,
         bc.Amount,
-        ABS(ISNULL(SUM(e.Amount), 0)) AS Spent,
+        ISNULL(SUM(e.Amount), 0) AS Spent,
         c.DisplayOrder
     FROM   
         @LatestMonthlyBudgets b
@@ -264,10 +264,10 @@ AS
         0 AS ID,
         a.ID AS AccountID,
         'Uncategorised' AS Name,
-        ABS((a.BalanceAtStartOfMonthlyBudget +
-        ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.Amount > 0), 0)) -
-        ISNULL((SELECT SUM(bc.Amount) FROM @BudgetCategories bc WHERE bc.AccountID = a.ID), 0)) AS Amount,
-        ABS(ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.CategoryID IS NULL AND e.Amount < 0), 0)) AS Spent,
+        (a.BalanceAtStartOfMonthlyBudget +
+        ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.Amount > 0), 0) +
+        ISNULL((SELECT SUM(bc.Amount) FROM @BudgetCategories bc WHERE bc.AccountID = a.ID), 0)) * -1 AS Amount,
+        ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.CategoryID IS NULL AND e.Amount < 0), 0) AS Spent,
         1000000 AS DisplayOrder
     FROM
         @Accounts a
