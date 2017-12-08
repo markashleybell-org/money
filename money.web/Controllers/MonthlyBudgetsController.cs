@@ -52,7 +52,7 @@ namespace money.web.Controllers
             var categories = model.Categories.Where(c => c.Amount != 0).Select(c => new Category_MonthlyBudget(
                 monthlyBudgetID: monthlyBudgetID,
                 categoryID: c.CategoryID,
-                amount: c.Amount
+                amount: -c.Amount
             ));
 
             foreach (var category in categories)
