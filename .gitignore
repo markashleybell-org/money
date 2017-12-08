@@ -312,3 +312,4 @@ money.web/Web.config
 
 # Ignore migration data
 db/migrate/migrate.sql
+db/migrate/*.bak
