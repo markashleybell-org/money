@@ -57,6 +57,8 @@ AS
         (b1.EndDate < b2.EndDate OR (b1.EndDate = b2.EndDate AND b1.Id < b2.Id))
     WHERE 
         b2.AccountID IS NULL
+    AND
+        b1.EndDate >= GETDATE()
 
     -- Get the balance of each account at the start of this budget period
     INSERT INTO
