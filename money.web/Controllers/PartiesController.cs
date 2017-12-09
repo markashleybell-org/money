@@ -1,13 +1,10 @@
-﻿using Dapper;
-using money.common;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using Dapper;
 using money.web.Abstract;
 using money.web.Models;
 using money.web.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace money.web.Controllers
 {
@@ -15,19 +12,13 @@ namespace money.web.Controllers
     {
         public PartiesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index()
-        {
-            return View(new ListPartiesViewModel {
-                Parties = _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties"))
-            });
-        }
+        public ActionResult Index() => View(new ListPartiesViewModel {
+            Parties = _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties"))
+        });
 
-        public ActionResult Create()
-        {
-            return View(new CreatePartyViewModel {
-                Accounts = AccountsSelectListItems()
-            });
-        }
+        public ActionResult Create() => View(new CreatePartyViewModel {
+            Accounts = AccountsSelectListItems()
+        });
 
         [HttpPost]
         public ActionResult Create(CreatePartyViewModel model)
@@ -72,7 +63,7 @@ namespace money.web.Controllers
             var dto = _db.Get<Party>(model.ID);
 
             var updated = dto.WithUpdates(name: model.Name);
-            
+
             _db.InsertOrUpdate(updated);
 
             _unitOfWork.CommitChanges();
@@ -92,10 +83,8 @@ namespace money.web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private IEnumerable<SelectListItem> AccountsSelectListItems()
-        {
-            return _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
-                .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
-        }
+        private IEnumerable<SelectListItem> AccountsSelectListItems() =>
+            _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
+               .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
     }
 }

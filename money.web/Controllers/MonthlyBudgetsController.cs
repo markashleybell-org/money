@@ -1,14 +1,13 @@
-﻿using Dapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using Dapper;
 using Dapper.Contrib.Extensions;
 using money.common;
 using money.web.Abstract;
 using money.web.Models;
 using money.web.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace money.web.Controllers
 {
@@ -16,23 +15,17 @@ namespace money.web.Controllers
     {
         public MonthlyBudgetsController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index(int id)
-        {
-            return View(new ListMonthlyBudgetsViewModel {
-                AccountID = id,
-                MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @ID", new { id }))
-            });
-        }
+        public ActionResult Index(int id) => View(new ListMonthlyBudgetsViewModel {
+            AccountID = id,
+            MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @ID", new { id }))
+        });
 
-        public ActionResult Create(int id)
-        {
-            return View(new CreateMonthlyBudgetViewModel {
-                AccountID = id,
-                StartDate = DateTime.Now.FirstDayOfMonth(),
-                EndDate = DateTime.Now.LastDayOfMonth(),
-                Categories = Categories(accountID: id)
-            });
-        }
+        public ActionResult Create(int id) => View(new CreateMonthlyBudgetViewModel {
+            AccountID = id,
+            StartDate = DateTime.Now.FirstDayOfMonth(),
+            EndDate = DateTime.Now.LastDayOfMonth(),
+            Categories = Categories(accountID: id)
+        });
 
         [HttpPost]
         public ActionResult Create(CreateMonthlyBudgetViewModel model)

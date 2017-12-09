@@ -1,19 +1,15 @@
-﻿using money.common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 
 namespace money.web.Models.Entities
 {
     public partial class Entry
     {
-        public Entry(int accountID, 
-            int? monthlyBudgetID, 
-            int? categoryID, 
-            int? partyID, 
-            DateTime date, 
-            decimal amount, 
+        public Entry(int accountID,
+            int? monthlyBudgetID,
+            int? categoryID,
+            int? partyID,
+            DateTime date,
+            decimal amount,
             string note)
         {
             AccountID = accountID;
@@ -25,12 +21,12 @@ namespace money.web.Models.Entities
             Note = note;
         }
 
-        public Entry(int accountID, 
-            int? monthlyBudgetID, 
-            int? categoryID, 
-            DateTime date, 
-            decimal amount, 
-            string note, 
+        public Entry(int accountID,
+            int? monthlyBudgetID,
+            int? categoryID,
+            DateTime date,
+            decimal amount,
+            string note,
             Guid? transferGuid)
         {
             AccountID = accountID;
@@ -42,11 +38,11 @@ namespace money.web.Models.Entities
             TransferGUID = transferGuid;
         }
 
-        public Entry(int accountID, 
-            int? monthlyBudgetID, 
-            DateTime date, 
-            decimal amount, 
-            string note, 
+        public Entry(int accountID,
+            int? monthlyBudgetID,
+            DateTime date,
+            decimal amount,
+            string note,
             Guid? transferGuid)
         {
             AccountID = accountID;
@@ -60,15 +56,13 @@ namespace money.web.Models.Entities
 
     public static class EntryExtensions
     {
-        public static Entry WithUpdates(this Entry entry, 
+        public static Entry WithUpdates(this Entry entry,
             int? monthlyBudgetID,
             int? categoryID,
             int? partyID,
             DateTime date,
             decimal amount,
-            string note)
-        {
-            return new Entry(
+            string note) => new Entry(
                 id: entry.ID,
                 accountID: entry.AccountID,
                 monthlyBudgetID: monthlyBudgetID,
@@ -79,6 +73,5 @@ namespace money.web.Models.Entities
                 note: note,
                 transferGuid: entry.TransferGUID
             );
-        }
     }
 }

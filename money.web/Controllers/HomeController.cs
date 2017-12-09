@@ -1,11 +1,8 @@
-﻿using money.web.Abstract;
+﻿using System.Linq;
+using System.Web.Mvc;
+using money.web.Abstract;
 using money.web.Models;
 using money.web.Support;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace money.web.Controllers
 {
@@ -21,7 +18,7 @@ namespace money.web.Controllers
                     var accounts = reader.Read<AccountViewModel>();
                     var categories = reader.Read<CategoryViewModel>();
 
-                    foreach(var account in accounts)
+                    foreach (var account in accounts)
                         account.Categories = categories.Where(c => c.AccountID == account.ID);
 
                     return new IndexViewModel {

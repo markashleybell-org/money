@@ -1,8 +1,4 @@
-﻿using money.web.Concrete;
-using money.web.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace money.web.Models

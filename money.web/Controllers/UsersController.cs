@@ -1,15 +1,10 @@
-﻿using Dapper;
+﻿using System.Web.Mvc;
+using Dapper;
 using Microsoft.AspNet.Identity;
 using money.common;
 using money.web.Abstract;
 using money.web.Models;
 using money.web.Models.Entities;
-using money.web.Support;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace money.web.Controllers
 {
@@ -18,10 +13,7 @@ namespace money.web.Controllers
         public UsersController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
         [OverrideAuthorization]
-        public ActionResult Login()
-        {
-            return View();
-        }
+        public ActionResult Login() => View();
 
         [HttpPost]
         [OverrideAuthorization]

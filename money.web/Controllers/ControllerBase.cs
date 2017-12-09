@@ -1,11 +1,8 @@
-﻿using money.common;
+﻿using System;
+using System.Web.Mvc;
+using money.common;
 using money.web.Abstract;
 using money.web.Support;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace money.web.Controllers
 {
@@ -25,18 +22,13 @@ namespace money.web.Controllers
 
             var userID = _context.GetSessionItemValue(Globals.USER_SESSION_VARIABLE_NAME) as int?;
 
-            _userID = userID.HasValue ? userID.Value : -1;
+            _userID = userID ?? -1;
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                var uowDisposable = _unitOfWork as IDisposable;
-
-                if (uowDisposable != null)
-                    uowDisposable.Dispose();
-            }
+            if (disposing && _unitOfWork is IDisposable uowDisposable)
+                uowDisposable.Dispose();
 
             base.Dispose(disposing);
         }

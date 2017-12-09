@@ -1,15 +1,11 @@
-﻿using money.common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 
 namespace money.web.Models.Entities
 {
     public partial class MonthlyBudget
     {
-        public MonthlyBudget(int accountID, 
-            DateTime startDate, 
+        public MonthlyBudget(int accountID,
+            DateTime startDate,
             DateTime endDate)
         {
             AccountID = accountID;
@@ -20,16 +16,13 @@ namespace money.web.Models.Entities
 
     public static class MonthlyBudgetExtensions
     {
-        public static MonthlyBudget WithUpdates(this MonthlyBudget monthlyBudget, 
-            DateTime startDate, 
-            DateTime endDate)
-        {
-            return new MonthlyBudget(
+        public static MonthlyBudget WithUpdates(this MonthlyBudget monthlyBudget,
+            DateTime startDate,
+            DateTime endDate) => new MonthlyBudget(
                 id: monthlyBudget.ID,
                 accountID: monthlyBudget.AccountID,
                 startDate: startDate,
                 endDate: endDate
             );
-        }
     }
 }

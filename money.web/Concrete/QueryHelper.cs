@@ -1,11 +1,9 @@
-﻿using Dapper.Contrib.Extensions;
-using money.web.Abstract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+using Dapper.Contrib.Extensions;
+using money.web.Abstract;
 
 namespace money.web.Concrete
 {
@@ -21,11 +19,7 @@ namespace money.web.Concrete
             _connectionString = connectionString;
         }
 
-        public T Get<T>(int id)
-             where T : class, IEntity
-        {
-            return Query(conn => conn.Get<T>(id));
-        }
+        public T Get<T>(int id) where T : class, IEntity => Query(conn => conn.Get<T>(id));
 
         public T Query<T>(Func<IDbConnection, T> body)
         {
@@ -76,10 +70,7 @@ namespace money.web.Concrete
             return dto.ID;
         }
 
-        public void Delete<T>(T dto)
-            where T : class, IEntity
-        {
+        public void Delete<T>(T dto) where T : class, IEntity =>
             Execute((conn, transaction) => conn.Delete(dto, transaction));
-        }
     }
 }

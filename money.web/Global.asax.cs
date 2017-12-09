@@ -1,18 +1,14 @@
-﻿using money.web.Abstract;
+﻿using System.Configuration;
+using System.Web.Mvc;
+using System.Web.Optimization;
+using System.Web.Routing;
+using money.web.Abstract;
 using money.web.Concrete;
 using money.web.Support;
 using Ninject;
 using Ninject.Web.Common;
 using Ninject.Web.Common.WebHost;
 using Ninject.Web.Mvc.FilterBindingSyntax;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
 
 namespace money.web
 {
@@ -21,7 +17,6 @@ namespace money.web
         protected override void OnApplicationStarted()
         {
             AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }

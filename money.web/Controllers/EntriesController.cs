@@ -1,13 +1,11 @@
-﻿using Dapper;
-using money.common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using Dapper;
 using money.web.Abstract;
 using money.web.Models;
 using money.web.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace money.web.Controllers
 {
@@ -15,12 +13,9 @@ namespace money.web.Controllers
     {
         public EntriesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index()
-        {
-            return View(new ListEntriesViewModel {
-                Entries = _db.Query(conn => conn.Query<Entry>("SELECT * FROM Entries"))
-            });
-        }
+        public ActionResult Index() => View(new ListEntriesViewModel {
+            Entries = _db.Query(conn => conn.Query<Entry>("SELECT * FROM Entries"))
+        });
 
         public ActionResult Create(int? id)
         {
@@ -87,7 +82,7 @@ namespace money.web.Controllers
             {
                 if (model.Type == EntryType.Debit)
                     amount = -amount;
-                
+
                 _db.InsertOrUpdate(new Entry(
                     accountID: model.AccountID,
                     monthlyBudgetID: model.MonthlyBudgetID,
@@ -160,28 +155,20 @@ namespace money.web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private IEnumerable<SelectListItem> AccountsSelectListItems()
-        {
-            return _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
-                .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
-        }
+        private IEnumerable<SelectListItem> AccountsSelectListItems() =>
+            _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
+               .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
 
-        private IEnumerable<SelectListItem> CategoriesSelectListItems(int accountID)
-        {
-            return _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories WHERE AccountID = @AccountID", new { accountID }))
-                .Select(c => new SelectListItem { Value = c.ID.ToString(), Text = c.Name });
-        }
+        private IEnumerable<SelectListItem> CategoriesSelectListItems(int accountID) =>
+            _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories WHERE AccountID = @AccountID", new { accountID }))
+               .Select(c => new SelectListItem { Value = c.ID.ToString(), Text = c.Name });
 
-        private IEnumerable<SelectListItem> PartiesSelectListItems(int accountID)
-        {
-            return _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties WHERE AccountID = @AccountID", new { accountID }))
-                .Select(p => new SelectListItem { Value = p.ID.ToString(), Text = p.Name });
-        }
+        private IEnumerable<SelectListItem> PartiesSelectListItems(int accountID) =>
+            _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties WHERE AccountID = @AccountID", new { accountID }))
+               .Select(p => new SelectListItem { Value = p.ID.ToString(), Text = p.Name });
 
-        private IEnumerable<SelectListItem> MonthlyBudgetsSelectListItems(int accountID)
-        {
-            return _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @AccountID", new { accountID }))
-                .Select(b => new SelectListItem { Value = b.ID.ToString(), Text = b.StartDate.ToString("dd/MM/yyyy") + " - " + b.EndDate.ToString("dd/MM/yyyy") });
-        }
+        private IEnumerable<SelectListItem> MonthlyBudgetsSelectListItems(int accountID) =>
+            _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @AccountID", new { accountID }))
+               .Select(b => new SelectListItem { Value = b.ID.ToString(), Text = b.StartDate.ToString("dd/MM/yyyy") + " - " + b.EndDate.ToString("dd/MM/yyyy") });
     }
 }

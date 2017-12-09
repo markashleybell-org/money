@@ -1,13 +1,8 @@
-﻿using Dapper;
-using money.common;
+﻿using System.Web.Mvc;
+using Dapper;
 using money.web.Abstract;
 using money.web.Models;
 using money.web.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace money.web.Controllers
 {
@@ -15,17 +10,11 @@ namespace money.web.Controllers
     {
         public AccountsController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index()
-        {
-            return View(new ListAccountsViewModel {
-                Accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
-            });
-        }
+        public ActionResult Index() => View(new ListAccountsViewModel {
+            Accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
+        });
 
-        public ActionResult Create()
-        {
-            return View();
-        }
+        public ActionResult Create() => View();
 
         [HttpPost]
         public ActionResult Create(CreateAccountViewModel model)

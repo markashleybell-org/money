@@ -1,6 +1,4 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using d = Dapper.Contrib.Extensions;
+﻿using d = Dapper.Contrib.Extensions;
 
 namespace money.web.Models.Entities
 {

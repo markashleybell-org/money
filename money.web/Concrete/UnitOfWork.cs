@@ -1,10 +1,7 @@
-﻿using money.web.Abstract;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+using money.web.Abstract;
 
 namespace money.web.Concrete
 {
@@ -14,10 +11,7 @@ namespace money.web.Concrete
         private IDbConnection _connection;
         private IDbTransaction _transaction;
 
-        public UnitOfWork(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
+        public UnitOfWork(string connectionString) => _connectionString = connectionString;
 
         public IDbTransaction GetTransaction()
         {

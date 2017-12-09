@@ -1,6 +1,4 @@
-﻿using money.web.Concrete;
-
-namespace money.web.Models
+﻿namespace money.web.Models
 {
     public class CreateAccountViewModel
     {

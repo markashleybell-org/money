@@ -1,10 +1,4 @@
-﻿using money.common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace money.web.Models.Entities
+﻿namespace money.web.Models.Entities
 {
     public partial class Party
     {
@@ -17,13 +11,10 @@ namespace money.web.Models.Entities
 
     public static class PartyExtensions
     {
-        public static Party WithUpdates(this Party party, string name)
-        {
-            return new Party(
+        public static Party WithUpdates(this Party party, string name) => new Party(
                 id: party.ID,
                 accountID: party.AccountID,
                 name: name
             );
-        }
     }
 }

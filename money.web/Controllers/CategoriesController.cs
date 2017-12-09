@@ -1,13 +1,10 @@
-﻿using Dapper;
-using money.common;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using Dapper;
 using money.web.Abstract;
 using money.web.Models;
 using money.web.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace money.web.Controllers
 {
@@ -15,19 +12,13 @@ namespace money.web.Controllers
     {
         public CategoriesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index()
-        {
-            return View(new ListCategoriesViewModel {
-                Categories = _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories"))
-            });
-        }
+        public ActionResult Index() => View(new ListCategoriesViewModel {
+            Categories = _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories"))
+        });
 
-        public ActionResult Create()
-        {
-            return View(new CreateCategoryViewModel {
-                Accounts = AccountsSelectListItems()
-            });
-        }
+        public ActionResult Create() => View(new CreateCategoryViewModel {
+            Accounts = AccountsSelectListItems()
+        });
 
         [HttpPost]
         public ActionResult Create(CreateCategoryViewModel model)
@@ -94,10 +85,8 @@ namespace money.web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private IEnumerable<SelectListItem> AccountsSelectListItems()
-        {
-            return _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
-                .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
-        }
+        private IEnumerable<SelectListItem> AccountsSelectListItems() =>
+            _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
+               .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
     }
 }

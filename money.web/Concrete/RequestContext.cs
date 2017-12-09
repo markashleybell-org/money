@@ -1,19 +1,14 @@
-﻿using money.web.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Web;
+using money.web.Abstract;
 
 namespace money.web.Concrete
 {
     public class RequestContext : IRequestContext
     {
         private HttpContextBase _context;
-        
-        public RequestContext(HttpContextBase context)
-        {
-            _context = context;
-        }
+
+        public RequestContext(HttpContextBase context) => _context = context;
 
         public string RequestUrl => _context.Request.Url.AbsolutePath;
 

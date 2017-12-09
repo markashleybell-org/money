@@ -1,5 +1,5 @@
-﻿using money.web.Models.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using money.web.Models.Entities;
 
 namespace money.web.Models
 {
