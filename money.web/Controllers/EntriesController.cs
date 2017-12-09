@@ -54,6 +54,9 @@ namespace money.web.Controllers
                 var sourceAccountName = accounts.Single(a => a.ID == model.AccountID).Name;
                 var destinationAccountName = accounts.Single(a => a.ID == destinationAccountID).Name;
 
+                var sql = "SELECT TOP 1 ID FROM MonthlyBudgets WHERE AccountID = @DestinationAccountID AND EndDate <= GETDATE() ORDER BY EndDate, ID";
+                var destinationMonthlyBudgetID = _db.Query(conn => conn.QuerySingleOrDefault<int?>(sql, new { destinationAccountID }));
+
                 var guid = Guid.NewGuid();
 
                 // For transfers, we set up separate entries for source and destination accounts
@@ -71,7 +74,7 @@ namespace money.web.Controllers
 
                 _db.InsertOrUpdate(new Entry(
                     accountID: destinationAccountID,
-                    monthlyBudgetID: null, // TODO: Get latest monthly budget ID for destination 
+                    monthlyBudgetID: destinationMonthlyBudgetID,
                     date: model.Date,
                     amount: amount,
                     note: $"Transfer from {sourceAccountName}",
