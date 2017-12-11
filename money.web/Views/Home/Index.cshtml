@@ -6,15 +6,57 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1>Overview</h1>
-        @foreach(var account in Model.Accounts)
-        {
-            <h2>@account.Name: @account.CurrentBalance.ToString("0.00") | @Html.ActionLink("Add Entry", "Create", "Entries", new { id = account.ID }, null)</h2>
-            
-            foreach(var category in account.Categories)
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            @foreach (var account in Model.Accounts)
             {
-                <p>@category.Name: @category.Amount.ToString("0.00") @category.Spent.ToString("0.00") @category.Remaining.ToString("0.00")</p>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="account-@account.ID-heading">
+                        <h1 class="panel-title">
+                            <a role="button" class="account-heading-view-toggle" data-toggle="collapse" data-parent="#accordion" href="#account-@account.ID-categories" aria-expanded="true" aria-controls="account-@account.ID-categories">
+                                <i class="fa fa-chevron-down"></i> <span class="account-name">@account.Name</span> <span class="account-balance">@account.CurrentBalance.ToString("0.00")</span>
+                            </a>
+                            <span class="account-heading-add-entry"><a href="#add-entry-modal" data-toggle="modal" data-target="#add-entry-modal" data-accountid="@account.ID" class="btn-primary btn-sm"><i class="fa fa-plus"></i> Add Entry</a></span>
+                        </h1>
+                    </div>
+                    <div id="account-@account.ID-categories" class="panel-collapse collapse" role="tabpanel" aria-labelledby="account-@account.ID-heading">
+                        <div class="panel-body">
+                            @foreach (var category in account.Categories)
+                            {
+                                <p>@category.Name: @category.Amount.ToString("0.00") @category.Spent.ToString("0.00") @category.Remaining.ToString("0.00")</p>
+                            }
+                        </div>
+                    </div>
+                </div>
             }
-        }
+        </div>
     </div>
+</div>
+
+<!-- Add Entry Modal -->
+<div class="modal fade" id="add-entry-modal" tabindex="-1" role="dialog" aria-labelledby="add-entry-modal-label">
+    @using (Html.BeginForm("Create", "Tasks"))
+    {
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add-entry-modal-label">New Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            FORM FIELDS HERE
+                        </div>
+                        <div class="col-xs-4">
+                            FORM FIELDS HERE
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    }
 </div>

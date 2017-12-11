@@ -9,16 +9,50 @@ body {
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.panel-group {
+    margin-top: 20px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.panel-group .panel-heading {
+    padding: 0;
+    position: relative;
+}
+
+.panel-title {
+    font-weight: bold;
+}
+
+.panel-title .account-heading-view-toggle {
+    display: block;
+    text-decoration: none;
+    padding: 10px 15px;
+    position: relative;
+    /*span {
+            padding-left: $grid-gutter-width / 2;
+            vertical-align: middle;
+            font-size: 12px;
+            position: absolute;
+            text-align: right;
+            top: 13px;
+            right: 120px;
+        }*/
+}
+
+.panel-title .account-name {
+    padding-left: 10px;
+}
+
+.panel-title .account-heading-add-entry {
+    display: block;
+    text-decoration: none;
+    padding: 9px 15px;
+    text-align: right;
+    width: 150px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.panel-title .account-heading-add-entry a {
+    text-decoration: none;
 }
