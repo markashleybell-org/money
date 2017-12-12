@@ -14,7 +14,10 @@ namespace money.web.Support
             var session = filterContext.HttpContext.Session[Globals.USER_SESSION_VARIABLE_NAME];
 
             if (session == null)
-                filterContext.Result = new RedirectResult("/Users/Login");
+            {
+                var urlHelper = new UrlHelper(filterContext.RequestContext);
+                filterContext.Result = new RedirectResult(urlHelper.Action("Login", "Users"));
+            }
         }
     }
 }
