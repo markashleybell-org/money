@@ -24,7 +24,7 @@
                             {
                                 <div>
                                     <span class="category-name">@category.Name</span>
-                                    <span class="category-spent">@Math.Abs(category.Spent).ToString("0.00") of @Math.Abs(category.Amount).ToString("0.00")</span>
+                                    <span class="category-spent">Spent @Math.Abs(category.Spent).ToString("0.00") of @Math.Abs(category.Amount).ToString("0.00")</span>
                                     <span class="category-remaining pull-right">@Math.Abs(category.Remaining).ToString("0.00") @(category.Remaining <= 0 ? "left" : "over")</span>
                                 </div>
                                 <div class="progress">

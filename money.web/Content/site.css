@@ -57,6 +57,22 @@ body {
     text-decoration: none;
 }
 
+.progress {
+    margin-bottom: 8px;
+}
+
 .progress:last-child {
     margin-bottom: 0;
+}
+
+.category-name {
+    font-weight: bold;
+}
+
+.category-spent {
+    padding-left: 20px;
+}
+
+.category-remaining {
+    font-weight: bold;
 }
