@@ -13,9 +13,34 @@ namespace money.web.Controllers
     {
         public EntriesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index() => View(new ListEntriesViewModel {
-            Entries = _db.Query(conn => conn.Query<Entry>("SELECT * FROM Entries"))
-        });
+        public ActionResult Index(int id)
+        {
+            var sql = @"SELECT 
+                            e.ID,
+                            a.Name AS Account,
+                            e.Date,
+                            p.Name AS Party,
+                            c.Name AS Category,
+                            e.Amount
+                        FROM 
+                            Entries e 
+                        INNER JOIN 
+                            Accounts a ON a.ID = e.AccountID
+                        LEFT JOIN 
+                            Parties p ON p.ID = e.PartyID
+                        LEFT JOIN 
+                            Categories c ON c.ID = e.CategoryID
+                        WHERE 
+                            e.AccountID = @ID
+                        ORDER BY
+                            e.Date DESC";
+
+            var entries = _db.Query(conn => conn.Query<ListEntriesEntryViewModel>(sql, new { id }));
+
+            return View(new ListEntriesViewModel {
+                Entries = entries
+            });
+        }
 
         public ActionResult Create(int? id)
         {

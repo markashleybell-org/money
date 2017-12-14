@@ -44,6 +44,14 @@ body {
     }
 
     .account-balance {
+        display: block;
+        text-decoration: none;
+        padding: 9px 15px;
+        text-align: right;
+        width: 100px;
+        position: absolute;
+        top: 0;
+        right: 120px;
     }
 
     .account-heading-add-entry {
@@ -51,7 +59,7 @@ body {
         text-decoration: none;
         padding: 9px 15px;
         text-align: right;
-        width: 150px;
+        width: 120px;
         position: absolute;
         top: 0;
         right: 0;
@@ -60,6 +68,11 @@ body {
             text-decoration: none;
         }
     }
+}
+
+.panel-body p:last-child {
+    margin-bottom: 0;
+    text-align: right;
 }
 
 .progress {

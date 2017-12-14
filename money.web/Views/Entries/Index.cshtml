@@ -7,10 +7,30 @@
 <div class="row">
     <div class="col-md-12">
         <h1>Entries</h1>
-        @foreach(var entry in Model.Entries)
-        {
-            <p>@entry.Date @entry.Amount @Html.ActionLink("Edit", "Update", new { id = entry.ID })</p>
-        }
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>Account</th>
+                    <th>Date</th>
+                    <th>Category/Party</th>
+                    <th>Amount</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entry in Model.Entries)
+    {
+            <tr>
+                <td>@entry.Account</td>
+                <td>@entry.Date.ToString("dd/MM/yyyy")</td>
+                <td>@entry.Party @entry.Category</td>
+                <td>@entry.Amount.ToString("0.00")</td>
+                <td>@Html.ActionLink("Edit", "Update", new { id = entry.ID })</td>
+            </tr>
+}
+            </tbody>
+        </table>
+        
         @Html.ActionLink("New", "Create")
     </div>
 </div>

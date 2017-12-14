@@ -5,6 +5,6 @@ namespace money.web.Models
 {
     public class ListEntriesViewModel
     {
-        public IEnumerable<Entry> Entries { get; set; }
+        public IEnumerable<ListEntriesEntryViewModel> Entries { get; set; }
     }
 }
