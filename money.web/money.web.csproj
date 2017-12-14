@@ -178,6 +178,7 @@
     <Compile Include="Models\Entries\UpdateEntryViewModel.cs" />
     <Compile Include="Models\Home\CategoryViewModel.cs" />
     <Compile Include="Models\Home\AccountViewModel.cs" />
+    <Compile Include="Models\Home\AddEntryViewModel.cs" />
     <Compile Include="Models\Parties\CreatePartyViewModel.cs" />
     <Compile Include="Models\Parties\ListPartiesViewModel.cs" />
     <Compile Include="Models\Parties\UpdatePartyViewModel.cs" />
@@ -254,6 +255,7 @@
     <Content Include="Views\Entries\Index.cshtml" />
     <Content Include="Views\Entries\Update.cshtml" />
     <Content Include="Scripts\tsconfig.json" />
+    <Content Include="Views\Home\AddEntry.cshtml" />
     <None Include="Web.config.TEMPLATE" />
   </ItemGroup>
   <ItemGroup>

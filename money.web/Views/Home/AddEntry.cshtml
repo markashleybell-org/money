@@ -1,0 +1,26 @@
+﻿@model AddEntryViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.HiddenFor(x => x.AccountID, Model.Accounts)
+
+        @Html.LabelFor(x => x.MonthlyBudgetID)
+        @Html.DropDownListFor(x => x.MonthlyBudgetID, Model.MonthlyBudgets)<br />
+        @Html.LabelFor(x => x.CategoryID)
+        @Html.DropDownListFor(x => x.CategoryID, Model.Categories, "--")<br />
+        @Html.LabelFor(x => x.PartyID)
+        @Html.DropDownListFor(x => x.PartyID, Model.Parties, "--")<br />
+        @Html.LabelFor(x => x.Date)
+        @Html.EditorFor(x => x.Date)<br />
+        @Html.LabelFor(x => x.Type)
+        @Html.EnumDropDownListFor(x => x.Type)<br />
+        @Html.LabelFor(x => x.Amount)
+        @Html.EditorFor(x => x.Amount)<br />
+        @Html.LabelFor(x => x.TransferAccountID)
+        @Html.DropDownListFor(x => x.TransferAccountID, Model.Accounts, "--")<br />
+    </div>
+</div>
