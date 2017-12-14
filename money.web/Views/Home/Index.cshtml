@@ -22,7 +22,16 @@
                         <div class="panel-body">
                             @foreach (var category in account.Categories)
                             {
-                                <p>@category.Name: @category.Amount.ToString("0.00") @category.Spent.ToString("0.00") @category.Remaining.ToString("0.00")</p>
+                                <div>
+                                    <span class="category-name">@category.Name</span>
+                                    <span class="category-spent">@Math.Abs(category.Spent).ToString("0.00") of @Math.Abs(category.Amount).ToString("0.00")</span>
+                                    <span class="category-remaining pull-right">@Math.Abs(category.Remaining).ToString("0.00") @(category.Remaining <= 0 ? "left" : "over")</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-@(category.Remaining <= 0 ? "success" : "danger")" role="progressbar" aria-valuenow="@category.PercentageSpent" aria-valuemin="0" aria-valuemax="100" style="width: @(category.PercentageSpent > 100 ? 100 : category.PercentageSpent)%">
+                                        <span class="sr-only">@category.PercentageSpent%</span>
+                                    </div>
+                                </div>
                             }
                         </div>
                     </div>

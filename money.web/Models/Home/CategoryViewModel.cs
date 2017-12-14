@@ -1,4 +1,6 @@
-﻿namespace money.web.Models
+﻿using System;
+
+namespace money.web.Models
 {
     public class CategoryViewModel
     {
@@ -8,5 +10,8 @@
         public decimal Amount { get; set; }
         public decimal Spent { get; set; }
         public decimal Remaining { get; set; }
+
+        public int PercentageSpent =>
+            (Spent == 0 || Amount == 0) ? 0 : (int)Math.Round((100 * Spent) / Amount);
     }
 }

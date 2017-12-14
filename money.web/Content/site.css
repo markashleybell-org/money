@@ -56,3 +56,7 @@ body {
 .panel-title .account-heading-add-entry a {
     text-decoration: none;
 }
+
+.progress:last-child {
+    margin-bottom: 0;
+}
