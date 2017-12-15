@@ -1,4 +1,5 @@
 ﻿/// <reference types="jquery" />
+/// <reference types="bootstrap-datepicker" />
 
 enum Method {
     GET,
@@ -54,6 +55,7 @@ namespace money {
             _xhr(Method.GET, 'home/addentry/' + accountID, {}, html => {
                 _modalContent.html(html);
                 _modal.modal('show');
+                // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
             });
         });
     }

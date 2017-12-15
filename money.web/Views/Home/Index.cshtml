@@ -44,7 +44,7 @@
 
 <!-- Add Entry Modal -->
 <div class="modal fade" id="add-entry-modal" tabindex="-1" role="dialog" aria-labelledby="add-entry-modal-label">
-    @using (Html.BeginForm("AddEntry", "Home"))
+    @using (Html.BeginForm("AddEntry", "Home", FormMethod.Post, new { }))
     {
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">

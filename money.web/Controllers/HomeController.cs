@@ -36,6 +36,7 @@ namespace money.web.Controllers
 
         public ActionResult AddEntry(int id) => View(new AddEntryViewModel {
             AccountID = id,
+            MonthlyBudgetID = GetLatestMonthlyBudget(id),
             Accounts = AccountsSelectListItems(),
             MonthlyBudgets = MonthlyBudgetsSelectListItems(id),
             Categories = CategoriesSelectListItems(id),
@@ -66,8 +67,7 @@ namespace money.web.Controllers
                 var sourceAccountName = accounts.Single(a => a.ID == model.AccountID).Name;
                 var destinationAccountName = accounts.Single(a => a.ID == destinationAccountID).Name;
 
-                var sql = "SELECT TOP 1 ID FROM MonthlyBudgets WHERE AccountID = @DestinationAccountID AND EndDate <= GETDATE() ORDER BY EndDate, ID";
-                var destinationMonthlyBudgetID = _db.Query(conn => conn.QuerySingleOrDefault<int?>(sql, new { destinationAccountID }));
+                var destinationMonthlyBudgetID = GetLatestMonthlyBudget(destinationAccountID);
 
                 var guid = Guid.NewGuid();
 
@@ -112,6 +112,12 @@ namespace money.web.Controllers
             _unitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private int? GetLatestMonthlyBudget(int accountID)
+        {
+            var sql = "SELECT TOP 1 ID FROM MonthlyBudgets WHERE AccountID = @AccountID AND EndDate <= GETDATE() ORDER BY EndDate, ID";
+            return _db.Query(conn => conn.QuerySingleOrDefault<int?>(sql, new { accountID }));
         }
 
         private IEnumerable<SelectListItem> AccountsSelectListItems() =>

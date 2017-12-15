@@ -1,4 +1,5 @@
 /// <reference types="jquery" />
+/// <reference types="bootstrap-datepicker" />
 var Method;
 (function (Method) {
     Method[Method["GET"] = 0] = "GET";
@@ -45,6 +46,7 @@ var money;
             _xhr(Method.GET, 'home/addentry/' + accountID, {}, function (html) {
                 _modalContent.html(html);
                 _modal.modal('show');
+                // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
             });
         });
     };
