@@ -22,7 +22,7 @@ var money;
         };
         $.ajax(options).done(successCallback).fail(errorCallback || _defaultAjaxErrorCallback);
     };
-    money.init = function () {
+    money.init = function (addEntryUrl) {
         _accountList = $('.panel-group');
         _addEntryButtons = $('.btn-add-entry');
         _modal = $('#add-entry-modal');
@@ -43,13 +43,17 @@ var money;
             var accountID = button.data('accountid');
             var accountName = button.data('accountname');
             _modalTitle.html(accountName);
-            _xhr(Method.GET, 'home/addentry/' + accountID, {}, function (html) {
+            _xhr(Method.GET, addEntryUrl + '/' + accountID, {}, function (html) {
                 _modalContent.html(html);
                 _modal.modal('show');
                 // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
             });
         });
-        $(document).on('focus', '#Amount', function (e) { return $(e.target).val(''); });
+        $(document).on('focus', '#Amount', function (e) {
+            var input = $(e.target);
+            if (parseFloat(input.val()) == 0)
+                input.val('');
+        });
         $(document).on('click', '.btn-date-preset', function (e) {
             e.preventDefault();
             $('#Date').val($(e.target).data('date'));
@@ -57,6 +61,6 @@ var money;
     };
 })(money || (money = {}));
 $(function () {
-    money.init();
+    money.init(_ADD_ENTRY_URL);
 });
 //# sourceMappingURL=site.js.map

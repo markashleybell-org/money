@@ -1,6 +1,8 @@
 ﻿/// <reference types="jquery" />
 /// <reference types="bootstrap-datepicker" />
 
+declare var _ADD_ENTRY_URL: string;
+
 enum Method {
     GET,
     POST
@@ -26,7 +28,7 @@ namespace money {
         $.ajax(options).done(successCallback).fail(errorCallback || _defaultAjaxErrorCallback);
     }
 
-    export const init = (): void => {
+    export const init = (addEntryUrl: string): void => {
         _accountList = $('.panel-group');
         _addEntryButtons = $('.btn-add-entry');
         _modal = $('#add-entry-modal');
@@ -52,14 +54,18 @@ namespace money {
 
             _modalTitle.html(accountName);
 
-            _xhr(Method.GET, 'home/addentry/' + accountID, {}, html => {
+            _xhr(Method.GET, addEntryUrl + '/' + accountID, {}, html => {
                 _modalContent.html(html);
                 _modal.modal('show');
                 // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
             });
         });
 
-        $(document).on('focus', '#Amount', e => $(e.target).val(''));
+        $(document).on('focus', '#Amount', e => {
+            var input = $(e.target);
+            if (parseFloat(input.val() as string) == 0)
+                input.val('');
+        });
 
         $(document).on('click', '.btn-date-preset', e => {
             e.preventDefault();
@@ -70,5 +76,5 @@ namespace money {
 }
 
 $(() => {
-    money.init();
+    money.init(_ADD_ENTRY_URL);
 });
