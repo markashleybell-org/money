@@ -7,6 +7,7 @@ using money.web.Abstract;
 using money.web.Models;
 using money.web.Models.Entities;
 using money.web.Support;
+using static money.web.Support.Extensions;
 
 namespace money.web.Controllers
 {
@@ -14,7 +15,7 @@ namespace money.web.Controllers
     {
         public HomeController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             var model = _db.Query(conn => {
                 using (var reader = conn.QueryMultipleSP("Dashboard", new { UserID = _userID }))
@@ -26,6 +27,7 @@ namespace money.web.Controllers
                         account.Categories = categories.Where(c => c.AccountID == account.ID);
 
                     return new IndexViewModel {
+                        AccountID = id,
                         Accounts = accounts
                     };
                 }
@@ -111,7 +113,7 @@ namespace money.web.Controllers
 
             _unitOfWork.CommitChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { id = model.AccountID });
         }
 
         private int? GetLatestMonthlyBudget(int accountID)

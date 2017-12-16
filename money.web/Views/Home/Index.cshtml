@@ -18,7 +18,7 @@
                             <span class="account-heading-add-entry"><button data-accountid="@account.ID" data-accountname="@account.Name" class="btn btn-primary btn-xs btn-add-entry"><i class="fa fa-plus"></i> Add Entry</button></span>
                         </h1>
                     </div>
-                    <div id="account-@account.ID-categories" class="panel-collapse collapse" role="tabpanel" aria-labelledby="account-@account.ID-heading">
+                    <div id="account-@account.ID-categories" class="panel-collapse collapse @((Model.AccountID.HasValue && Model.AccountID.Value == account.ID) ? "in" : "")" role="tabpanel" aria-labelledby="account-@account.ID-heading">
                         <div class="panel-body">
                             @foreach (var category in account.Categories)
                             {
