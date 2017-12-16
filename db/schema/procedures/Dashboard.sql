@@ -12,6 +12,7 @@ AS
     DECLARE @LatestMonthlyBudgets TABLE (ID INT, AccountID INT, StartDate DATETIME, EndDate DATETIME)
     DECLARE @Entries TABLE (ID INT, AccountID INT, MonthlyBudgetID INT, CategoryID INT, PartyID INT, Amount DECIMAL(18,2))
     DECLARE @BudgetCategories TABLE (ID INT, AccountID INT, Name NVARCHAR(64), Amount DECIMAL(18,2), Spent DECIMAL(18,2), DisplayOrder INT)
+    DECLARE @UncategorisedCategories TABLE (ID INT, AccountID INT, Name NVARCHAR(64), Amount DECIMAL(18,2), Spent DECIMAL(18,2), DisplayOrder INT)
     DECLARE @BudgetStartBalances TABLE (AccountID INT, Balance DECIMAL(18,2))
 
     -- Populate the accounts table for this user
@@ -130,7 +131,7 @@ AS
         c.DisplayOrder
 
     INSERT INTO
-        @BudgetCategories 
+        @UncategorisedCategories 
     SELECT
         0 AS ID,
         a.ID AS AccountID,
@@ -147,6 +148,15 @@ AS
         a.CurrentBalance,
         a.BalanceAtStartOfMonthlyBudget,
         a.LatestMonthlyBudgetID
+
+    INSERT INTO
+        @BudgetCategories
+    SELECT
+        *
+    FROM
+        @UncategorisedCategories
+    WHERE 
+        Amount < 0
         
     SELECT * FROM @Accounts
     SELECT *, Amount - Spent AS Remaining FROM @BudgetCategories ORDER BY AccountID, DisplayOrder
