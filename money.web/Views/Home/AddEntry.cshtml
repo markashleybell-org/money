@@ -35,7 +35,7 @@
                     @Html.EnumDropDownListFor(x => x.Type, new { @class = "form-control" })
                 </div>
                 <div class="col-xs-7">
-                    @Html.TextBoxFor(x => x.Amount, new { @class = "form-control", type = "number" })
+                    @Html.TextBoxFor(x => x.Amount, new { @class = "form-control", type = "number", autocomplete = "off" })
                 </div>
             </div>
         </div>
