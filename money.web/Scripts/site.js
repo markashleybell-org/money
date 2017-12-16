@@ -49,6 +49,11 @@ var money;
                 // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
             });
         });
+        $(document).on('focus', '#Amount', function (e) { return $(e.target).val(''); });
+        $(document).on('click', '.btn-date-preset', function (e) {
+            e.preventDefault();
+            $('#Date').val($(e.target).data('date'));
+        });
     };
 })(money || (money = {}));
 $(function () {

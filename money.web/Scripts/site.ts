@@ -58,6 +58,14 @@ namespace money {
                 // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
             });
         });
+
+        $(document).on('focus', '#Amount', e => $(e.target).val(''));
+
+        $(document).on('click', '.btn-date-preset', e => {
+            e.preventDefault();
+
+            $('#Date').val($(e.target).data('date'));
+        })
     }
 }
 
