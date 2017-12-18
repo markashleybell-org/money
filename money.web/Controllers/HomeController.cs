@@ -118,7 +118,7 @@ namespace money.web.Controllers
 
         private int? GetLatestMonthlyBudget(int accountID)
         {
-            var sql = "SELECT TOP 1 ID FROM MonthlyBudgets WHERE AccountID = @AccountID AND EndDate <= GETDATE() ORDER BY EndDate, ID";
+            var sql = "SELECT TOP 1 ID FROM MonthlyBudgets WHERE AccountID = @AccountID AND GETDATE() <= EndDate ORDER BY EndDate, ID";
             return _db.Query(conn => conn.QuerySingleOrDefault<int?>(sql, new { accountID }));
         }
 
