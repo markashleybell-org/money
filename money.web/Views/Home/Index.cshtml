@@ -7,13 +7,13 @@
 @foreach (var account in Model.Accounts)
 {
     <div class="row row-account">
-        <div class="col-xs-6 col-sm-10">
+        <div class="col-xs-6 col-sm-8">
             <h1>@Html.ActionLink(account.Name, "Index", "Entries", new { id = account.ID }, new { @class = "btn-height" })</h1>
         </div>
-        <div class="col-xs-3 col-sm-1 account-balance">
+        <div class="col-xs-3 col-sm-2 account-balance">
             <span class="btn-height">@account.CurrentBalance.ToString("0.00")</span>
         </div>
-        <div class="col-xs-3 col-sm-1">
+        <div class="col-xs-3 col-sm-2">
             <button data-accountid="@account.ID" data-accountname="@account.Name" class="btn btn-primary btn-block btn-add-entry"><i class="fa fa-plus"></i> Add</button>
         </div>
     </div>
