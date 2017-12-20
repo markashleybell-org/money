@@ -4,44 +4,41 @@
     ViewBag.Title = "Home Page";
 }
 
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            @foreach (var account in Model.Accounts)
-            {
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="account-@account.ID-heading">
-                        <h1 class="panel-title">
-                            <a role="button" class="account-heading-view-toggle" data-toggle="collapse" data-parent="#accordion" href="#account-@account.ID-categories" aria-expanded="true" aria-controls="account-@account.ID-categories">
-                                <i class="fa fa-chevron-down"></i> <span class="account-name">@account.Name</span> <span class="account-balance">@account.CurrentBalance.ToString("0.00")</span>
-                            </a>
-                            <span class="account-heading-add-entry"><button data-accountid="@account.ID" data-accountname="@account.Name" class="btn btn-primary btn-xs btn-add-entry"><i class="fa fa-plus"></i> Add</button></span>
-                        </h1>
-                    </div>
-                    <div id="account-@account.ID-categories" class="panel-collapse collapse @((Model.AccountID.HasValue && Model.AccountID.Value == account.ID) ? "in" : "")" role="tabpanel" aria-labelledby="account-@account.ID-heading">
-                        <div class="panel-body">
-                            @foreach (var category in account.Categories)
-                            {
-                                <div>
-                                    <span class="category-name">@category.Name</span>
-                                    <span class="category-spent">Spent @Math.Abs(category.Spent).ToString("0.00") of @Math.Abs(category.Amount).ToString("0.00")</span>
-                                    <span class="category-remaining pull-right">@Math.Abs(category.Remaining).ToString("0.00") @(category.Remaining <= 0 ? "left" : "over")</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-@(category.Remaining <= 0 ? "success" : "danger")" role="progressbar" aria-valuenow="@category.PercentageSpent" aria-valuemin="0" aria-valuemax="100" style="width: @(category.PercentageSpent > 100 ? 100 : category.PercentageSpent)%">
-                                        <span class="sr-only">@category.PercentageSpent%</span>
-                                    </div>
-                                </div>
-                            }
-                            <p>@Html.ActionLink("Entries", "Index", "Entries", new { id = account.ID }, null)</p>
-                        </div>
-                    </div>
-                </div>
-            }
+@foreach (var account in Model.Accounts)
+{
+    <div class="row row-account">
+        <div class="col-xs-6">
+            <h1>@Html.ActionLink(account.Name, "Index", "Entries", new { id = account.ID }, new { @class = "btn-height" })</h1>
+        </div>
+        <div class="col-xs-3 account-balance">
+            <span class="btn-height">@account.CurrentBalance.ToString("0.00")</span>
+        </div>
+        <div class="col-xs-3">
+            <button data-accountid="@account.ID" data-accountname="@account.Name" class="btn btn-primary btn-block btn-add-entry"><i class="fa fa-plus"></i> Add</button>
         </div>
     </div>
-</div>
+
+    if (account.Categories.Count() > 0)
+    {
+        <div class="row row-budget">
+            <div class="col-xs-12">
+                @foreach (var category in account.Categories)
+                {
+                    <div>
+                        <span class="category-name">@category.Name</span>
+                        <span class="category-spent">Spent @Math.Abs(category.Spent).ToString("0.00") of @Math.Abs(category.Amount).ToString("0.00")</span>
+                        <span class="category-remaining pull-right">@Math.Abs(category.Remaining).ToString("0.00") @(category.Remaining <= 0 ? "left" : "over")</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-@(category.Remaining <= 0 ? "success" : "danger")" role="progressbar" aria-valuenow="@category.PercentageSpent" aria-valuemin="0" aria-valuemax="100" style="width: @(category.PercentageSpent > 100 ? 100 : category.PercentageSpent)%">
+                            <span class="sr-only">@category.PercentageSpent%</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
 
 <!-- Add Entry Modal -->
 <div class="modal fade" id="add-entry-modal" tabindex="-1" role="dialog" aria-labelledby="add-entry-modal-label">

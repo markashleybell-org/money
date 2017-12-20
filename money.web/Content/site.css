@@ -9,68 +9,24 @@ body {
     padding-right: 15px;
 }
 
-.panel-group {
-    margin-top: 20px;
+.row-account {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: solid 1px #e0e0e0;
 }
 
-.panel-group .panel-heading {
-    padding: 0;
-    position: relative;
+.row-account h1 {
+    margin: 0;
+    font-size: 14px;
 }
 
-.panel-title {
+.row-budget {
+    margin-top: 15px;
+}
+
+.account-balance {
+    text-align: right;
     font-weight: bold;
-}
-
-.panel-title .account-heading-view-toggle {
-    display: block;
-    text-decoration: none;
-    padding: 10px 15px;
-    position: relative;
-    /*span {
-            padding-left: $grid-gutter-width / 2;
-            vertical-align: middle;
-            font-size: 12px;
-            position: absolute;
-            text-align: right;
-            top: 13px;
-            right: 120px;
-        }*/
-}
-
-.panel-title .account-name {
-    position: absolute;
-    top: 11px;
-    left: 40px;
-}
-
-.panel-title .account-balance {
-    display: block;
-    text-decoration: none;
-    text-align: right;
-    width: 150px;
-    position: absolute;
-    top: 11px;
-    right: 70px;
-}
-
-.panel-title .account-heading-add-entry {
-    display: block;
-    text-decoration: none;
-    text-align: right;
-    width: 120px;
-    position: absolute;
-    top: 9px;
-    right: 12px;
-}
-
-.panel-title .account-heading-add-entry a {
-    text-decoration: none;
-}
-
-.panel-body p:last-child {
-    margin-bottom: 0;
-    text-align: right;
 }
 
 .progress {
@@ -86,9 +42,28 @@ body {
 }
 
 .category-spent {
-    padding-left: 20px;
+    padding-left: 15px;
 }
 
 .category-remaining {
     font-weight: bold;
+}
+
+.btn-height {
+    display: inline-block;
+    padding: 6px 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.42857143;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
 }
