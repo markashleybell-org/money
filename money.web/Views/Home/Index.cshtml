@@ -6,43 +6,14 @@
 
 @foreach (var account in Model.Accounts)
 {
-    <div class="row row-account">
-        <div class="col-xs-6 col-sm-8">
-            <h1>@Html.ActionLink(account.Name, "Index", "Entries", new { id = account.ID }, new { @class = "btn-height" })</h1>
-        </div>
-        <div class="col-xs-3 col-sm-2 account-balance">
-            <span class="btn-height">@account.CurrentBalance.ToString("0.00")</span>
-        </div>
-        <div class="col-xs-3 col-sm-2">
-            <button data-accountid="@account.ID" data-accountname="@account.Name" class="btn btn-primary btn-block btn-add-entry"><i class="fa fa-plus"></i> Add</button>
-        </div>
+    <div id="account-@account.ID">
+        @{ Html.RenderPartial("_Account", account); }
     </div>
-
-    if (account.Categories.Count() > 0)
-    {
-        <div class="row row-budget">
-            <div class="col-xs-12">
-                @foreach (var category in account.Categories)
-                {
-                    <div>
-                        <span class="category-name">@category.Name</span>
-                        <span class="category-spent">Spent @Math.Abs(category.Spent).ToString("0.00") of @Math.Abs(category.Amount).ToString("0.00")</span>
-                        <span class="category-remaining pull-right">@Math.Abs(category.Remaining).ToString("0.00") @(category.Remaining <= 0 ? "left" : "over")</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-@(category.Remaining <= 0 ? "success" : "danger")" role="progressbar" aria-valuenow="@category.PercentageSpent" aria-valuemin="0" aria-valuemax="100" style="width: @(category.PercentageSpent > 100 ? 100 : category.PercentageSpent)%">
-                            <span class="sr-only">@category.PercentageSpent%</span>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    }
 }
 
 <!-- Add Entry Modal -->
 <div class="modal fade" id="add-entry-modal" tabindex="-1" role="dialog" aria-labelledby="add-entry-modal-label">
-    @using (Html.BeginForm("AddEntry", "Home", FormMethod.Post, new { }))
+    @using (Html.BeginForm("AddEntry", "Home", FormMethod.Post, new { id = "add-entry-form" }))
     {
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -54,6 +25,7 @@
                     <!-- Content -->
                 </div>
                 <div class="modal-footer">
+                    <div class="load-indicator btn-height"><img src="~/Content/ajax-loader-dark.gif" class="load-indicator-hidden" /></div>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Add</button>
                 </div>

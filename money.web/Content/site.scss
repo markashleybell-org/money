@@ -42,7 +42,7 @@
 }
 
 .category-spent {
-    padding-left: $grid-gutter-width;
+    padding-left: 20px;
 }
 
 .category-remaining {
@@ -66,4 +66,19 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
+}
+
+.navbar-header .load-indicator {
+    float: left;
+    padding: 15px;
+    line-height: 20px;
+}
+
+.modal-footer .load-indicator {
+    float: left;
+    padding-left: 5px;
+}
+
+.load-indicator-hidden {
+    visibility: hidden;
 }

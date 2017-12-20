@@ -36,6 +36,26 @@ namespace money.web.Controllers
             return View(model);
         }
 
+        public ActionResult Account(int id)
+        {
+            var model = _db.Query(conn => {
+                using (var reader = conn.QueryMultipleSP("Account", new { AccountID = id }))
+                {
+                    var account = reader.ReadSingle<AccountViewModel>();
+                    var categories = reader.Read<CategoryViewModel>();
+
+                    return new AccountViewModel {
+                        ID = account.ID,
+                        Name = account.Name,
+                        CurrentBalance = account.CurrentBalance,
+                        Categories = categories
+                    };
+                }
+            });
+
+            return View("_Account", model);
+        }
+
         public ActionResult AddEntry(int id) => View(new AddEntryViewModel {
             AccountID = id,
             MonthlyBudgetID = GetLatestMonthlyBudget(id),
@@ -54,7 +74,8 @@ namespace money.web.Controllers
                 model.MonthlyBudgets = MonthlyBudgetsSelectListItems(model.AccountID);
                 model.Categories = CategoriesSelectListItems(model.AccountID);
                 model.Parties = PartiesSelectListItems(model.AccountID);
-                return View(model);
+
+                return Content("INVALID");
             }
 
             var amount = Math.Abs(model.Amount);
@@ -113,7 +134,22 @@ namespace money.web.Controllers
 
             _unitOfWork.CommitChanges();
 
-            return RedirectToAction(nameof(Index), new { id = model.AccountID });
+            var accountModel = _db.Query(conn => {
+                using (var reader = conn.QueryMultipleSP("Account", new { model.AccountID }))
+                {
+                    var account = reader.ReadSingle<AccountViewModel>();
+                    var categories = reader.Read<CategoryViewModel>();
+
+                    return new AccountViewModel {
+                        ID = account.ID,
+                        Name = account.Name,
+                        CurrentBalance = account.CurrentBalance,
+                        Categories = categories
+                    };
+                }
+            });
+
+            return View("_Account", accountModel);
         }
 
         private int? GetLatestMonthlyBudget(int accountID)

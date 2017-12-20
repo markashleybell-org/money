@@ -9,6 +9,9 @@ enum Method {
 }
 
 namespace money {
+    const _loadIndicatorSelector = '.load-indicator > img';
+    const _loaderHideClass = 'load-indicator-hidden';
+
     let _accountList: JQuery;
     let _addEntryButtons: JQuery;
     let _modal: JQuery;
@@ -27,6 +30,10 @@ namespace money {
 
         $.ajax(options).done(successCallback).fail(errorCallback || _defaultAjaxErrorCallback);
     }
+
+    let _showLoader = () => $(_loadIndicatorSelector).removeClass(_loaderHideClass);
+
+    let _hideLoader = () => $(_loadIndicatorSelector).addClass(_loaderHideClass);
 
     export const init = (addEntryUrl: string): void => {
         _accountList = $('.panel-group');
@@ -54,10 +61,33 @@ namespace money {
 
             _modalTitle.html(accountName);
 
+            _showLoader();
+
             _xhr(Method.GET, addEntryUrl + '/' + accountID, {}, html => {
                 _modalContent.html(html);
                 _modal.modal('show');
                 // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
+                _hideLoader();
+            });
+        });
+
+        $(document).on('submit', '#add-entry-form', e => {
+            e.preventDefault();
+
+            _showLoader();
+
+            let form = $(e.target);
+            let accountSummary = $('#account-' + form.find('[name=AccountID]').val());
+
+            _xhr(Method.POST, addEntryUrl, $(e.target).serialize(), response => {
+                _hideLoader();
+
+                if ($.trim(response) === 'INVALID') {
+                    alert('Form Invalid');
+                } else {
+                    accountSummary.html(response);
+                    _modal.modal('hide');
+                }
             });
         });
 
@@ -71,7 +101,7 @@ namespace money {
             e.preventDefault();
 
             $('#Date').val($(e.target).data('date'));
-        })
+        });
     }
 }
 

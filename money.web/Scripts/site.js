@@ -7,6 +7,8 @@ var Method;
 })(Method || (Method = {}));
 var money;
 (function (money) {
+    var _loadIndicatorSelector = '.load-indicator > img';
+    var _loaderHideClass = 'load-indicator-hidden';
     var _accountList;
     var _addEntryButtons;
     var _modal;
@@ -22,6 +24,8 @@ var money;
         };
         $.ajax(options).done(successCallback).fail(errorCallback || _defaultAjaxErrorCallback);
     };
+    var _showLoader = function () { return $(_loadIndicatorSelector).removeClass(_loaderHideClass); };
+    var _hideLoader = function () { return $(_loadIndicatorSelector).addClass(_loaderHideClass); };
     money.init = function (addEntryUrl) {
         _accountList = $('.panel-group');
         _addEntryButtons = $('.btn-add-entry');
@@ -43,10 +47,28 @@ var money;
             var accountID = button.data('accountid');
             var accountName = button.data('accountname');
             _modalTitle.html(accountName);
+            _showLoader();
             _xhr(Method.GET, addEntryUrl + '/' + accountID, {}, function (html) {
                 _modalContent.html(html);
                 _modal.modal('show');
                 // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
+                _hideLoader();
+            });
+        });
+        $(document).on('submit', '#add-entry-form', function (e) {
+            e.preventDefault();
+            _showLoader();
+            var form = $(e.target);
+            var accountSummary = $('#account-' + form.find('[name=AccountID]').val());
+            _xhr(Method.POST, addEntryUrl, $(e.target).serialize(), function (response) {
+                _hideLoader();
+                if ($.trim(response) === 'INVALID') {
+                    alert('Form Invalid');
+                }
+                else {
+                    accountSummary.html(response);
+                    _modal.modal('hide');
+                }
             });
         });
         $(document).on('focus', '#Amount', function (e) {
