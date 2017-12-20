@@ -27,11 +27,11 @@
                     <li>@Html.ActionLink("Parties", "Index", "Parties")</li>
                     @if (HttpContext.Current.Session[Globals.USER_SESSION_VARIABLE_NAME] == null)
                     {
-                    <li>@Html.ActionLink("Log In", "Login", "Users")</li>
+                        <li>@Html.ActionLink("Log In", "Login", "Users")</li>
                     }
                     else
                     {
-                    <li>@Html.ActionLink("Log Out", "Logout", "Users")</li>
+                        <li>@Html.ActionLink("Log Out", "Logout", "Users")</li>
                     }
                 </ul>
             </div>
@@ -48,6 +48,9 @@
     @*@Scripts.Render("~/bundles/jqueryval")*@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/site")
+    <script>
+        const _ADD_ENTRY_URL = '@Url.Action("AddEntry", "Home")';
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
