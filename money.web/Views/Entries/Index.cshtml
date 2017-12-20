@@ -18,19 +18,32 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var entry in Model.Entries)
-    {
-            <tr>
-                <td>@entry.Account</td>
-                <td>@entry.Date.ToString("dd/MM/yyyy")</td>
-                <td>@entry.Party @entry.Category</td>
-                <td>@entry.Amount.ToString("0.00")</td>
-                <td>@Html.ActionLink("Edit", "Update", new { id = entry.ID })</td>
-            </tr>
-}
+                @foreach (var group in Model.Entries)
+                {
+                    <tr>
+                        <th colspan="5">@group.Key.ToString("dd/MM/yyyy")</th>
+                    </tr>
+
+                    foreach (var entry in group)
+                    {
+                        var category = string.IsNullOrWhiteSpace(entry.Category) 
+                                     ? null 
+                                     : string.IsNullOrWhiteSpace(entry.Party) 
+                                     ? entry.Category 
+                                     : $"({entry.Category})";
+
+                        <tr>
+                            <td>@entry.Account</td>
+                            <td>@entry.Date.ToString("dd/MM/yyyy")</td>
+                            <td>@entry.Party @category</td>
+                            <td>@entry.Amount.ToString("0.00")</td>
+                            <td>@Html.ActionLink("Edit", "Update", new { id = entry.ID })</td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
-        
+
         @Html.ActionLink("New", "Create")
     </div>
 </div>

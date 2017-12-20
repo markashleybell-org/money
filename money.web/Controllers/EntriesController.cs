@@ -33,12 +33,13 @@ namespace money.web.Controllers
                         WHERE 
                             e.AccountID = @ID
                         ORDER BY
-                            e.Date DESC";
+                            e.Date DESC, 
+                            e.ID DESC";
 
             var entries = _db.Query(conn => conn.Query<ListEntriesEntryViewModel>(sql, new { id }));
 
             return View(new ListEntriesViewModel {
-                Entries = entries
+                Entries = entries.GroupBy(e => e.Date)
             });
         }
 

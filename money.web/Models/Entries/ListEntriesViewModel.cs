@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using money.web.Models.Entities;
 
 namespace money.web.Models
 {
     public class ListEntriesViewModel
     {
-        public IEnumerable<ListEntriesEntryViewModel> Entries { get; set; }
+        public IEnumerable<IGrouping<DateTime, ListEntriesEntryViewModel>> Entries { get; set; }
     }
 }
