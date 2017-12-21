@@ -5,14 +5,12 @@
 }
 
 <div class="row row-account">
-    <div class="col-xs-6 col-sm-8">
+    <div class="col-xs-6">
         <h1>@Html.ActionLink(Model.Name, "Index", "Entries", new { id = Model.ID }, new { @class = "btn-height" })</h1>
     </div>
-    <div class="col-xs-3 col-sm-2 account-balance">
-        <span class="btn-height">@Model.CurrentBalance.ToString("0.00")</span>
-    </div>
-    <div class="col-xs-3 col-sm-2">
-        <button data-accountid="@Model.ID" data-accountname="@Model.Name" class="btn btn-primary btn-block btn-add-entry"><i class="fa fa-plus"></i> Add</button>
+    <div class="col-xs-6 text-right">
+        <span class="btn-height account-balance">@Model.CurrentBalance.ToString("0.00")</span>
+        <button data-accountid="@Model.ID" data-accountname="@Model.Name" class="btn btn-primary btn-add-entry"><i class="fa fa-plus"></i> Add</button>
     </div>
 </div>
 

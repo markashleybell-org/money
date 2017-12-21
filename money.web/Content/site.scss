@@ -17,16 +17,17 @@
     h1 {
         margin: 0;
         font-size: 14px;
+        font-weight: bold;
     }
 }
 
 .row-budget {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .account-balance {
-    text-align: right;
     font-weight: bold;
+    margin-right: 15px;
 }
 
 .progress {
