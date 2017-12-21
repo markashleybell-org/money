@@ -12,8 +12,6 @@ namespace money {
     const _loadIndicatorSelector = '.load-indicator > img';
     const _loaderHideClass = 'load-indicator-hidden';
 
-    let _accountList: JQuery;
-    let _addEntryButtons: JQuery;
     let _modal: JQuery;
     let _modalTitle: JQuery;
     let _modalContent: JQuery;
@@ -36,22 +34,11 @@ namespace money {
     let _hideLoader = () => $(_loadIndicatorSelector).addClass(_loaderHideClass);
 
     export const init = (addEntryUrl: string): void => {
-        _accountList = $('.panel-group');
-        _addEntryButtons = $('.btn-add-entry');
         _modal = $('#add-entry-modal');
         _modalTitle = _modal.find('.modal-title');
         _modalContent = _modal.find('.modal-body');
 
-        _accountList.on('show.bs.collapse hide.bs.collapse', e => {
-            var icon = $('#' + e.target.id.replace('categories', 'heading')).find('.account-heading-view-toggle > .fa');
-            if (e.type == 'show') {
-                icon.removeClass('fa-chevron-down').addClass('fa-chevron-up');
-            } else {
-                icon.removeClass('fa-chevron-up').addClass('fa-chevron-down');
-            }
-        });
-
-        _addEntryButtons.on('click', e => {
+        $(document).on('click', '.btn-add-entry', e => {
             e.preventDefault();
 
             let button = $(e.target);

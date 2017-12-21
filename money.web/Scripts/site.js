@@ -9,8 +9,6 @@ var money;
 (function (money) {
     var _loadIndicatorSelector = '.load-indicator > img';
     var _loaderHideClass = 'load-indicator-hidden';
-    var _accountList;
-    var _addEntryButtons;
     var _modal;
     var _modalTitle;
     var _modalContent;
@@ -27,21 +25,10 @@ var money;
     var _showLoader = function () { return $(_loadIndicatorSelector).removeClass(_loaderHideClass); };
     var _hideLoader = function () { return $(_loadIndicatorSelector).addClass(_loaderHideClass); };
     money.init = function (addEntryUrl) {
-        _accountList = $('.panel-group');
-        _addEntryButtons = $('.btn-add-entry');
         _modal = $('#add-entry-modal');
         _modalTitle = _modal.find('.modal-title');
         _modalContent = _modal.find('.modal-body');
-        _accountList.on('show.bs.collapse hide.bs.collapse', function (e) {
-            var icon = $('#' + e.target.id.replace('categories', 'heading')).find('.account-heading-view-toggle > .fa');
-            if (e.type == 'show') {
-                icon.removeClass('fa-chevron-down').addClass('fa-chevron-up');
-            }
-            else {
-                icon.removeClass('fa-chevron-up').addClass('fa-chevron-down');
-            }
-        });
-        _addEntryButtons.on('click', function (e) {
+        $(document).on('click', '.btn-add-entry', function (e) {
             e.preventDefault();
             var button = $(e.target);
             var accountID = button.data('accountid');
