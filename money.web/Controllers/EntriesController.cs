@@ -6,6 +6,7 @@ using Dapper;
 using money.web.Abstract;
 using money.web.Models;
 using money.web.Models.Entities;
+using static money.web.Support.Extensions;
 
 namespace money.web.Controllers
 {
@@ -169,7 +170,7 @@ namespace money.web.Controllers
 
             _unitOfWork.CommitChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectTo<HomeController>(c => c.Index(updated.AccountID));
         }
 
         [HttpPost]
