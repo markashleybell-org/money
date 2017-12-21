@@ -11,8 +11,8 @@
             <thead>
                 <tr>
                     <th>Category/Party</th>
-                    <th>Amount</th>
-                    <th>Edit</th>
+                    <th class="text-right">Amount</th>
+                    <th class="text-right">Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,8 +39,8 @@
 
                         <tr>
                             <td>@partyAndCategory</td>
-                            <td>@entry.Amount.ToString("0.00")</td>
-                            <td>@Html.ActionLink("Edit", "Update", new { id = entry.ID })</td>
+                            <td class="text-right">@entry.Amount.ToString("0.00")</td>
+                            <td class="text-right">@Html.ActionLink("Edit", "Update", new { id = entry.ID })</td>
                         </tr>
                     }
                 }
