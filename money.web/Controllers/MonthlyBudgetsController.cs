@@ -121,10 +121,19 @@ namespace money.web.Controllers
         {
             var dto = _db.Get<MonthlyBudget>(id);
 
+            // Start the day after the old budget finished
+            var startDate = dto.EndDate.AddDays(1);
+            // End on the last day of the same month
+            var endDate = startDate.LastDayOfMonth();
+            // If the budget started just before the end of a month,
+            // skip the end date to the end of the *next* month
+            if ((endDate - startDate).Days < 28)
+                endDate = endDate.LastDayOfNextMonth();
+
             return View(nameof(Create), new CreateMonthlyBudgetViewModel {
                 AccountID = dto.AccountID,
-                StartDate = dto.EndDate.AddDays(1),
-                EndDate = dto.EndDate.AddDays(1).LastDayOfMonth(),
+                StartDate = startDate,
+                EndDate = endDate,
                 Categories = Categories(accountID: dto.AccountID, monthlyBudgetID: dto.ID)
             });
         }

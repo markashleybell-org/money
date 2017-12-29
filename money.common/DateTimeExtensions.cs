@@ -43,6 +43,11 @@ namespace money.common
             return dt.FirstDayOfMonth().AddMonths(1);
         }
 
+        public static DateTime LastDayOfNextMonth(this DateTime dt)
+        {
+            return dt.FirstDayOfNextMonth().LastDayOfMonth();
+        }
+
         public static DateTime SetTime(this DateTime dt, int hour, int minute, int second)
         {
             return new DateTime(dt.Year, dt.Month, dt.Day, hour, minute, second, 0);
