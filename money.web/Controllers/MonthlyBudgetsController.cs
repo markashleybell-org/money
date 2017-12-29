@@ -85,7 +85,7 @@ namespace money.web.Controllers
                 endDate: model.EndDate.SetTime(23, 59, 59)
             );
 
-            _db.InsertOrUpdate(dto);
+            _db.InsertOrUpdate(updated);
 
             _db.Execute((conn, tran) => conn.Execute("DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID", new { model.ID }, tran));
 
