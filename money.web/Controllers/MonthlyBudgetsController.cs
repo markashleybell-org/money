@@ -117,6 +117,18 @@ namespace money.web.Controllers
             return RedirectToAction(nameof(Index), new { id = dto.AccountID });
         }
 
+        public ActionResult Copy(int id)
+        {
+            var dto = _db.Get<MonthlyBudget>(id);
+
+            return View(nameof(Create), new CreateMonthlyBudgetViewModel {
+                AccountID = dto.AccountID,
+                StartDate = dto.EndDate.AddDays(1),
+                EndDate = dto.EndDate.AddDays(1).LastDayOfMonth(),
+                Categories = Categories(accountID: dto.AccountID, monthlyBudgetID: dto.ID)
+            });
+        }
+
         private IEnumerable<MonthlyBudgetCategoryViewModel> Categories(int accountID, int monthlyBudgetID = 0)
         {
             var sql = @"SELECT 

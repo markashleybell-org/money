@@ -9,7 +9,11 @@
         <h1>Monthly Budgets</h1>
         @foreach(var monthlyBudget in Model.MonthlyBudgets)
         {
-            <p>@monthlyBudget.StartDate - @monthlyBudget.EndDate @Html.ActionLink("Edit", "Update", new { id = monthlyBudget.ID })</p>
+        <p>
+            @monthlyBudget.StartDate - @monthlyBudget.EndDate 
+            @Html.ActionLink("Edit", "Update", new { id = monthlyBudget.ID })
+            @Html.ActionLink("Copy", "Copy", new { id = monthlyBudget.ID })
+        </p>
         }
         @Html.ActionLink("New", "Create", new { id = Model.AccountID })
     </div>
