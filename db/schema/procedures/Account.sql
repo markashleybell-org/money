@@ -53,8 +53,8 @@ AS
     WHERE 
         b.AccountID = @AccountID 
     ORDER BY 
-        b.EndDate, 
-        b.ID
+        b.EndDate DESC, 
+        b.ID DESC
 
     -- Get the balance of each account at the start of this budget period
     INSERT INTO
