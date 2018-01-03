@@ -46,14 +46,13 @@ var money;
             e.preventDefault();
             _showLoader();
             var form = $(e.target);
-            var accountSummary = $('#account-' + form.find('[name=AccountID]').val());
-            _xhr(Method.POST, addEntryUrl, $(e.target).serialize(), function (response) {
+            _xhr(Method.POST, addEntryUrl, form.serialize(), function (response) {
                 _hideLoader();
-                if ($.trim(response) === 'INVALID') {
+                if (!response.ok) {
                     alert('Form Invalid');
                 }
                 else {
-                    accountSummary.html(response);
+                    response.updated.forEach(function (u) { return $('#account-' + u.id).html(u.html); });
                     _modal.modal('hide');
                 }
             });

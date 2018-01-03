@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using Dapper;
@@ -36,26 +37,6 @@ namespace money.web.Controllers
             return View(model);
         }
 
-        public ActionResult Account(int id)
-        {
-            var model = _db.Query(conn => {
-                using (var reader = conn.QueryMultipleSP("Account", new { AccountID = id }))
-                {
-                    var account = reader.ReadSingle<AccountViewModel>();
-                    var categories = reader.Read<CategoryViewModel>();
-
-                    return new AccountViewModel {
-                        ID = account.ID,
-                        Name = account.Name,
-                        CurrentBalance = account.CurrentBalance,
-                        Categories = categories
-                    };
-                }
-            });
-
-            return View("_Account", model);
-        }
-
         public ActionResult AddEntry(int id) => View(new AddEntryViewModel {
             AccountID = id,
             MonthlyBudgetID = GetLatestMonthlyBudget(id),
@@ -75,8 +56,10 @@ namespace money.web.Controllers
                 model.Categories = CategoriesSelectListItems(model.AccountID);
                 model.Parties = PartiesSelectListItems(model.AccountID);
 
-                return Content("INVALID");
+                return Json(new { ok = false, msg = "Invalid form values" });
             }
+
+            var ids = new int[0];
 
             var amount = Math.Abs(model.Amount);
 
@@ -115,6 +98,8 @@ namespace money.web.Controllers
                     note: $"Transfer from {sourceAccountName}",
                     transferGuid: guid
                 ));
+
+                ids = new[] { model.AccountID, destinationAccountID };
             }
             else
             {
@@ -130,12 +115,21 @@ namespace money.web.Controllers
                     amount: amount,
                     note: model.Note
                 ));
+
+                ids = new[] { model.AccountID };
             }
 
             _unitOfWork.CommitChanges();
 
-            var accountModel = _db.Query(conn => {
-                using (var reader = conn.QueryMultipleSP("Account", new { model.AccountID }))
+            var updated = ids.Select(id => new { id, html = RenderAccountHtml(id) });
+            
+            return Json(new { ok = true, updated });
+        }
+
+        public string RenderAccountHtml(int accountID)
+        {
+            var model = _db.Query(conn => {
+                using (var reader = conn.QueryMultipleSP("Account", new { AccountID = accountID }))
                 {
                     var account = reader.ReadSingle<AccountViewModel>();
                     var categories = reader.Read<CategoryViewModel>();
@@ -149,7 +143,16 @@ namespace money.web.Controllers
                 }
             });
 
-            return View("_Account", accountModel);
+            var viewData = new ViewDataDictionary(model);
+
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, "_Account");
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, viewData, new TempDataDictionary(), sw);
+                viewResult.View.Render(viewContext, sw);
+
+                return sw.GetStringBuilder().ToString();
+            }
         }
 
         private int? GetLatestMonthlyBudget(int accountID)

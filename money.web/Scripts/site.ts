@@ -64,15 +64,14 @@ namespace money {
             _showLoader();
 
             let form = $(e.target);
-            let accountSummary = $('#account-' + form.find('[name=AccountID]').val());
 
-            _xhr(Method.POST, addEntryUrl, $(e.target).serialize(), response => {
+            _xhr(Method.POST, addEntryUrl, form.serialize(), response => {
                 _hideLoader();
 
-                if ($.trim(response) === 'INVALID') {
+                if (!response.ok) {
                     alert('Form Invalid');
                 } else {
-                    accountSummary.html(response);
+                    response.updated.forEach((u: any) => $('#account-' + u.id).html(u.html));
                     _modal.modal('hide');
                 }
             });
