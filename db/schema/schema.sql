@@ -16,6 +16,7 @@ CREATE TABLE [Accounts] (
     [ID] INT IDENTITY(1,1) NOT NULL,
     [UserID] INT NOT NULL,
     [Name] NVARCHAR(64) NOT NULL,
+    [Type] INT NOT NULL,
     [StartingBalance] DECIMAL(18,2) NOT NULL,
     [IsMainAccount] BIT NOT NULL,
     [IsIncludedInNetWorth] BIT NOT NULL,

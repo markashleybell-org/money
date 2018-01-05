@@ -6,11 +6,12 @@ namespace money.web.Models.Entities
     [d.Table("Accounts")]
     public partial class Account : Abstract.IEntity
     {
-        public Account(int id, int userID, string name, decimal startingBalance, bool isMainAccount, bool isIncludedInNetWorth, int displayOrder)
+        public Account(int id, int userID, string name, AccountType type, decimal startingBalance, bool isMainAccount, bool isIncludedInNetWorth, int displayOrder)
         {
             ID = id;
             UserID = userID;
             Name = name;
+            Type = type;
             StartingBalance = startingBalance;
             IsMainAccount = isMainAccount;
             IsIncludedInNetWorth = isIncludedInNetWorth;
@@ -22,6 +23,7 @@ namespace money.web.Models.Entities
         public int UserID { get; private set; }
         [StringLength(64)]
         public string Name { get; private set; }
+        public AccountType Type { get; private set; }
         public decimal StartingBalance { get; private set; }
         public bool IsMainAccount { get; private set; }
         public bool IsIncludedInNetWorth { get; private set; }

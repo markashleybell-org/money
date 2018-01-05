@@ -25,6 +25,7 @@ namespace money.web.Controllers
             var account = new Account(
                 userID: _userID,
                 name: model.Name,
+                type: model.Type,
                 isMainAccount: model.IsMainAccount,
                 isIncludedInNetWorth: model.IncludeInNetWorth,
                 displayOrder: model.DisplayOrder,
