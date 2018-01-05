@@ -170,7 +170,7 @@ namespace money.web.Controllers
 
             _unitOfWork.CommitChanges();
 
-            return RedirectTo<HomeController>(c => c.Index(updated.AccountID));
+            return RedirectTo<HomeController>(c => c.Index());
         }
 
         [HttpPost]
