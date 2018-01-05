@@ -32,13 +32,17 @@
         <httpProtocol>
             <customHeaders>
                 <add name="X-Frame-Options" value="SAMEORIGIN" />
-                <add name="Strict-Transport-Security" value="max-age=31536000"/>
+                <add name="Strict-Transport-Security" value="max-age=31536000" />
                 <add name="X-Content-Type-Options" value="nosniff" />
             </customHeaders>
         </httpProtocol>
     </system.webServer>
     <runtime>
         <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+            <dependentAssembly>
+                <assemblyIdentity name="Ninject" publicKeyToken="C7192DC5380945E7" culture="neutral" />
+                <bindingRedirect oldVersion="0.0.0.0-3.3.4.0" newVersion="3.3.4.0" />
+            </dependentAssembly>
             <dependentAssembly>
                 <assemblyIdentity name="Newtonsoft.Json" culture="neutral" publicKeyToken="30ad4fe6b2a6aeed" />
                 <bindingRedirect oldVersion="0.0.0.0-10.0.0.0" newVersion="10.0.0.0" />
