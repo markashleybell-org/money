@@ -4,11 +4,16 @@
     ViewBag.Title = "Home Page";
 }
 
-@foreach (var account in Model.Accounts)
+@foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type).OrderBy(a => a.Key))
 {
-    <div id="account-@account.ID">
-        @{ Html.RenderPartial("_Account", account); }
-    </div>
+    <h1 class="account-type-heading">@typeGroup.Key.GetDisplayName()</h1>
+
+    foreach (var account in typeGroup)
+    {
+        <div id="account-@account.ID">
+            @{ Html.RenderPartial("_Account", account); }
+        </div>
+    }
 }
 
 <!-- Add Entry Modal -->
