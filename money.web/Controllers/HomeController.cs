@@ -16,7 +16,7 @@ namespace money.web.Controllers
     {
         public HomeController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
             var model = _db.Query(conn => {
                 using (var reader = conn.QueryMultipleSP("Dashboard", new { UserID = _userID }))
@@ -28,7 +28,6 @@ namespace money.web.Controllers
                         account.Categories = categories.Where(c => c.AccountID == account.ID);
 
                     return new IndexViewModel {
-                        AccountID = id,
                         Accounts = accounts
                     };
                 }
