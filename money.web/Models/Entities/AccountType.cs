@@ -8,15 +8,15 @@ namespace money.web.Models.Entities
 {
     public enum AccountType
     {
-        [Display(Name = "Current Account")]
+        [Display(Name = "Current Accounts")]
         Current,
-        [Display(Name = "Savings Account")]
+        [Display(Name = "Savings Accounts")]
         Savings,
-        [Display(Name = "Credit Card")]
+        [Display(Name = "Credit Cards")]
         CreditCard,
-        [Display(Name = "Loan")]
-        Loan,
-        [Display(Name = "Mortgage")]
-        Mortgage
+        [Display(Name = "Loans")]
+        Mortgage,
+        [Display(Name = "Pensions")]
+        Pension
     }
 }
