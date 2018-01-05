@@ -11,13 +11,13 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Net Worth</th>
-                    <th class="text-right">Edit</th>
-                    <th class="text-right">Budgets</th>
+                    <th class="text-center">Net Worth</th>
+                    <th class="text-center">Edit</th>
+                    <th class="text-center">Budgets</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type))
+                @foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type).OrderBy(a => a.Key))
                 {
                     <tr>
                         <th colspan="4">@typeGroup.Key.GetDisplayName()</th>
@@ -27,9 +27,9 @@
                     {
                         <tr>
                             <td>@account.Name</td>
-                            <td>@(account.IsIncludedInNetWorth ? "Yes" : "No")</td>
-                            <td class="text-right">@Html.ActionLink("Edit", "Update", new { id = account.ID })</td>
-                            <td class="text-right">@Html.ActionLink("View", "Index", "MonthlyBudgets", new { id = account.ID }, null)</td>
+                            <td class="text-center">@(account.IsIncludedInNetWorth ? "Yes" : "No")</td>
+                            <td class="text-center">@Html.ActionLink("Edit", "Update", new { id = account.ID })</td>
+                            <td class="text-center">@Html.ActionLink("View", "Index", "MonthlyBudgets", new { id = account.ID }, null)</td>
                         </tr>
                     }
                 }
