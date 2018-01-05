@@ -39,7 +39,7 @@ namespace money.web.Controllers
         public ActionResult AddEntry(int id) => View(new AddEntryViewModel {
             AccountID = id,
             MonthlyBudgetID = GetLatestMonthlyBudget(id),
-            Accounts = AccountsSelectListItems(),
+            Types = TypesSelectListItems(id),
             MonthlyBudgets = MonthlyBudgetsSelectListItems(id),
             Categories = CategoriesSelectListItems(id),
             Parties = PartiesSelectListItems(id)
@@ -50,7 +50,7 @@ namespace money.web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Accounts = AccountsSelectListItems();
+                model.Types = TypesSelectListItems(model.AccountID);
                 model.MonthlyBudgets = MonthlyBudgetsSelectListItems(model.AccountID);
                 model.Categories = CategoriesSelectListItems(model.AccountID);
                 model.Parties = PartiesSelectListItems(model.AccountID);
@@ -61,10 +61,14 @@ namespace money.web.Controllers
             var ids = new int[0];
 
             var amount = Math.Abs(model.Amount);
+            
+            if (!Enum.TryParse<EntryType>(model.Type, out var entryType))
+                entryType = EntryType.Transfer;
 
-            if (model.TransferAccountID.HasValue)
+            if (entryType == EntryType.Transfer)
             {
-                var destinationAccountID = model.TransferAccountID.Value;
+                if (!int.TryParse(model.Type.Split('-')[1], out var destinationAccountID))
+                    return Json(new { ok = false, msg = "Invalid destination account ID" });
 
                 var parameters = new { ids = new[] { model.AccountID, destinationAccountID } };
 
@@ -102,7 +106,7 @@ namespace money.web.Controllers
             }
             else
             {
-                if (model.Type == EntryType.Debit)
+                if (entryType == EntryType.Debit)
                     amount = -amount;
 
                 _db.InsertOrUpdate(new Entry(
@@ -158,6 +162,17 @@ namespace money.web.Controllers
         {
             var sql = "SELECT TOP 1 ID FROM MonthlyBudgets WHERE AccountID = @AccountID AND GETDATE() <= EndDate ORDER BY EndDate, ID";
             return _db.Query(conn => conn.QuerySingleOrDefault<int?>(sql, new { accountID }));
+        }
+
+        private IEnumerable<SelectListItem> TypesSelectListItems(int accountID)
+        {
+            var accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts WHERE ID != @AccountID", new { accountID }))
+               .Select(a => new SelectListItem { Value = $"Transfer-{a.ID}", Text = $"To {a.Name}" });
+
+            var types = Enum.GetNames(typeof(EntryType)).Where(n => n != EntryType.Transfer.ToString())
+                .Select(n => new SelectListItem { Value = n, Text = n }).Concat(accounts);
+
+            return types;
         }
 
         private IEnumerable<SelectListItem> AccountsSelectListItems() =>

@@ -19,14 +19,12 @@ namespace money.web.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; } = DateTime.Now;
         [Display(Name = "Type")]
-        public EntryType Type { get; set; }
+        public string Type { get; set; }
         public decimal Amount { get; set; }
         [StringLength(64)]
         public string Note { get; set; }
-        [Display(Name = "Transfer To")]
-        public int? TransferAccountID { get; set; }
 
-        public IEnumerable<SelectListItem> Accounts { get; set; }
+        public IEnumerable<SelectListItem> Types { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
         public IEnumerable<SelectListItem> Parties { get; set; }
         public IEnumerable<SelectListItem> MonthlyBudgets { get; set; }
