@@ -12,6 +12,7 @@ namespace money {
     const _loadIndicatorSelector = '.load-indicator > img';
     const _loaderHideClass = 'load-indicator-hidden';
 
+    let _addEntryUrl: string;
     let _modal: JQuery;
     let _modalTitle: JQuery;
     let _modalContent: JQuery;
@@ -34,10 +35,12 @@ namespace money {
     let _hideLoader = () => $(_loadIndicatorSelector).addClass(_loaderHideClass);
 
     export const init = (addEntryUrl: string): void => {
+        _addEntryUrl = addEntryUrl;
+
         _modal = $('#add-entry-modal');
         _modalTitle = _modal.find('.modal-title');
         _modalContent = _modal.find('.modal-body');
-
+        
         $(document).on('click', '.btn-add-entry', e => {
             e.preventDefault();
 
@@ -46,11 +49,18 @@ namespace money {
             let accountID = button.data('accountid');
             let accountName = button.data('accountname');
 
+            if (!accountID) {
+                console.log(e, button);
+                debugger;
+            }
+
+            let modalUrl = _addEntryUrl + '/' + accountID;
+
             _modalTitle.html(accountName);
 
             _showLoader();
 
-            _xhr(Method.GET, addEntryUrl + '/' + accountID, {}, html => {
+            _xhr(Method.GET, modalUrl, {}, html => {
                 _modalContent.html(html);
                 _modal.modal('show');
                 // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });

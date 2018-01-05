@@ -9,6 +9,7 @@ var money;
 (function (money) {
     var _loadIndicatorSelector = '.load-indicator > img';
     var _loaderHideClass = 'load-indicator-hidden';
+    var _addEntryUrl;
     var _modal;
     var _modalTitle;
     var _modalContent;
@@ -25,6 +26,7 @@ var money;
     var _showLoader = function () { return $(_loadIndicatorSelector).removeClass(_loaderHideClass); };
     var _hideLoader = function () { return $(_loadIndicatorSelector).addClass(_loaderHideClass); };
     money.init = function (addEntryUrl) {
+        _addEntryUrl = addEntryUrl;
         _modal = $('#add-entry-modal');
         _modalTitle = _modal.find('.modal-title');
         _modalContent = _modal.find('.modal-body');
@@ -33,9 +35,14 @@ var money;
             var button = $(e.target);
             var accountID = button.data('accountid');
             var accountName = button.data('accountname');
+            if (!accountID) {
+                console.log(e, button);
+                debugger;
+            }
+            var modalUrl = _addEntryUrl + '/' + accountID;
             _modalTitle.html(accountName);
             _showLoader();
-            _xhr(Method.GET, addEntryUrl + '/' + accountID, {}, function (html) {
+            _xhr(Method.GET, modalUrl, {}, function (html) {
                 _modalContent.html(html);
                 _modal.modal('show');
                 // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
