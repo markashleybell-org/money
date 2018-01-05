@@ -7,10 +7,35 @@
 <div class="row">
     <div class="col-md-12">
         <h1>Accounts</h1>
-        @foreach(var account in Model.Accounts)
-        {
-            <p>@account.Name @Html.ActionLink("Edit", "Update", new { id = account.ID }) @Html.ActionLink("Budgets", "Index", "MonthlyBudgets", new { id = account.ID }, null)</p>
-        }
-        @Html.ActionLink("New", "Create")
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Net Worth</th>
+                    <th class="text-right">Edit</th>
+                    <th class="text-right">Budgets</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type))
+                {
+                    <tr>
+                        <th colspan="4">@typeGroup.Key.GetDisplayName()</th>
+                    </tr>
+
+                    foreach (var account in typeGroup)
+                    {
+                        <tr>
+                            <td>@account.Name</td>
+                            <td>@(account.IsIncludedInNetWorth ? "Yes" : "No")</td>
+                            <td class="text-right">@Html.ActionLink("Edit", "Update", new { id = account.ID })</td>
+                            <td class="text-right">@Html.ActionLink("View", "Index", "MonthlyBudgets", new { id = account.ID }, null)</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <p>@Html.ActionLink("New", "Create")</p>
     </div>
 </div>

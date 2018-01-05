@@ -25,7 +25,7 @@ namespace money.web.Controllers
             var account = new Account(
                 userID: _userID,
                 name: model.Name,
-                type: model.Type,
+                type: model.Type.Value,
                 isMainAccount: model.IsMainAccount,
                 isIncludedInNetWorth: model.IncludeInNetWorth,
                 displayOrder: model.DisplayOrder,
@@ -46,6 +46,7 @@ namespace money.web.Controllers
             return View(new UpdateAccountViewModel {
                 ID = dto.ID,
                 Name = dto.Name,
+                Type = dto.Type,
                 IncludeInNetWorth = dto.IsIncludedInNetWorth,
                 StartingBalance = dto.StartingBalance
             });
@@ -61,6 +62,7 @@ namespace money.web.Controllers
 
             var updated = dto.WithUpdates(
                 name: model.Name,
+                type: model.Type,
                 isIncludedInNetWorth: model.IncludeInNetWorth,
                 startingBalance: model.StartingBalance
             );

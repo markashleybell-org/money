@@ -24,12 +24,13 @@
     {
         public static Account WithUpdates(this Account account,
             string name,
+            AccountType type,
             decimal startingBalance,
             bool isIncludedInNetWorth) => new Account(
                 account.ID,
                 account.UserID,
                 name,
-                account.Type,
+                type,
                 startingBalance,
                 account.IsMainAccount,
                 isIncludedInNetWorth,

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -10,6 +12,9 @@ namespace money.web.Support
 {
     public static class Extensions
     {
+        public static string GetDisplayName(this Enum enumValue) => 
+            enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>().Name;
+
         public static ActionResult RedirectTo<T>(Expression<Func<T, ActionResult>> action) where T : ControllerBase =>
             new RedirectToRouteResult(GetRouteValuesFor(action));
 
