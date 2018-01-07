@@ -28,5 +28,7 @@ namespace money.web.Models
         public IEnumerable<SelectListItem> Categories { get; set; }
         public IEnumerable<SelectListItem> Parties { get; set; }
         public IEnumerable<SelectListItem> MonthlyBudgets { get; set; }
+
+        public bool ShowCategorySelector { get; set; }
     }
 }

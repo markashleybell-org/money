@@ -35,9 +35,17 @@ var money;
             var button = $(e.currentTarget);
             var accountID = parseInt(button.data('accountid'), 10);
             var accountName = button.data('accountname');
-            var categoryID = parseInt(button.data('categoryid'), 10);
+            // This bit of code differentiates between a click on the account-level add button
+            // (which doesn't have a category ID data attribute) and the category-level add buttons
+            // We only want to show the category dropdown if the account-level button has been
+            // clicked, so there is a bit of nastiness here which works around the fact that
+            // uncategorised categories are returned with an ID of 0 by the stored procedure
+            var categoryID = button.attr('data-categoryid') ? parseInt(button.data('categoryid'), 10) : null;
             var categoryName = button.data('categoryname');
-            var data = categoryID !== 0 ? { categoryID: categoryID } : {};
+            var data = {
+                categoryID: categoryID !== 0 ? categoryID : null,
+                showCategorySelector: categoryID === null
+            };
             _modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));
             _showLoader();
             _xhr(Method.GET, _addEntryUrl + '/' + accountID, data, function (html) {

@@ -36,14 +36,15 @@ namespace money.web.Controllers
             return View(model);
         }
 
-        public ActionResult AddEntry(int id, int? categoryID = null) => View(new AddEntryViewModel {
+        public ActionResult AddEntry(int id, int? categoryID = null, bool showCategorySelector = true) => View(new AddEntryViewModel {
             AccountID = id,
             MonthlyBudgetID = GetLatestMonthlyBudget(id),
             CategoryID = categoryID,
             Types = TypesSelectListItems(id),
             MonthlyBudgets = MonthlyBudgetsSelectListItems(id),
             Categories = CategoriesSelectListItems(id),
-            Parties = PartiesSelectListItems(id)
+            Parties = PartiesSelectListItems(id),
+            ShowCategorySelector = showCategorySelector
         });
 
         [HttpPost]

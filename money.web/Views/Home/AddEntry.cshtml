@@ -31,16 +31,16 @@
                 </div>
             </div>
         </div>
-        @if (Model.CategoryID.HasValue)
-        {
-            @Html.HiddenFor(x => x.CategoryID)
-        }
-        else
+        @if (Model.ShowCategorySelector)
         {
             <div class="form-group">
                 @Html.LabelFor(x => x.CategoryID)
                 @Html.DropDownListFor(x => x.CategoryID, Model.Categories, "--", new { @class = "form-control" })
             </div>
+        }
+        else
+        {
+            @Html.HiddenFor(x => x.CategoryID)
         }
         <div class="form-group">
             @Html.LabelFor(x => x.PartyID)
