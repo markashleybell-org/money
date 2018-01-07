@@ -36,7 +36,7 @@ namespace money.web.Controllers
             return View(model);
         }
 
-        public ActionResult AddEntry(int id, int? categoryID = null, bool showCategorySelector = true) => View(new AddEntryViewModel {
+        public ActionResult AddEntry(int id, int? categoryID = null, bool showCategorySelector = true, decimal remaining = 0) => View(new AddEntryViewModel {
             AccountID = id,
             MonthlyBudgetID = GetLatestMonthlyBudget(id),
             CategoryID = categoryID,
@@ -44,7 +44,8 @@ namespace money.web.Controllers
             MonthlyBudgets = MonthlyBudgetsSelectListItems(id),
             Categories = CategoriesSelectListItems(id),
             Parties = PartiesSelectListItems(id),
-            ShowCategorySelector = showCategorySelector
+            ShowCategorySelector = showCategorySelector,
+            Remaining = remaining
         });
 
         [HttpPost]
@@ -170,7 +171,7 @@ namespace money.web.Controllers
         private IEnumerable<SelectListItem> TypesSelectListItems(int accountID)
         {
             var accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts WHERE ID != @AccountID ORDER BY DisplayOrder", new { accountID }))
-               .Select(a => new SelectListItem { Value = $"Transfer-{a.ID}", Text = $"To {a.Name}" });
+               .Select(a => new SelectListItem { Value = $"Transfer-{a.ID}", Text = $"Transfer to {a.Name}" });
 
             var types = Enum.GetNames(typeof(EntryType)).Where(n => n != EntryType.Transfer.ToString())
                 .Select(n => new SelectListItem { Value = n, Text = n }).Concat(accounts);

@@ -8,7 +8,24 @@
     <div class="col-md-12">
         @Html.HiddenFor(x => x.AccountID)
         @Html.HiddenFor(x => x.MonthlyBudgetID)
-
+        <div class="form-group">
+            @Html.LabelFor(x => x.Type)
+            @Html.DropDownListFor(x => x.Type, Model.Types, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Amount)
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="input-group">
+                        <div class="input-group-addon">&pound;</div>
+                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control", type = "number", step = "0.01", autocomplete = "off" })
+                    </div>
+                </div>
+                <div class="col-xs-7">
+                    <button class="btn btn-default btn-block btn-amount-preset" data-amount="@Model.Remaining.ToString("0.00")" @(Model.Remaining == 0 ? "disabled" : "")>All Remaining</button>
+                </div>
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(x => x.Date)
             <div class="row">
@@ -17,17 +34,6 @@
                 </div>
                 <div class="col-xs-5">
                     <button class="btn btn-default btn-block btn-date-preset" data-date="@DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd")">Yesterday</button>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.Amount) / @Html.LabelFor(x => x.Type)
-            <div class="row">
-                <div class="col-xs-4">
-                    @Html.TextBoxFor(x => x.Amount, new { @class = "form-control", type = "number", step = "0.01", autocomplete = "off" })
-                </div>
-                <div class="col-xs-8">
-                    @Html.DropDownListFor(x => x.Type, Model.Types, new { @class = "form-control" })
                 </div>
             </div>
         </div>

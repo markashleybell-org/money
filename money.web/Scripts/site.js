@@ -44,7 +44,8 @@ var money;
             var categoryName = button.data('categoryname');
             var data = {
                 categoryID: categoryID !== 0 ? categoryID : null,
-                showCategorySelector: categoryID === null
+                showCategorySelector: categoryID === null,
+                remaining: button.attr('data-remaining') ? parseFloat(button.attr('data-remaining')) : 0
             };
             _modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));
             _showLoader();
@@ -78,6 +79,10 @@ var money;
         $(document).on('click', '.btn-date-preset', function (e) {
             e.preventDefault();
             $('#Date').val($(e.currentTarget).data('date'));
+        });
+        $(document).on('click', '.btn-amount-preset', function (e) {
+            e.preventDefault();
+            $('#Amount').val($(e.currentTarget).data('amount'));
         });
     };
 })(money || (money = {}));
