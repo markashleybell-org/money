@@ -33,13 +33,14 @@ var money;
         $(document).on('click', '.btn-add-entry', function (e) {
             e.preventDefault();
             var button = $(e.currentTarget);
-            var accountID = button.data('accountid');
+            var accountID = parseInt(button.data('accountid'), 10);
             var accountName = button.data('accountname');
-            var categoryID = button.data('categoryid');
+            var categoryID = parseInt(button.data('categoryid'), 10);
             var categoryName = button.data('categoryname');
+            var data = categoryID !== 0 ? { categoryID: categoryID } : {};
             _modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));
             _showLoader();
-            _xhr(Method.GET, _addEntryUrl + '/' + accountID, { categoryID: categoryID }, function (html) {
+            _xhr(Method.GET, _addEntryUrl + '/' + accountID, data, function (html) {
                 _modalContent.html(html);
                 _modal.modal('show');
                 _hideLoader();

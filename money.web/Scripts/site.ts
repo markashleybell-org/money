@@ -46,16 +46,18 @@ namespace money {
 
             let button = $(e.currentTarget);
 
-            let accountID = button.data('accountid');
+            let accountID = parseInt(button.data('accountid'), 10);
             let accountName = button.data('accountname');
-            let categoryID = button.data('categoryid');
+            let categoryID = parseInt(button.data('categoryid'), 10);
             let categoryName = button.data('categoryname');
+
+            let data = categoryID !== 0 ? { categoryID: categoryID } : {};
 
             _modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));
 
             _showLoader();
 
-            _xhr(Method.GET, _addEntryUrl + '/' + accountID, { categoryID: categoryID }, html => {
+            _xhr(Method.GET, _addEntryUrl + '/' + accountID, data, html => {
                 _modalContent.html(html);
                 _modal.modal('show');
                 _hideLoader();
