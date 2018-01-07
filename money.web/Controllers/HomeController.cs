@@ -166,7 +166,7 @@ namespace money.web.Controllers
 
         private IEnumerable<SelectListItem> TypesSelectListItems(int accountID)
         {
-            var accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts WHERE ID != @AccountID", new { accountID }))
+            var accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts WHERE ID != @AccountID ORDER BY DisplayOrder", new { accountID }))
                .Select(a => new SelectListItem { Value = $"Transfer-{a.ID}", Text = $"To {a.Name}" });
 
             var types = Enum.GetNames(typeof(EntryType)).Where(n => n != EntryType.Transfer.ToString())
@@ -176,15 +176,15 @@ namespace money.web.Controllers
         }
 
         private IEnumerable<SelectListItem> AccountsSelectListItems() =>
-            _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
+            _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts ORDER BY DisplayOrder"))
                .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
 
         private IEnumerable<SelectListItem> CategoriesSelectListItems(int accountID) =>
-            _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories WHERE AccountID = @AccountID", new { accountID }))
+            _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories WHERE AccountID = @AccountID ORDER BY Name", new { accountID }))
                .Select(c => new SelectListItem { Value = c.ID.ToString(), Text = c.Name });
 
         private IEnumerable<SelectListItem> PartiesSelectListItems(int accountID) =>
-            _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties WHERE AccountID = @AccountID", new { accountID }))
+            _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties WHERE AccountID = @AccountID ORDER BY Name", new { accountID }))
                .Select(p => new SelectListItem { Value = p.ID.ToString(), Text = p.Name });
 
         private IEnumerable<SelectListItem> MonthlyBudgetsSelectListItems(int accountID) =>
