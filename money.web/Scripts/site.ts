@@ -49,21 +49,13 @@ namespace money {
             let accountID = button.data('accountid');
             let accountName = button.data('accountname');
 
-            if (!accountID) {
-                console.log(e, button);
-                debugger;
-            }
-
-            let modalUrl = _addEntryUrl + '/' + accountID;
-
             _modalTitle.html(accountName);
 
             _showLoader();
 
-            _xhr(Method.GET, modalUrl, {}, html => {
+            _xhr(Method.GET, _addEntryUrl + '/' + accountID, {}, html => {
                 _modalContent.html(html);
                 _modal.modal('show');
-                // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
                 _hideLoader();
             });
         });

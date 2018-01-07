@@ -35,17 +35,11 @@ var money;
             var button = $(e.currentTarget);
             var accountID = button.data('accountid');
             var accountName = button.data('accountname');
-            if (!accountID) {
-                console.log(e, button);
-                debugger;
-            }
-            var modalUrl = _addEntryUrl + '/' + accountID;
             _modalTitle.html(accountName);
             _showLoader();
-            _xhr(Method.GET, modalUrl, {}, function (html) {
+            _xhr(Method.GET, _addEntryUrl + '/' + accountID, {}, function (html) {
                 _modalContent.html(html);
                 _modal.modal('show');
-                // _modal.find('.date-picker').datepicker({ format: 'dd/mm/yyyy' });
                 _hideLoader();
             });
         });
