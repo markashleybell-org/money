@@ -89,6 +89,7 @@ namespace money {
                 } else {
                     response.updated.forEach((u: any) => $('#account-' + u.id).html(u.html));
                     _modal.modal('hide');
+                    setTimeout(() => $('.updated').removeClass('updated-show'), 1000);
                 }
             });
         });

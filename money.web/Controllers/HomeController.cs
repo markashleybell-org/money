@@ -126,12 +126,12 @@ namespace money.web.Controllers
 
             _unitOfWork.CommitChanges();
 
-            var updated = ids.Select(id => new { id, html = RenderAccountHtml(id) });
+            var updated = ids.Select((id, i) => new { id, html = RenderAccountHtml(id, (i == 0 && !model.CategoryID.HasValue ? 0 : model.CategoryID)) });
             
             return Json(new { ok = true, updated });
         }
 
-        public string RenderAccountHtml(int accountID)
+        public string RenderAccountHtml(int accountID, int? updatedCategoryID = null)
         {
             var model = _db.Query(conn => {
                 using (var reader = conn.QueryMultipleSP("Account", new { AccountID = accountID }))
@@ -143,7 +143,8 @@ namespace money.web.Controllers
                         ID = account.ID,
                         Name = account.Name,
                         CurrentBalance = account.CurrentBalance,
-                        Categories = categories
+                        Categories = categories,
+                        UpdatedCategoryID = updatedCategoryID
                     };
                 }
             });

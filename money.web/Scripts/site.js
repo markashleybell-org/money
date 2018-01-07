@@ -66,6 +66,7 @@ var money;
                 else {
                     response.updated.forEach(function (u) { return $('#account-' + u.id).html(u.html); });
                     _modal.modal('hide');
+                    setTimeout(function () { return $('.updated').removeClass('updated-show'); }, 1000);
                 }
             });
         });

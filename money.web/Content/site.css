@@ -38,6 +38,19 @@ body {
     margin-bottom: 0;
 }
 
+.updated {
+    -webkit-transition: opacity 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
+    transition: opacity 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
+    color: #288600;
+    opacity: 0;
+}
+
+.updated-show {
+    -webkit-transition: opacity 0s cubic-bezier(0.91, 0.065, 0.95, 0.54);
+    transition: opacity 0s cubic-bezier(0.91, 0.065, 0.95, 0.54);
+    opacity: 1;
+}
+
 .category-name {
     font-weight: bold;
     font-size: 12px;

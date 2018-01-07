@@ -37,6 +37,17 @@
     margin-bottom: 0;
 }
 
+.updated {
+    transition: opacity 3s cubic-bezier(0.910, 0.065, 0.950, 0.540);
+    color: #288600;
+    opacity: 0;
+}
+
+.updated-show {
+    transition: opacity 0s cubic-bezier(0.910, 0.065, 0.950, 0.540);
+    opacity: 1;
+}
+
 .category-name {
     font-weight: bold;
     font-size: 12px;

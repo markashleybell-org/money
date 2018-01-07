@@ -18,13 +18,12 @@
 
 @if (Model.Categories.Count() > 0)
 {
-
     foreach (var category in Model.Categories)
     {
         <div class="row row-budget">
             <div class="col-xs-10">
                 <div class="row">
-                    <div class="col-xs-12 category-name">@category.Name</div>
+                    <div class="col-xs-12 category-name">@category.Name <span class="updated @(Model.UpdatedCategoryID == category.ID ? "updated-show" : "")">UPDATED</span></div>
                     <div class="col-xs-12">
                         <div class="progress">
                             <span class="category-spent">@Math.Abs(category.Spent).ToString("0.00") of @Math.Abs(category.Amount).ToString("0.00")</span>
@@ -43,5 +42,4 @@
             </div>
         </div>
     }
-
 }

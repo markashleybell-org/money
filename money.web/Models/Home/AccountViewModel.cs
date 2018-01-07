@@ -11,5 +11,7 @@ namespace money.web.Models
         public decimal CurrentBalance { get; set; }
 
         public IEnumerable<CategoryViewModel> Categories { get; set; }
+
+        public int? UpdatedCategoryID { get; set; }
     }
 }
