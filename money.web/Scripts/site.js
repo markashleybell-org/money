@@ -35,9 +35,11 @@ var money;
             var button = $(e.currentTarget);
             var accountID = button.data('accountid');
             var accountName = button.data('accountname');
-            _modalTitle.html(accountName);
+            var categoryID = button.data('categoryid');
+            var categoryName = button.data('categoryname');
+            _modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));
             _showLoader();
-            _xhr(Method.GET, _addEntryUrl + '/' + accountID, {}, function (html) {
+            _xhr(Method.GET, _addEntryUrl + '/' + accountID, { categoryID: categoryID }, function (html) {
                 _modalContent.html(html);
                 _modal.modal('show');
                 _hideLoader();

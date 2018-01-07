@@ -48,12 +48,14 @@ namespace money {
 
             let accountID = button.data('accountid');
             let accountName = button.data('accountname');
+            let categoryID = button.data('categoryid');
+            let categoryName = button.data('categoryname');
 
-            _modalTitle.html(accountName);
+            _modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));
 
             _showLoader();
 
-            _xhr(Method.GET, _addEntryUrl + '/' + accountID, {}, html => {
+            _xhr(Method.GET, _addEntryUrl + '/' + accountID, { categoryID: categoryID }, html => {
                 _modalContent.html(html);
                 _modal.modal('show');
                 _hideLoader();

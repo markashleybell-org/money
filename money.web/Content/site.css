@@ -22,32 +22,42 @@ body {
 }
 
 .row-budget {
-    margin-top: 20px;
+    margin-top: 5px;
+}
+
+.row-budget .btn-add-entry {
+    margin-top: 4px;
 }
 
 .account-balance {
     font-weight: bold;
-    margin-right: 15px;
 }
 
 .progress {
-    margin-bottom: 8px;
-}
-
-.progress:last-child {
+    position: relative;
     margin-bottom: 0;
 }
 
 .category-name {
     font-weight: bold;
+    font-size: 12px;
 }
 
 .category-spent {
-    padding-left: 20px;
+    position: absolute;
+    top: 0;
+    left: 5px;
+    font-size: 12px;
+    line-height: 20px;
 }
 
 .category-remaining {
     font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 12px;
+    line-height: 20px;
 }
 
 .btn-height {
