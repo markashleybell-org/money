@@ -10,9 +10,11 @@ var money;
     var _loadIndicatorSelector = '.load-indicator > img';
     var _loaderHideClass = 'load-indicator-hidden';
     var _addEntryUrl;
+    var _netWorthUrl;
     var _modal;
     var _modalTitle;
     var _modalContent;
+    var _netWorth;
     var _defaultAjaxErrorCallback = function (request, status, error) { return console.log('XHR ERROR: ' + error + ', STATUS: ' + status); };
     var _xhr = function (method, url, data, successCallback, errorCallback) {
         var options = {
@@ -25,11 +27,13 @@ var money;
     };
     var _showLoader = function () { return $(_loadIndicatorSelector).removeClass(_loaderHideClass); };
     var _hideLoader = function () { return $(_loadIndicatorSelector).addClass(_loaderHideClass); };
-    money.init = function (addEntryUrl) {
+    money.init = function (addEntryUrl, netWorthUrl) {
         _addEntryUrl = addEntryUrl;
+        _netWorthUrl = netWorthUrl;
         _modal = $('#add-entry-modal');
         _modalTitle = _modal.find('.modal-title');
         _modalContent = _modal.find('.modal-body');
+        _netWorth = $('#net-worth');
         $(document).on('click', '.btn-add-entry', function (e) {
             e.preventDefault();
             var button = $(e.currentTarget);
@@ -66,6 +70,7 @@ var money;
                 }
                 else {
                     response.updated.forEach(function (u) { return $('#account-' + u.id).html(u.html); });
+                    _netWorth.load(_netWorthUrl);
                     _modal.modal('hide');
                     setTimeout(function () { return $('.updated').removeClass('updated-show'); }, 1000);
                 }
@@ -84,9 +89,13 @@ var money;
             e.preventDefault();
             $('#Amount').val($(e.currentTarget).data('amount'));
         });
+        $(document).on('click', '.net-worth-expand', function (e) {
+            e.preventDefault();
+            $('.net-worth-balance-list').toggleClass('net-worth-balance-list-hidden');
+        });
     };
 })(money || (money = {}));
 $(function () {
-    money.init(_ADD_ENTRY_URL);
+    money.init(_ADD_ENTRY_URL, _NET_WORTH_URL);
 });
 //# sourceMappingURL=site.js.map

@@ -178,6 +178,7 @@
     <Compile Include="Models\Entries\ListEntriesEntryViewModel.cs" />
     <Compile Include="Models\Entries\ListEntriesViewModel.cs" />
     <Compile Include="Models\Entries\UpdateEntryViewModel.cs" />
+    <Compile Include="Models\Home\NetWorthViewModel.cs" />
     <Compile Include="Models\Home\CategoryViewModel.cs" />
     <Compile Include="Models\Home\AccountViewModel.cs" />
     <Compile Include="Models\Home\AddEntryViewModel.cs" />
@@ -345,6 +346,7 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Home\_Account.cshtml" />
+    <Content Include="Views\Home\_NetWorth.cshtml" />
     <None Include="Web.config.TEMPLATE" />
   </ItemGroup>
   <ItemGroup>

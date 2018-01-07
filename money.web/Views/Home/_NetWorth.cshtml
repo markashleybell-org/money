@@ -1,0 +1,31 @@
+﻿@model NetWorthViewModel
+
+@{
+    Layout = null;
+}
+
+<button class="btn btn-info btn-block text-center net-worth-expand">Net Worth: <span class="net-worth-total">@Model.NetWorth.ToString("0.00")</span></button>
+
+<div class="well net-worth net-worth-balance-list net-worth-balance-list-hidden">
+
+    @foreach (var accountGroup in Model.Accounts.GroupBy(a => a.IsIncludedInNetWorth))
+    {
+        if (!accountGroup.Key)
+        {
+            <h1 class="net-worth-header">Excluded</h1>
+        }
+
+        foreach (var account in accountGroup)
+        {
+            <div class="row row-budget">
+                <div class="col-xs-8">
+                    @account.Name
+                </div>
+                <div class="col-xs-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
+                    @account.CurrentBalance
+                </div>
+            </div>
+        }
+    }
+
+</div>

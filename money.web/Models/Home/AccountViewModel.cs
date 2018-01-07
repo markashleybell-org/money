@@ -9,6 +9,7 @@ namespace money.web.Models
         public string Name { get; set; }
         public AccountType Type { get; set; }
         public decimal CurrentBalance { get; set; }
+        public bool IsIncludedInNetWorth { get; set; }
 
         public IEnumerable<CategoryViewModel> Categories { get; set; }
 

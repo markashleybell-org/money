@@ -2,6 +2,7 @@
 /// <reference types="bootstrap-datepicker" />
 
 declare var _ADD_ENTRY_URL: string;
+declare var _NET_WORTH_URL: string;
 
 enum Method {
     GET,
@@ -13,9 +14,12 @@ namespace money {
     const _loaderHideClass = 'load-indicator-hidden';
 
     let _addEntryUrl: string;
+    let _netWorthUrl: string;
+
     let _modal: JQuery;
     let _modalTitle: JQuery;
     let _modalContent: JQuery;
+    let _netWorth: JQuery;
 
     let _defaultAjaxErrorCallback = (request: JQueryXHR, status: string, error: string): void => console.log('XHR ERROR: ' + error + ', STATUS: ' + status);
 
@@ -34,12 +38,14 @@ namespace money {
 
     let _hideLoader = () => $(_loadIndicatorSelector).addClass(_loaderHideClass);
 
-    export const init = (addEntryUrl: string): void => {
+    export const init = (addEntryUrl: string, netWorthUrl: string): void => {
         _addEntryUrl = addEntryUrl;
+        _netWorthUrl = netWorthUrl;
 
         _modal = $('#add-entry-modal');
         _modalTitle = _modal.find('.modal-title');
         _modalContent = _modal.find('.modal-body');
+        _netWorth = $('#net-worth');
         
         $(document).on('click', '.btn-add-entry', e => {
             e.preventDefault();
@@ -89,6 +95,7 @@ namespace money {
                     alert('Form Invalid');
                 } else {
                     response.updated.forEach((u: any) => $('#account-' + u.id).html(u.html));
+                    _netWorth.load(_netWorthUrl);
                     _modal.modal('hide');
                     setTimeout(() => $('.updated').removeClass('updated-show'), 1000);
                 }
@@ -103,18 +110,21 @@ namespace money {
 
         $(document).on('click', '.btn-date-preset', e => {
             e.preventDefault();
-
             $('#Date').val($(e.currentTarget).data('date'));
         });
 
         $(document).on('click', '.btn-amount-preset', e => {
             e.preventDefault();
-
             $('#Amount').val($(e.currentTarget).data('amount'));
+        });
+
+        $(document).on('click', '.net-worth-expand', e => {
+            e.preventDefault();
+            $('.net-worth-balance-list').toggleClass('net-worth-balance-list-hidden');
         });
     }
 }
 
 $(() => {
-    money.init(_ADD_ENTRY_URL);
+    money.init(_ADD_ENTRY_URL, _NET_WORTH_URL);
 });

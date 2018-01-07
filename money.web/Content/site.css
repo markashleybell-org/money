@@ -112,3 +112,35 @@ body {
     font-size: 18px;
     font-weight: bold;
 }
+
+#net-worth {
+    margin-top: 15px;
+}
+
+.net-worth-header {
+    font-size: 11px;
+    color: #969696;
+    text-transform: uppercase;
+    padding: 10px 0 2px 0;
+    font-weight: bold;
+}
+
+.well.net-worth {
+    padding: 10px 15px 15px 15px;
+}
+
+.net-worth-total {
+    font-weight: bold;
+}
+
+.net-worth-balance {
+    font-weight: bold;
+}
+
+.net-worth-balance-list {
+    margin-top: 12px;
+}
+
+.net-worth-balance-list-hidden {
+    display: none;
+}

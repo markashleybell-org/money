@@ -8,7 +8,7 @@ AS
 
     SET NOCOUNT ON 
 
-    DECLARE @Accounts TABLE (ID INT, Name NVARCHAR(64), Type INT, StartingBalance DECIMAL(18,2), CurrentBalance DECIMAL(18,2), LatestMonthlyBudgetID INT, BalanceAtStartOfMonthlyBudget DECIMAL(18,2))
+    DECLARE @Accounts TABLE (ID INT, Name NVARCHAR(64), Type INT, StartingBalance DECIMAL(18,2), CurrentBalance DECIMAL(18,2), IsIncludedInNetWorth BIT, LatestMonthlyBudgetID INT, BalanceAtStartOfMonthlyBudget DECIMAL(18,2))
     DECLARE @LatestMonthlyBudgets TABLE (ID INT, AccountID INT, StartDate DATETIME, EndDate DATETIME)
     DECLARE @Entries TABLE (ID INT, AccountID INT, MonthlyBudgetID INT, CategoryID INT, PartyID INT, Amount DECIMAL(18,2))
     DECLARE @BudgetCategories TABLE (ID INT, AccountID INT, Name NVARCHAR(64), Amount DECIMAL(18,2), Spent DECIMAL(18,2), DisplayOrder INT)
@@ -24,6 +24,7 @@ AS
         a.Type,
         a.StartingBalance,
         a.StartingBalance + ISNULL(SUM(e.Amount), 0),
+        a.IsIncludedInNetWorth,
         0,
         0
     FROM   
@@ -37,6 +38,7 @@ AS
         a.Name,
         a.Type,
         a.StartingBalance,
+        a.IsIncludedInNetWorth,
         a.DisplayOrder
     ORDER BY
         a.DisplayOrder

@@ -36,6 +36,10 @@ namespace money.web.Controllers
             return View(model);
         }
 
+        public ActionResult NetWorth() => View("_NetWorth", new NetWorthViewModel {
+            Accounts = _db.Query(conn => conn.QuerySP<AccountViewModel>("NetWorth", new { UserID = _userID }))
+        });
+
         public ActionResult AddEntry(int id, int? categoryID = null, bool showCategorySelector = true, decimal remaining = 0) => View(new AddEntryViewModel {
             AccountID = id,
             MonthlyBudgetID = GetLatestMonthlyBudget(id),

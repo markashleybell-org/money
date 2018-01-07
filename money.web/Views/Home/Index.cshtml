@@ -4,6 +4,10 @@
     ViewBag.Title = "Home Page";
 }
 
+<div id="net-worth">
+    @{ Html.RenderPartial("_NetWorth", new NetWorthViewModel { Accounts = Model.Accounts }); }
+</div>
+
 @foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type).OrderBy(a => a.Key))
 {
     <h1 class="account-type-heading">@typeGroup.Key.GetDisplayName()</h1>
