@@ -32,7 +32,7 @@ var money;
         _modalContent = _modal.find('.modal-body');
         $(document).on('click', '.btn-add-entry', function (e) {
             e.preventDefault();
-            var button = $(e.target);
+            var button = $(e.currentTarget);
             var accountID = button.data('accountid');
             var accountName = button.data('accountname');
             if (!accountID) {
@@ -52,7 +52,7 @@ var money;
         $(document).on('submit', '#add-entry-form', function (e) {
             e.preventDefault();
             _showLoader();
-            var form = $(e.target);
+            var form = $(e.currentTarget);
             _xhr(Method.POST, addEntryUrl, form.serialize(), function (response) {
                 _hideLoader();
                 if (!response.ok) {
@@ -65,13 +65,13 @@ var money;
             });
         });
         $(document).on('focus', '#Amount', function (e) {
-            var input = $(e.target);
+            var input = $(e.currentTarget);
             if (parseFloat(input.val()) == 0)
                 input.val('');
         });
         $(document).on('click', '.btn-date-preset', function (e) {
             e.preventDefault();
-            $('#Date').val($(e.target).data('date'));
+            $('#Date').val($(e.currentTarget).data('date'));
         });
     };
 })(money || (money = {}));

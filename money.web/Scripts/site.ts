@@ -44,7 +44,7 @@ namespace money {
         $(document).on('click', '.btn-add-entry', e => {
             e.preventDefault();
 
-            let button = $(e.target);
+            let button = $(e.currentTarget);
 
             let accountID = button.data('accountid');
             let accountName = button.data('accountname');
@@ -73,7 +73,7 @@ namespace money {
 
             _showLoader();
 
-            let form = $(e.target);
+            let form = $(e.currentTarget);
 
             _xhr(Method.POST, addEntryUrl, form.serialize(), response => {
                 _hideLoader();
@@ -88,7 +88,7 @@ namespace money {
         });
 
         $(document).on('focus', '#Amount', e => {
-            var input = $(e.target);
+            var input = $(e.currentTarget);
             if (parseFloat(input.val() as string) == 0)
                 input.val('');
         });
@@ -96,7 +96,7 @@ namespace money {
         $(document).on('click', '.btn-date-preset', e => {
             e.preventDefault();
 
-            $('#Date').val($(e.target).data('date'));
+            $('#Date').val($(e.currentTarget).data('date'));
         });
     }
 }
