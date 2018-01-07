@@ -41,8 +41,9 @@ body {
 .updated {
     -webkit-transition: opacity 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
     transition: opacity 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
-    color: #288600;
+    color: #ff6a00;
     opacity: 0;
+    text-align: right;
 }
 
 .updated-show {

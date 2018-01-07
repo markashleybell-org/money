@@ -39,8 +39,9 @@
 
 .updated {
     transition: opacity 3s cubic-bezier(0.910, 0.065, 0.950, 0.540);
-    color: #288600;
+    color: #ff6a00;
     opacity: 0;
+    text-align: right;
 }
 
 .updated-show {
