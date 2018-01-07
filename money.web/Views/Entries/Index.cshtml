@@ -12,14 +12,16 @@
                 <tr>
                     <th>Category/Party</th>
                     <th class="text-right">Amount</th>
-                    <th class="text-right">Edit</th>
+                    <th class="text-right"></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var group in Model.Entries)
                 {
                     <tr>
-                        <th colspan="3">@group.Key.ToString("dd/MM/yyyy")</th>
+                        <th>@group.Key.ToString("dd/MM/yyyy")</th>
+                        <th class="text-right">@*@group.Sum(g => g.Amount).ToString("0.00")*@</th>
+                        <th></th>
                     </tr>
 
                     foreach (var entry in group)
