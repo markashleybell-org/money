@@ -144,3 +144,9 @@ body {
 .net-worth-balance-list-hidden {
     display: none;
 }
+
+@media (min-width: 600px) {
+    .container {
+        width: 600px;
+    }
+}
