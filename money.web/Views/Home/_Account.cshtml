@@ -20,20 +20,16 @@
 {
     foreach (var category in Model.Categories)
     {
+        @*<span class="pull-right updated @(Model.UpdatedCategoryID == category.ID ? "updated-show" : "")">UPDATED</span>*@
+
         <div class="row row-budget">
+    
             <div class="col-xs-10">
-                <div class="row">
-                    <div class="col-xs-12 category-name">@category.Name <span class="pull-right updated @(Model.UpdatedCategoryID == category.ID ? "updated-show" : "")">UPDATED</span></div>
-                    <div class="col-xs-12">
-                        <div class="progress">
-                            <span class="category-spent">@Math.Abs(category.Spent).ToString("0.00") of @Math.Abs(category.Amount).ToString("0.00")</span>
-                            <span class="category-remaining">
-                                @Math.Abs(category.Remaining).ToString("0.00") @(category.Remaining <= 0 ? "left" : "over")
-                            </span>
-                            <div class="progress-bar progress-bar-@(category.Remaining <= 0 ? "success" : "danger")" role="progressbar" aria-valuenow="@category.PercentageSpent" aria-valuemin="0" aria-valuemax="100" style="width: @(category.PercentageSpent > 100 ? 100 : category.PercentageSpent)%">
-                                <span class="sr-only">@category.PercentageSpent%</span>
-                            </div>
-                        </div>
+                <div class="progress">
+                    <span class="category-name">@category.Name: @Math.Abs(category.Amount).ToString("0.00")</span>
+                    <span class="category-remaining">@category.Remaining.ToString("0.00")</span>
+                    <div class="progress-bar progress-bar-@(category.Remaining <= 0 ? "success" : "danger")" role="progressbar" aria-valuenow="@category.PercentageSpent" aria-valuemin="0" aria-valuemax="100" style="width: @(category.PercentageSpent > 100 ? 100 : category.PercentageSpent)%">
+                        <span class="sr-only">@category.PercentageSpent%</span>
                     </div>
                 </div>
             </div>

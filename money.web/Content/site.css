@@ -25,10 +25,6 @@ body {
     margin-top: 5px;
 }
 
-.row-budget .btn-add-entry {
-    margin-top: 4px;
-}
-
 .account-balance {
     font-weight: bold;
 }
@@ -36,6 +32,25 @@ body {
 .progress {
     position: relative;
     margin-bottom: 0;
+    height: 34px;
+}
+
+.progress span {
+    line-height: 34px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.category-name {
+    font-weight: bold;
+}
+
+.category-remaining {
+    font-weight: bold;
+    left: auto;
+    right: 0;
+    text-align: right;
 }
 
 .updated {
@@ -50,28 +65,6 @@ body {
     -webkit-transition: opacity 0s cubic-bezier(0.91, 0.065, 0.95, 0.54);
     transition: opacity 0s cubic-bezier(0.91, 0.065, 0.95, 0.54);
     opacity: 1;
-}
-
-.category-name {
-    font-weight: bold;
-    font-size: 12px;
-}
-
-.category-spent {
-    position: absolute;
-    top: 0;
-    left: 5px;
-    font-size: 12px;
-    line-height: 20px;
-}
-
-.category-remaining {
-    font-weight: bold;
-    position: absolute;
-    top: 0;
-    right: 5px;
-    font-size: 12px;
-    line-height: 20px;
 }
 
 .btn-height {
