@@ -72,7 +72,7 @@ var money;
                     response.updated.forEach(function (u) { return $('#account-' + u.id).html(u.html); });
                     _netWorth.load(_netWorthUrl);
                     _modal.modal('hide');
-                    setTimeout(function () { return $('.updated').removeClass('updated-show'); }, 1000);
+                    setTimeout(function () { return $('.progress-bar').removeClass('updated'); }, 1000);
                 }
             });
         });

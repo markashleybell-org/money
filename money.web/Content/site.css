@@ -25,6 +25,10 @@ body {
     margin-top: 5px;
 }
 
+.row-budget [class^="col-"]:first-child {
+    padding-right: 0;
+}
+
 .account-balance {
     font-weight: bold;
 }
@@ -39,7 +43,7 @@ body {
     line-height: 34px;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 15px;
 }
 
 .category-name {
@@ -49,22 +53,19 @@ body {
 .category-remaining {
     font-weight: bold;
     left: auto;
-    right: 0;
+    right: 15px;
     text-align: right;
+}
+
+.progress-bar {
+    -webkit-transition: background-color 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
+    transition: background-color 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
 }
 
 .updated {
-    -webkit-transition: opacity 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
-    transition: opacity 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
-    color: #ff6a00;
-    opacity: 0;
-    text-align: right;
-}
-
-.updated-show {
-    -webkit-transition: opacity 0s cubic-bezier(0.91, 0.065, 0.95, 0.54);
-    transition: opacity 0s cubic-bezier(0.91, 0.065, 0.95, 0.54);
-    opacity: 1;
+    -webkit-transition: background-color 0 cubic-bezier(0.91, 0.065, 0.95, 0.54);
+    transition: background-color 0 cubic-bezier(0.91, 0.065, 0.95, 0.54);
+    background-color: #ff6a00;
 }
 
 .btn-height {

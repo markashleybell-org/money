@@ -97,7 +97,7 @@ namespace money {
                     response.updated.forEach((u: any) => $('#account-' + u.id).html(u.html));
                     _netWorth.load(_netWorthUrl);
                     _modal.modal('hide');
-                    setTimeout(() => $('.updated').removeClass('updated-show'), 1000);
+                    setTimeout(() => $('.progress-bar').removeClass('updated'), 1000);
                 }
             });
         });

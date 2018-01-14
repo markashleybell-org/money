@@ -23,6 +23,10 @@
 
 .row-budget {
     margin-top: 5px;
+
+    [class^="col-"]:first-child {
+        padding-right: 0;
+    }
 }
 
 .account-balance {
@@ -38,7 +42,7 @@
         line-height: 34px;
         position: absolute;
         top: 0;
-        left: 0;
+        left: 15px;
     }
 }
 
@@ -49,20 +53,17 @@
 .category-remaining {
     font-weight: bold;
     left: auto;
-    right: 0;
+    right: 15px;
     text-align: right;
+}
+
+.progress-bar {
+    transition: background-color 3s cubic-bezier(0.910, 0.065, 0.950, 0.540);
 }
 
 .updated {
-    transition: opacity 3s cubic-bezier(0.910, 0.065, 0.950, 0.540);
-    color: #ff6a00;
-    opacity: 0;
-    text-align: right;
-}
-
-.updated-show {
-    transition: opacity 0s cubic-bezier(0.910, 0.065, 0.950, 0.540);
-    opacity: 1;
+    transition: background-color 0 cubic-bezier(0.910, 0.065, 0.950, 0.540);
+    background-color: #ff6a00;
 }
 
 .btn-height {
