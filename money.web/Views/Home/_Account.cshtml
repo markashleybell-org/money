@@ -2,6 +2,8 @@
 
 @{
     Layout = null;
+
+    var hasBudget = Model.Categories.Count() > 0;
 }
 
 <div class="row row-account">
@@ -12,11 +14,14 @@
         <span class="btn-height account-balance">@Model.CurrentBalance.ToString("0.00")</span>
     </div>
     <div class="col-xs-2 text-right">
+        @if (!hasBudget)
+        {
         <button data-accountid="@Model.ID" data-accountname="@Model.Name" class="btn btn-primary btn-add-entry"><i class="fa fa-plus"></i></button>
+        }
     </div>
 </div>
 
-@if (Model.Categories.Count() > 0)
+@if (hasBudget)
 {
     foreach (var category in Model.Categories)
     {
