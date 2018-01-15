@@ -29,8 +29,8 @@
     
             <div class="col-xs-10">
                 <div class="progress">
-                    <span class="category-name">@Math.Abs(category.Amount).ToString("0.00") @category.Name</span>
-                    <span class="category-remaining">@category.Remaining.ToString("0.00")</span>
+                    <span class="category-name">@category.Name</span>
+                    <span class="category-remaining">@((-category.Remaining).ToString("0.00"))</span>
                     <div class="progress-bar progress-bar-@(category.Remaining <= 0 ? "success" : "danger") @(Model.UpdatedCategoryID == category.ID ? "updated" : "")" role="progressbar" aria-valuenow="@category.PercentageSpent" aria-valuemin="0" aria-valuemax="100" style="width: @(category.PercentageSpent > 100 ? 100 : category.PercentageSpent)%">
                         <span class="sr-only">@category.PercentageSpent%</span>
                     </div>
