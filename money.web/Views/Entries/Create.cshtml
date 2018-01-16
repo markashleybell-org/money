@@ -1,31 +1,56 @@
 ﻿@model CreateEntryViewModel
 
 @{
-    ViewBag.Title = "Create Entry";
+    Layout = null;
 }
 
 <div class="row">
     <div class="col-md-12">
-        <h1>Create Entry</h1>
-        @using (Html.BeginForm())
-        {
-            @Html.LabelFor(x => x.AccountID)
-            @Html.DropDownListFor(x => x.AccountID, Model.Accounts)<br />
-            @Html.LabelFor(x => x.MonthlyBudgetID)
-            @Html.DropDownListFor(x => x.MonthlyBudgetID, Model.MonthlyBudgets)<br />
-            @Html.LabelFor(x => x.CategoryID)
-            @Html.DropDownListFor(x => x.CategoryID, Model.Categories, "--")<br />
-            @Html.LabelFor(x => x.PartyID)
-            @Html.DropDownListFor(x => x.PartyID, Model.Parties, "--")<br />
-            @Html.LabelFor(x => x.Date)
-            @Html.EditorFor(x => x.Date)<br />
+        @Html.HiddenFor(x => x.AccountID)
+        @Html.HiddenFor(x => x.MonthlyBudgetID)
+        <div class="form-group">
             @Html.LabelFor(x => x.Type)
-            @Html.EnumDropDownListFor(x => x.Type)<br />
+            @Html.DropDownListFor(x => x.Type, Model.Types, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
             @Html.LabelFor(x => x.Amount)
-            @Html.EditorFor(x => x.Amount)<br />
-            @Html.LabelFor(x => x.TransferAccountID)
-            @Html.DropDownListFor(x => x.TransferAccountID, Model.Accounts, "--")<br />
-            <input type="submit" value="Create" />
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="input-group">
+                        <div class="input-group-addon">&pound;</div>
+                        @Html.TextBoxFor(x => x.Amount, new { @class = "form-control", type = "number", step = "0.01", autocomplete = "off" })
+                    </div>
+                </div>
+                <div class="col-xs-7">
+                    <button class="btn btn-default btn-block btn-amount-preset" data-amount="@Model.Remaining.ToString("0.00")" @(Model.Remaining == 0 ? "disabled" : "")>All Remaining</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Date)
+            <div class="row">
+                <div class="col-xs-7">
+                    @Html.EditorFor(x => x.Date)
+                </div>
+                <div class="col-xs-5">
+                    <button class="btn btn-default btn-block btn-date-preset" data-date="@DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd")">Yesterday</button>
+                </div>
+            </div>
+        </div>
+        @if (Model.ShowCategorySelector)
+        {
+            <div class="form-group">
+                @Html.LabelFor(x => x.CategoryID)
+                @Html.DropDownListFor(x => x.CategoryID, Model.Categories, "--", new { @class = "form-control" })
+            </div>
         }
+        else
+        {
+            @Html.HiddenFor(x => x.CategoryID)
+        }
+        <div class="form-group">
+            @Html.LabelFor(x => x.PartyID)
+            @Html.DropDownListFor(x => x.PartyID, Model.Parties, "--", new { @class = "form-control" })
+        </div>
     </div>
 </div>

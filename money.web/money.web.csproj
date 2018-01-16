@@ -173,15 +173,14 @@
     <Compile Include="Models\Entities\Partials\Account.cs" />
     <Compile Include="Models\Entities\Party.cs" />
     <Compile Include="Models\Entities\User.cs" />
-    <Compile Include="Models\Entries\CreateEntryViewModel.cs" />
     <Compile Include="Models\Entries\EntryType.cs" />
     <Compile Include="Models\Entries\ListEntriesEntryViewModel.cs" />
     <Compile Include="Models\Entries\ListEntriesViewModel.cs" />
     <Compile Include="Models\Entries\UpdateEntryViewModel.cs" />
     <Compile Include="Models\Home\NetWorthViewModel.cs" />
     <Compile Include="Models\Home\CategoryViewModel.cs" />
-    <Compile Include="Models\Home\AccountViewModel.cs" />
-    <Compile Include="Models\Home\AddEntryViewModel.cs" />
+    <Compile Include="Models\Shared\AccountViewModel.cs" />
+    <Compile Include="Models\Entries\CreateEntryViewModel.cs" />
     <Compile Include="Models\Parties\CreatePartyViewModel.cs" />
     <Compile Include="Models\Parties\ListPartiesViewModel.cs" />
     <Compile Include="Models\Parties\UpdatePartyViewModel.cs" />
@@ -338,14 +337,13 @@
     <Content Include="Views\Parties\Create.cshtml" />
     <Content Include="Views\Parties\Index.cshtml" />
     <Content Include="Views\Parties\Update.cshtml" />
-    <Content Include="Views\Entries\Create.cshtml" />
     <Content Include="Views\Entries\Index.cshtml" />
     <Content Include="Views\Entries\Update.cshtml" />
     <Content Include="Scripts\tsconfig.json" />
-    <Content Include="Views\Home\AddEntry.cshtml" />
+    <Content Include="Views\Entries\Create.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
-    <Content Include="Views\Home\_Account.cshtml" />
+    <Content Include="Views\Shared\_Account.cshtml" />
     <Content Include="Views\Home\_NetWorth.cshtml" />
     <None Include="Web.config.TEMPLATE" />
   </ItemGroup>

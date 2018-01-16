@@ -65,6 +65,7 @@ namespace money {
             let categoryName = button.data('categoryname');
 
             let data = {
+                accountID: accountID,
                 categoryID: categoryID !== 0 ? categoryID : null,
                 showCategorySelector: categoryID === null,
                 remaining: button.attr('data-remaining') ? parseFloat(button.attr('data-remaining')) : 0
@@ -74,7 +75,7 @@ namespace money {
 
             _showLoader();
 
-            _xhr(Method.GET, _addEntryUrl + '/' + accountID, data, html => {
+            _xhr(Method.GET, _addEntryUrl, data, html => {
                 _modalContent.html(html);
                 _modal.modal('show');
                 _hideLoader();

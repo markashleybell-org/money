@@ -47,13 +47,14 @@ var money;
             var categoryID = button.attr('data-categoryid') ? parseInt(button.data('categoryid'), 10) : null;
             var categoryName = button.data('categoryname');
             var data = {
+                accountID: accountID,
                 categoryID: categoryID !== 0 ? categoryID : null,
                 showCategorySelector: categoryID === null,
                 remaining: button.attr('data-remaining') ? parseFloat(button.attr('data-remaining')) : 0
             };
             _modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));
             _showLoader();
-            _xhr(Method.GET, _addEntryUrl + '/' + accountID, data, function (html) {
+            _xhr(Method.GET, _addEntryUrl, data, function (html) {
                 _modalContent.html(html);
                 _modal.modal('show');
                 _hideLoader();
