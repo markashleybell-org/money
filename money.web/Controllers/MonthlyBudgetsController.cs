@@ -17,7 +17,7 @@ namespace money.web.Controllers
 
         public ActionResult Index(int id) => View(new ListMonthlyBudgetsViewModel {
             AccountID = id,
-            MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @ID", new { id }))
+            MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @ID ORDER BY StartDate DESC", new { id }))
         });
 
         public ActionResult Create(int id) => View(new CreateMonthlyBudgetViewModel {

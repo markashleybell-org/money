@@ -20,8 +20,8 @@
                 @foreach (var monthlyBudget in Model.MonthlyBudgets)
                 {
                     <tr>
-                        <td>@monthlyBudget.StartDate</td>
-                        <td>@monthlyBudget.EndDate</td>
+                        <td>@monthlyBudget.StartDate.ToString("dd/MM/yyyy")</td>
+                        <td>@monthlyBudget.EndDate.ToString("dd/MM/yyyy")</td>
                         <td class="text-center">@Html.ActionLink("Edit", "Update", new { id = monthlyBudget.ID })</td>
                         <td class="text-center">@Html.ActionLink("Copy", "Copy", new { id = monthlyBudget.ID })</td>
                     </tr>
