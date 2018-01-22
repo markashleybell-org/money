@@ -155,7 +155,8 @@ namespace money.web.Controllers
                 Date = dto.Date,
                 Amount = dto.Amount,
                 Note = dto.Note,
-                Accounts = AccountsSelectListItems()
+                Categories = CategoriesSelectListItems(dto.AccountID),
+                Parties = PartiesSelectListItems(dto.AccountID)
             });
         }
 
@@ -164,7 +165,9 @@ namespace money.web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model.Accounts = AccountsSelectListItems();
+                model.Categories = CategoriesSelectListItems(model.ID);
+                model.Parties = PartiesSelectListItems(model.ID);
+
                 return View(model);
             }
 

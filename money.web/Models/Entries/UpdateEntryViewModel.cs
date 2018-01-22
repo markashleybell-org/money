@@ -7,11 +7,13 @@ namespace money.web.Models
 {
     public class UpdateEntryViewModel
     {
-        [HiddenInput(DisplayValue = false)]
         public int ID { get; set; }
         public int AccountID { get; set; }
+        [Display(Name = "Monthly Budget")]
         public int? MonthlyBudgetID { get; set; }
+        [Display(Name = "Category")]
         public int? CategoryID { get; set; }
+        [Display(Name = "Party")]
         public int? PartyID { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -20,6 +22,7 @@ namespace money.web.Models
         [StringLength(64)]
         public string Note { get; set; }
 
-        public IEnumerable<SelectListItem> Accounts { get; set; }
+        public IEnumerable<SelectListItem> Categories { get; set; }
+        public IEnumerable<SelectListItem> Parties { get; set; }
     }
 }
