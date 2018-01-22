@@ -1,4 +1,5 @@
-﻿using money.web.Models.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using money.web.Models.Entities;
 
 namespace money.web.Models
 {
@@ -9,6 +10,7 @@ namespace money.web.Models
         public bool IsMainAccount { get; set; }
         public bool IncludeInNetWorth { get; set; }
         public int DisplayOrder { get; set; }
+        [Display(Name = "Starting balance")]
         public decimal StartingBalance { get; set; }
     }
 }
