@@ -1,6 +1,9 @@
 ﻿@model MonthlyBudgetCategoryViewModel
 
-@Model.Name
-@Html.EditorFor(x => x.CategoryID)
-@Html.EditorFor(x => x.Amount)
-<br />
+<div class="form-group">
+    <label for="@ViewData.TemplateInfo.GetFullHtmlFieldId("CategoryID")" class="col-sm-5 control-label">@Model.Name</label>
+    <div class="col-sm-4">
+        @Html.HiddenFor(x => x.CategoryID)
+        @Html.EditorFor(x => x.Amount)
+    </div>
+</div>

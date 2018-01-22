@@ -345,6 +345,7 @@
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\_Account.cshtml" />
     <Content Include="Views\Home\_NetWorth.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
     <None Include="Web.config.TEMPLATE" />
   </ItemGroup>
   <ItemGroup>
