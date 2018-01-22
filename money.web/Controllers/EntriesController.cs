@@ -195,7 +195,7 @@ namespace money.web.Controllers
 
             _unitOfWork.CommitChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { id = dto.AccountID });
         }
 
         private string RenderAccountHtml(int accountID, int? updatedCategoryID = null)
