@@ -7,7 +7,6 @@ namespace money.web.Models
 {
     public class CreateMonthlyBudgetViewModel
     {
-        [HiddenInput(DisplayValue = false)]
         public int AccountID { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Start budget on")]
