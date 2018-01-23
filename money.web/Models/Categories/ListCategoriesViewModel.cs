@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using money.web.Models.Entities;
 
 namespace money.web.Models
 {
     public class ListCategoriesViewModel
     {
-        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<IGrouping<string, ListCategoriesCategoryViewModel>> Categories { get; set; }
     }
 }

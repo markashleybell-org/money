@@ -12,9 +12,26 @@ namespace money.web.Controllers
     {
         public CategoriesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index() => View(new ListCategoriesViewModel {
-            Categories = _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories"))
-        });
+        public ActionResult Index()
+        {
+            var sql = @"SELECT 
+                            c.ID, 
+                            a.Name AS Account, 
+                            c.Name 
+                        FROM 
+                            Categories c 
+                        INNER JOIN 
+                            Accounts a ON a.ID = c.AccountID
+                        ORDER BY
+                            a.DisplayOrder,
+                            c.DisplayOrder";
+
+            var categories = _db.Query(conn => conn.Query<ListCategoriesCategoryViewModel>(sql));
+
+            return View(new ListCategoriesViewModel {
+                Categories = categories.GroupBy(c => c.Account)
+            });
+        }
 
         public ActionResult Create() => View(new CreateCategoryViewModel {
             Accounts = AccountsSelectListItems()

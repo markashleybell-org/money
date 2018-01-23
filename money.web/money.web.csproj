@@ -160,6 +160,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Categories\ListCategoriesCategoryViewModel.cs" />
     <Compile Include="Models\Entities\Account.cs" />
     <Compile Include="Models\Entities\AccountType.cs" />
     <Compile Include="Models\Entities\Category.cs" />
