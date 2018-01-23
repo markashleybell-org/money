@@ -3,12 +3,12 @@ IF OBJECT_ID('[dbo].[Dashboard]') IS NOT NULL DROP PROC [dbo].[Dashboard]
 GO
 
 CREATE PROC Dashboard 
-    @UserID int
+    @UserID INT
 AS
 
     SET NOCOUNT ON 
 
-    DECLARE @Accounts TABLE (ID INT, Name NVARCHAR(64), Type INT, StartingBalance DECIMAL(18,2), CurrentBalance DECIMAL(18,2), IsIncludedInNetWorth BIT, LatestMonthlyBudgetID INT, BalanceAtStartOfMonthlyBudget DECIMAL(18,2))
+    DECLARE @Accounts TABLE (ID INT, Name NVARCHAR(64), Type INT, StartingBalance DECIMAL(18,2), CurrentBalance DECIMAL(18,2), IsIncludedInNetWorth BIT, LatestMonthlyBudgetID INT DEFAULT 0, BalanceAtStartOfMonthlyBudget DECIMAL(18,2) DEFAULT 0)
     DECLARE @LatestMonthlyBudgets TABLE (ID INT, AccountID INT, StartDate DATETIME, EndDate DATETIME)
     DECLARE @Entries TABLE (ID INT, AccountID INT, MonthlyBudgetID INT, CategoryID INT, PartyID INT, Amount DECIMAL(18,2))
     DECLARE @BudgetCategories TABLE (ID INT, AccountID INT, Name NVARCHAR(64), Amount DECIMAL(18,2), Spent DECIMAL(18,2), DisplayOrder INT)
@@ -16,32 +16,7 @@ AS
     DECLARE @BudgetStartBalances TABLE (AccountID INT, Balance DECIMAL(18,2))
 
     -- Populate the accounts table for this user
-    INSERT INTO 
-        @Accounts
-    SELECT 
-        a.ID,
-        a.Name,
-        a.Type,
-        a.StartingBalance,
-        a.StartingBalance + ISNULL(SUM(e.Amount), 0),
-        a.IsIncludedInNetWorth,
-        0,
-        0
-    FROM   
-        Accounts a
-    LEFT JOIN
-        Entries e ON e.AccountID = a.ID
-    WHERE  
-        a.UserID = @UserID
-    GROUP BY
-        a.ID,
-        a.Name,
-        a.Type,
-        a.StartingBalance,
-        a.IsIncludedInNetWorth,
-        a.DisplayOrder
-    ORDER BY
-        a.DisplayOrder
+    INSERT INTO @Accounts (ID, Name, Type, StartingBalance, CurrentBalance, IsIncludedInNetWorth) EXEC AccountList @UserID
 
     -- Get the ID of the latest budget for each account (if one exists)
     -- Pattern demonstrated here: https://stackoverflow.com/a/8749095/43140
@@ -162,6 +137,7 @@ AS
     WHERE 
         Amount < 0
         
+    SELECT * FROM @Accounts WHERE CurrentBalance != 0
     SELECT * FROM @Accounts
     SELECT *, Amount - Spent AS Remaining FROM @BudgetCategories ORDER BY AccountID, DisplayOrder
 

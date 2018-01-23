@@ -5,7 +5,7 @@
 }
 
 <div id="net-worth">
-    @{ Html.RenderPartial("_NetWorth", new NetWorthViewModel { Accounts = Model.Accounts }); }
+    @{ Html.RenderPartial("_NetWorth", new NetWorthViewModel { Accounts = Model.NetWorthAccounts }); }
 </div>
 
 @foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type).OrderBy(a => a.Key))

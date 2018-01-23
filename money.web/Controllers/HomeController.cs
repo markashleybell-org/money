@@ -21,6 +21,7 @@ namespace money.web.Controllers
             var model = _db.Query(conn => {
                 using (var reader = conn.QueryMultipleSP("Dashboard", new { UserID = _userID }))
                 {
+                    var netWorthAccounts = reader.Read<AccountViewModel>();
                     var accounts = reader.Read<AccountViewModel>();
                     var categories = reader.Read<CategoryViewModel>();
 
@@ -28,6 +29,7 @@ namespace money.web.Controllers
                         account.Categories = categories.Where(c => c.AccountID == account.ID);
 
                     return new IndexViewModel {
+                        NetWorthAccounts = netWorthAccounts,
                         Accounts = accounts
                     };
                 }
