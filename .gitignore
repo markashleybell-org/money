@@ -310,6 +310,7 @@ money.web/Web.config
 # Don't ignore DB release folder
 !db/[Rr]elease/
 
-# Ignore migration data
+# Ignore generated schema and migration data
+db/schema/schema.sql
 db/migrate/migrate.sql
 db/migrate/*.bak
