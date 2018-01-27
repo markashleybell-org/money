@@ -180,6 +180,7 @@
     <Compile Include="Models\Entries\UpdateEntryViewModel.cs" />
     <Compile Include="Models\Home\NetWorthViewModel.cs" />
     <Compile Include="Models\Home\CategoryViewModel.cs" />
+    <Compile Include="Models\Parties\ListPartiesPartyViewModel.cs" />
     <Compile Include="Models\Shared\AccountViewModel.cs" />
     <Compile Include="Models\Entries\CreateEntryViewModel.cs" />
     <Compile Include="Models\Parties\CreatePartyViewModel.cs" />

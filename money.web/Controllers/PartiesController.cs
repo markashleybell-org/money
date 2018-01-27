@@ -12,9 +12,26 @@ namespace money.web.Controllers
     {
         public PartiesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
 
-        public ActionResult Index() => View(new ListPartiesViewModel {
-            Parties = _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties"))
-        });
+        public ActionResult Index()
+        {
+            var sql = @"SELECT 
+                            p.ID, 
+                            a.Name AS Account, 
+                            p.Name 
+                        FROM 
+                            Parties p 
+                        INNER JOIN 
+                            Accounts a ON a.ID = p.AccountID
+                        ORDER BY
+                            a.DisplayOrder,
+                            p.Name";
+
+            var parties = _db.Query(conn => conn.Query<ListPartiesPartyViewModel>(sql));
+
+            return View(new ListPartiesViewModel {
+                Parties = parties.GroupBy(p => p.Account)
+            });
+        }
 
         public ActionResult Create() => View(new CreatePartyViewModel {
             Accounts = AccountsSelectListItems()
@@ -45,9 +62,7 @@ namespace money.web.Controllers
 
             return View(new UpdatePartyViewModel {
                 ID = dto.ID,
-                AccountID = dto.AccountID,
-                Name = dto.Name,
-                Accounts = AccountsSelectListItems()
+                Name = dto.Name
             });
         }
 
@@ -55,10 +70,7 @@ namespace money.web.Controllers
         public ActionResult Update(UpdatePartyViewModel model)
         {
             if (!ModelState.IsValid)
-            {
-                model.Accounts = AccountsSelectListItems();
                 return View(model);
-            }
 
             var dto = _db.Get<Party>(model.ID);
 

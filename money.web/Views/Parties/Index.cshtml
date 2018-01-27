@@ -7,10 +7,30 @@
 <div class="row">
     <div class="col-md-12">
         <h1>Parties</h1>
-        @foreach(var party in Model.Parties)
-        {
-            <p>@party.Name @Html.ActionLink("Edit", "Update", new { id = party.ID })</p>
-        }
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th class="text-center">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var partyGroup in Model.Parties)
+                {
+                    <tr>
+                        <th colspan="2">@partyGroup.Key</th>
+                    </tr>
+
+                    foreach (var party in partyGroup)
+                    {
+                        <tr>
+                            <td>@party.Name</td>
+                            <td class="text-center">@Html.ActionLink("Edit", "Update", new { id = party.ID })</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
         @Html.ActionLink("New", "Create")
     </div>
 </div>
