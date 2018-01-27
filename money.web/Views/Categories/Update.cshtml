@@ -9,14 +9,19 @@
         <h1>Update Category</h1>
         @using (Html.BeginForm())
         {
-            @Html.EditorForModel()
-            <input type="submit" value="Update" />
+            <div class="form-group">
+                @Html.LabelFor(x => x.Name)
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            </div>
+
+            @Html.HiddenFor(x => x.ID)
+            <button type="submit" class="btn btn-primary">Update</button>
         }
 
         @using (Html.BeginForm("Delete", "Categories"))
         {
             @Html.HiddenFor(x => x.ID)
-            <input type="submit" value="Delete" />
+            <button type="submit" class="btn btn-danger">Delete</button>
         }
     </div>
 </div>

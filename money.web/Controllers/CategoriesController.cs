@@ -64,9 +64,7 @@ namespace money.web.Controllers
 
             return View(new UpdateCategoryViewModel {
                 ID = dto.ID,
-                AccountID = dto.AccountID,
-                Name = dto.Name,
-                Accounts = AccountsSelectListItems()
+                Name = dto.Name
             });
         }
 
@@ -74,10 +72,7 @@ namespace money.web.Controllers
         public ActionResult Update(UpdateCategoryViewModel model)
         {
             if (!ModelState.IsValid)
-            {
-                model.Accounts = AccountsSelectListItems();
                 return View(model);
-            }
 
             var dto = _db.Get<Category>(model.ID);
 
