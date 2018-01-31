@@ -64,10 +64,13 @@ namespace money {
             let categoryID = button.attr('data-categoryid') ? parseInt(button.data('categoryid'), 10) : null;
             let categoryName = button.data('categoryname');
 
+            let isCredit = button.attr('data-iscredit') ? button.data('iscredit') as boolean : null;
+
             let data = {
                 accountID: accountID,
                 categoryID: categoryID !== 0 ? categoryID : null,
-                showCategorySelector: categoryID === null,
+                isCredit: isCredit,
+                showCategorySelector: false,
                 remaining: button.attr('data-remaining') ? parseFloat(button.attr('data-remaining')) : 0
             };
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,6 +7,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using money.web.Models.Entities;
 using static money.common.Globals;
 
 namespace money.web.Support
@@ -20,6 +22,28 @@ namespace money.web.Support
 
         public static string Url<T>(Expression<Func<T, ActionResult>> action) where T : ControllerBase =>
             new UrlHelper(HttpContext.Current.Request.RequestContext).RouteUrl(GetRouteValuesFor(action));
+
+        public static IEnumerable<SelectListItem> TypesSelectListItems(EntryType entryTypes, Func<IEnumerable<Account>> accountList)
+        {
+            var types = Enum.GetNames(typeof(EntryType)).Where(n => n != EntryType.Transfer.ToString())
+                    .Select(n => new SelectListItem { Value = n, Text = n }).ToList();
+
+            if (entryTypes.HasFlag(EntryType.Transfer))
+            {
+                var accounts = accountList()
+                   .Select(a => new SelectListItem { Value = $"Transfer-{a.ID}", Text = $"Transfer to {a.Name}" });
+
+                types.AddRange(accounts);
+            }
+
+            if (!entryTypes.HasFlag(EntryType.Debit))
+                types.RemoveAll(t => t.Value == EntryType.Debit.ToString());
+
+            if (!entryTypes.HasFlag(EntryType.Credit))
+                types.RemoveAll(t => t.Value == EntryType.Credit.ToString());
+
+            return types;
+        }
 
         private static RouteValueDictionary GetRouteValuesFor<T>(Expression<Func<T, ActionResult>> action) where T : ControllerBase
         {

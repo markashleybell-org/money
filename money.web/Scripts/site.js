@@ -46,10 +46,12 @@ var money;
             // uncategorised categories are returned with an ID of 0 by the stored procedure
             var categoryID = button.attr('data-categoryid') ? parseInt(button.data('categoryid'), 10) : null;
             var categoryName = button.data('categoryname');
+            var isCredit = button.attr('data-iscredit') ? button.data('iscredit') : null;
             var data = {
                 accountID: accountID,
                 categoryID: categoryID !== 0 ? categoryID : null,
-                showCategorySelector: categoryID === null,
+                isCredit: isCredit,
+                showCategorySelector: false,
                 remaining: button.attr('data-remaining') ? parseFloat(button.attr('data-remaining')) : 0
             };
             _modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));

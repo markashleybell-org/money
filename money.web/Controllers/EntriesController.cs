@@ -14,7 +14,12 @@ namespace money.web.Controllers
 {
     public class EntriesController : ControllerBase
     {
-        public EntriesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
+        private Func<int, Func<IEnumerable<Account>>> _accountList = null;
+
+        public EntriesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+            : base(unitOfWork, db, context) =>
+            _accountList = accountID => () =>
+                _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts WHERE ID != @AccountID ORDER BY DisplayOrder", new { accountID }));
 
         public ActionResult Index(int id)
         {
@@ -46,23 +51,50 @@ namespace money.web.Controllers
             });
         }
 
-        public ActionResult Create(int accountID, int? categoryID = null, bool showCategorySelector = true, decimal remaining = 0) => View(new CreateEntryViewModel {
-            AccountID = accountID,
-            CategoryID = categoryID,
-            Types = TypesSelectListItems(accountID),
-            MonthlyBudgets = MonthlyBudgetsSelectListItems(accountID),
-            Categories = CategoriesSelectListItems(accountID),
-            Parties = PartiesSelectListItems(accountID),
-            ShowCategorySelector = showCategorySelector,
-            Remaining = remaining
-        });
+        public ActionResult Create(int accountID, int? categoryID = null, bool? isCredit = null, bool showCategorySelector = true, decimal remaining = 0)
+        {
+            var types = EntryType.Debit | EntryType.Credit | EntryType.Transfer;
+
+            if (isCredit.HasValue)
+            {
+                if (isCredit.Value == true)
+                    types = EntryType.Credit;
+                else
+                    types = EntryType.Debit | EntryType.Transfer;
+            }
+
+            var typeSelectListItems = TypesSelectListItems(types, _accountList(accountID));
+
+            return View(new CreateEntryViewModel {
+                AccountID = accountID,
+                CategoryID = categoryID,
+                Types = typeSelectListItems,
+                Type = typeSelectListItems.Count() == 1 ? typeSelectListItems.Single().Value : null,
+                MonthlyBudgets = MonthlyBudgetsSelectListItems(accountID),
+                Categories = CategoriesSelectListItems(accountID),
+                Parties = PartiesSelectListItems(accountID),
+                IsCredit = isCredit,
+                ShowCategorySelector = showCategorySelector,
+                Remaining = remaining
+            });
+        }
 
         [HttpPost]
         public ActionResult Create(CreateEntryViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Types = TypesSelectListItems(model.AccountID);
+                var types = EntryType.Debit | EntryType.Credit | EntryType.Transfer;
+
+                if (model.IsCredit.HasValue)
+                {
+                    if (model.IsCredit.Value == true)
+                        types = EntryType.Credit;
+                    else
+                        types = EntryType.Debit | EntryType.Transfer;
+                }
+
+                model.Types = TypesSelectListItems(types, _accountList(model.AccountID));
                 model.MonthlyBudgets = MonthlyBudgetsSelectListItems(model.AccountID);
                 model.Categories = CategoriesSelectListItems(model.AccountID);
                 model.Parties = PartiesSelectListItems(model.AccountID);
@@ -233,17 +265,6 @@ namespace money.web.Controllers
         {
             var sql = "SELECT TOP 1 ID FROM MonthlyBudgets WHERE AccountID = @AccountID AND GETDATE() <= EndDate ORDER BY EndDate, ID";
             return _db.Query(conn => conn.QuerySingleOrDefault<int?>(sql, new { accountID }));
-        }
-
-        private IEnumerable<SelectListItem> TypesSelectListItems(int accountID)
-        {
-            var accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts WHERE ID != @AccountID ORDER BY DisplayOrder", new { accountID }))
-               .Select(a => new SelectListItem { Value = $"Transfer-{a.ID}", Text = $"Transfer to {a.Name}" });
-
-            var types = Enum.GetNames(typeof(EntryType)).Where(n => n != EntryType.Transfer.ToString())
-                .Select(n => new SelectListItem { Value = n, Text = n }).Concat(accounts);
-
-            return types;
         }
 
         private IEnumerable<SelectListItem> AccountsSelectListItems() =>

@@ -27,6 +27,7 @@ namespace money.web.Models
         public IEnumerable<SelectListItem> Parties { get; set; }
         public IEnumerable<SelectListItem> MonthlyBudgets { get; set; }
 
+        public bool? IsCredit { get; set; }
         public bool ShowCategorySelector { get; set; }
         public decimal Remaining { get; set; }
     }
