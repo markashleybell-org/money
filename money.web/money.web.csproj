@@ -174,7 +174,7 @@
     <Compile Include="Models\Entities\Partials\Account.cs" />
     <Compile Include="Models\Entities\Party.cs" />
     <Compile Include="Models\Entities\User.cs" />
-    <Compile Include="Models\Entries\EntryType.cs" />
+    <Compile Include="Models\Entities\EntryType.cs" />
     <Compile Include="Models\Entries\ListEntriesEntryViewModel.cs" />
     <Compile Include="Models\Entries\ListEntriesViewModel.cs" />
     <Compile Include="Models\Entries\UpdateEntryViewModel.cs" />
