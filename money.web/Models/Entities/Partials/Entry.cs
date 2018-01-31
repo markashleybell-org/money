@@ -57,7 +57,6 @@ namespace money.web.Models.Entities
     public static class EntryExtensions
     {
         public static Entry WithUpdates(this Entry entry,
-            int? monthlyBudgetID,
             int? categoryID,
             int? partyID,
             DateTime date,
@@ -65,7 +64,7 @@ namespace money.web.Models.Entities
             string note) => new Entry(
                 id: entry.ID,
                 accountID: entry.AccountID,
-                monthlyBudgetID: monthlyBudgetID,
+                monthlyBudgetID: entry.MonthlyBudgetID,
                 categoryID: categoryID,
                 partyID: partyID,
                 date: date,

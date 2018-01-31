@@ -48,7 +48,6 @@ namespace money.web.Controllers
 
         public ActionResult Create(int accountID, int? categoryID = null, bool showCategorySelector = true, decimal remaining = 0) => View(new CreateEntryViewModel {
             AccountID = accountID,
-            MonthlyBudgetID = GetLatestMonthlyBudget(accountID),
             CategoryID = categoryID,
             Types = TypesSelectListItems(accountID),
             MonthlyBudgets = MonthlyBudgetsSelectListItems(accountID),
@@ -75,6 +74,8 @@ namespace money.web.Controllers
 
             var amount = Math.Abs(model.Amount);
 
+            var monthlyBudgetID = GetLatestMonthlyBudget(model.AccountID);
+
             if (!Enum.TryParse<EntryType>(model.Type, out var entryType))
                 entryType = EntryType.Transfer;
 
@@ -98,7 +99,7 @@ namespace money.web.Controllers
 
                 _db.InsertOrUpdate(new Entry(
                     accountID: model.AccountID,
-                    monthlyBudgetID: model.MonthlyBudgetID,
+                    monthlyBudgetID: monthlyBudgetID,
                     categoryID: model.CategoryID,
                     date: model.Date,
                     amount: -amount,
@@ -124,7 +125,7 @@ namespace money.web.Controllers
 
                 _db.InsertOrUpdate(new Entry(
                     accountID: model.AccountID,
-                    monthlyBudgetID: model.MonthlyBudgetID,
+                    monthlyBudgetID: monthlyBudgetID,
                     categoryID: model.CategoryID,
                     partyID: model.PartyID,
                     date: model.Date,
@@ -149,7 +150,6 @@ namespace money.web.Controllers
             return View(new UpdateEntryViewModel {
                 ID = dto.ID,
                 AccountID = dto.AccountID,
-                MonthlyBudgetID = dto.MonthlyBudgetID,
                 CategoryID = dto.CategoryID,
                 PartyID = dto.PartyID,
                 Date = dto.Date,
@@ -174,7 +174,6 @@ namespace money.web.Controllers
             var dto = _db.Get<Entry>(model.ID);
 
             var updated = dto.WithUpdates(
-                monthlyBudgetID: model.MonthlyBudgetID,
                 categoryID: model.CategoryID,
                 partyID: model.PartyID,
                 date: model.Date,

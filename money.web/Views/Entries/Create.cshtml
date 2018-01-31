@@ -7,7 +7,6 @@
 <div class="row">
     <div class="col-md-12">
         @Html.HiddenFor(x => x.AccountID)
-        @Html.HiddenFor(x => x.MonthlyBudgetID)
         <div class="form-group">
             @Html.LabelFor(x => x.Type)
             @Html.DropDownListFor(x => x.Type, Model.Types, new { @class = "form-control" })

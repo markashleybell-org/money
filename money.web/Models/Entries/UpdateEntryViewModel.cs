@@ -9,8 +9,6 @@ namespace money.web.Models
     {
         public int ID { get; set; }
         public int AccountID { get; set; }
-        [Display(Name = "Monthly Budget")]
-        public int? MonthlyBudgetID { get; set; }
         [Display(Name = "Category")]
         public int? CategoryID { get; set; }
         [Display(Name = "Party")]
