@@ -149,7 +149,6 @@ namespace money.web.Controllers
 
             return View(new UpdateEntryViewModel {
                 ID = dto.ID,
-                AccountID = dto.AccountID,
                 CategoryID = dto.CategoryID,
                 PartyID = dto.PartyID,
                 Date = dto.Date,

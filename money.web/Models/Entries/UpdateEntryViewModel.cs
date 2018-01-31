@@ -8,7 +8,6 @@ namespace money.web.Models
     public class UpdateEntryViewModel
     {
         public int ID { get; set; }
-        public int AccountID { get; set; }
         [Display(Name = "Category")]
         public int? CategoryID { get; set; }
         [Display(Name = "Party")]
