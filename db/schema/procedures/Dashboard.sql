@@ -8,7 +8,7 @@ AS
 
     SET NOCOUNT ON 
 
-    DECLARE @Accounts TABLE (ID INT, Name NVARCHAR(64), Type INT, StartingBalance DECIMAL(18,2), CurrentBalance DECIMAL(18,2), IsIncludedInNetWorth BIT, LatestMonthlyBudgetID INT DEFAULT 0, BalanceAtStartOfMonthlyBudget DECIMAL(18,2) DEFAULT 0)
+    DECLARE @Accounts TABLE (ID INT, Name NVARCHAR(64), Type INT, StartingBalance DECIMAL(18,2), CurrentBalance DECIMAL(18,2), IsIncludedInNetWorth BIT, IsDormant BIT, LatestMonthlyBudgetID INT DEFAULT 0, BalanceAtStartOfMonthlyBudget DECIMAL(18,2) DEFAULT 0)
     DECLARE @LatestMonthlyBudgets TABLE (ID INT, AccountID INT, StartDate DATETIME, EndDate DATETIME)
     DECLARE @Entries TABLE (ID INT, AccountID INT, MonthlyBudgetID INT, CategoryID INT, PartyID INT, Amount DECIMAL(18,2))
     DECLARE @BudgetCategories TABLE (ID INT, AccountID INT, Name NVARCHAR(64), Amount DECIMAL(18,2), Spent DECIMAL(18,2), DisplayOrder INT)
@@ -16,7 +16,7 @@ AS
     DECLARE @BudgetStartBalances TABLE (AccountID INT, Balance DECIMAL(18,2))
 
     -- Populate the accounts table for this user
-    INSERT INTO @Accounts (ID, Name, Type, StartingBalance, CurrentBalance, IsIncludedInNetWorth) EXEC AccountList @UserID
+    INSERT INTO @Accounts (ID, Name, Type, StartingBalance, CurrentBalance, IsIncludedInNetWorth, IsDormant) EXEC AccountList @UserID
 
     -- Get the ID of the latest budget for each account (if one exists)
     -- Pattern demonstrated here: https://stackoverflow.com/a/8749095/43140

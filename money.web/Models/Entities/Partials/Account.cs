@@ -8,6 +8,7 @@
             decimal startingBalance,
             bool isMainAccount,
             bool isIncludedInNetWorth,
+            bool isDormant,
             int displayOrder)
         {
             UserID = userID;
@@ -16,6 +17,7 @@
             StartingBalance = startingBalance;
             IsMainAccount = isMainAccount;
             IsIncludedInNetWorth = isIncludedInNetWorth;
+            IsDormant = isDormant;
             DisplayOrder = displayOrder;
         }
     }
@@ -26,7 +28,8 @@
             string name,
             AccountType type,
             decimal startingBalance,
-            bool isIncludedInNetWorth) => new Account(
+            bool isIncludedInNetWorth,
+            bool isDormant) => new Account(
                 account.ID,
                 account.UserID,
                 name,
@@ -34,6 +37,7 @@
                 startingBalance,
                 account.IsMainAccount,
                 isIncludedInNetWorth,
+                isDormant,
                 account.DisplayOrder
             );
     }

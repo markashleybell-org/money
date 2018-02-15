@@ -26,10 +26,11 @@ namespace money.web.Controllers
                 userID: _userID,
                 name: model.Name,
                 type: model.Type.Value,
+                startingBalance: model.StartingBalance,
                 isMainAccount: model.IsMainAccount,
                 isIncludedInNetWorth: model.IncludeInNetWorth,
-                displayOrder: model.DisplayOrder,
-                startingBalance: model.StartingBalance
+                isDormant: false,
+                displayOrder: model.DisplayOrder
             );
 
             _db.InsertOrUpdate(account);
@@ -47,8 +48,9 @@ namespace money.web.Controllers
                 ID = dto.ID,
                 Name = dto.Name,
                 Type = dto.Type,
+                StartingBalance = dto.StartingBalance,
                 IncludeInNetWorth = dto.IsIncludedInNetWorth,
-                StartingBalance = dto.StartingBalance
+                IsDormant = dto.IsDormant
             });
         }
 
@@ -64,6 +66,7 @@ namespace money.web.Controllers
                 name: model.Name,
                 type: model.Type,
                 isIncludedInNetWorth: model.IncludeInNetWorth,
+                isDormant: model.IsDormant,
                 startingBalance: model.StartingBalance
             );
 

@@ -26,6 +26,11 @@
                     @Html.CheckBoxFor(x => x.IncludeInNetWorth) Include balance in net worth
                 </label>
             </div>
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(x => x.IsDormant) Account is dormant
+                </label>
+            </div>
 
             <button type="submit" class="btn btn-primary">Update</button>
         }

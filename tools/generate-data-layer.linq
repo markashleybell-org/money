@@ -40,6 +40,7 @@ let accounts = {
                             NotNull("StartingBalance", MONEY, NONE)
                             NotNull("IsMainAccount", BIT, NONE)
                             NotNull("IsIncludedInNetWorth", BIT, NONE)
+                            NotNull("IsDormant", BIT, NONE)
                             NotNull("DisplayOrder", INT, NONE)] 
     constraintSpecifications = [PrimaryKey(["ID"])
                                 ForeignKey("UserID", "Users", "ID")]

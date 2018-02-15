@@ -14,7 +14,8 @@ AS
         a.Type,
         a.StartingBalance,
         a.StartingBalance + ISNULL(SUM(e.Amount), 0) AS CurrentBalance,
-        a.IsIncludedInNetWorth
+        a.IsIncludedInNetWorth,
+        a.IsDormant
     FROM   
         Accounts a
     LEFT JOIN
@@ -27,6 +28,7 @@ AS
         a.Type,
         a.StartingBalance,
         a.IsIncludedInNetWorth,
+        a.IsDormant,
         a.DisplayOrder
     ORDER BY
         a.DisplayOrder

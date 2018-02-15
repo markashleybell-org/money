@@ -107,6 +107,10 @@ body {
     font-weight: bold;
 }
 
+.dormant {
+    background-color: #f3f9ff !important;
+}
+
 #net-worth {
     margin-top: 15px;
 }

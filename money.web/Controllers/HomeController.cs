@@ -30,7 +30,7 @@ namespace money.web.Controllers
 
                     return new IndexViewModel {
                         NetWorthAccounts = netWorthAccounts,
-                        Accounts = accounts
+                        Accounts = accounts.Where(a => !a.IsDormant)
                     };
                 }
             });

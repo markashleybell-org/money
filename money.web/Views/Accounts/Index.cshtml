@@ -12,6 +12,7 @@
                 <tr>
                     <th>Name</th>
                     <th class="text-center">Net Worth</th>
+                    <th class="text-center">Dormant</th>
                     <th class="text-center">Edit</th>
                     <th class="text-center">Budgets</th>
                 </tr>
@@ -25,9 +26,10 @@
 
                     foreach (var account in typeGroup)
                     {
-                        <tr>
+                        <tr class="@(account.IsDormant ? "dormant text-muted" : "")">
                             <td>@account.Name</td>
                             <td class="text-center">@(account.IsIncludedInNetWorth ? "Yes" : "No")</td>
+                            <td class="text-center">@(account.IsDormant ? "Yes" : "No")</td>
                             <td class="text-center">@Html.ActionLink("Edit", "Update", new { id = account.ID })</td>
                             <td class="text-center">@Html.ActionLink("View", "Index", "MonthlyBudgets", new { id = account.ID }, null)</td>
                         </tr>
