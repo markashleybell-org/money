@@ -14,7 +14,7 @@
         <span class="btn-height account-balance">@Model.CurrentBalance.ToString("0.00")</span>
     </div>
     <div class="col-xs-2 text-right">
-        <button data-accountid="@Model.ID" data-accountname="@Model.Name" @Html.Raw(hasBudget ? "data-iscredit=\"true\"" : "") class="btn btn-primary btn-add-entry"><i class="fa fa-plus"></i></button>
+        <button data-accountid="@Model.ID" data-accountname="@Model.Name" @Html.Raw(hasBudget ? "data-iscredit=\"true\"" : "") data-remaining="@Model.CurrentBalance" class="btn btn-primary btn-add-entry"><i class="fa fa-plus"></i></button>
     </div>
 </div>
 
