@@ -21,7 +21,7 @@
                 @foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type).OrderBy(a => a.Key))
                 {
                     <tr>
-                        <th colspan="4">@typeGroup.Key.GetDisplayName()</th>
+                        <th colspan="5">@typeGroup.Key.GetDisplayName()</th>
                     </tr>
 
                     foreach (var account in typeGroup)
