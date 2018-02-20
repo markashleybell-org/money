@@ -14,10 +14,11 @@ AS
         Type INT, 
         StartingBalance DECIMAL(18,2),
         CurrentBalance DECIMAL(18,2),
-        IsIncludedInNetWorth BIT
+        IsIncludedInNetWorth BIT,
+        IsDormant BIT
     )
 
-    INSERT INTO @Accounts (ID, Name, Type, StartingBalance, CurrentBalance, IsIncludedInNetWorth) EXEC AccountList @UserID
+    INSERT INTO @Accounts (ID, Name, Type, StartingBalance, CurrentBalance, IsIncludedInNetWorth, IsDormant) EXEC AccountList @UserID
 
     SELECT * FROM @Accounts WHERE CurrentBalance != 0
 GO
