@@ -39,6 +39,10 @@ namespace money {
     let _hideLoader = () => $(_loadIndicatorSelector).addClass(_loaderHideClass);
 
     export const init = (addEntryUrl: string, netWorthUrl: string): void => {
+        $.ajaxSetup({
+            cache: false
+        });
+
         _addEntryUrl = addEntryUrl;
         _netWorthUrl = netWorthUrl;
 

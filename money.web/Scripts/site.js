@@ -28,6 +28,9 @@ var money;
     var _showLoader = function () { return $(_loadIndicatorSelector).removeClass(_loaderHideClass); };
     var _hideLoader = function () { return $(_loadIndicatorSelector).addClass(_loaderHideClass); };
     money.init = function (addEntryUrl, netWorthUrl) {
+        $.ajaxSetup({
+            cache: false
+        });
         _addEntryUrl = addEntryUrl;
         _netWorthUrl = netWorthUrl;
         _modal = $('#add-entry-modal');
