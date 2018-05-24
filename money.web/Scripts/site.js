@@ -7,36 +7,36 @@ var Method;
 })(Method || (Method = {}));
 var money;
 (function (money) {
-    var _loadIndicatorSelector = '.load-indicator > img';
-    var _loaderHideClass = 'load-indicator-hidden';
-    var _addEntryUrl;
-    var _netWorthUrl;
-    var _modal;
-    var _modalTitle;
-    var _modalContent;
-    var _netWorth;
-    var _defaultAjaxErrorCallback = function (request, status, error) { return console.log('XHR ERROR: ' + error + ', STATUS: ' + status); };
-    var _xhr = function (method, url, data, successCallback, errorCallback) {
+    var loadIndicatorSelector = '.load-indicator > img';
+    var loaderHideClass = 'load-indicator-hidden';
+    var modal;
+    var modalTitle;
+    var modalContent;
+    var netWorth;
+    var defaultAjaxErrorCallback = function (request, status, error) {
+        return alert('XHR ERROR: ' + error + ', STATUS: ' + status);
+    };
+    var xhr = function (method, url, data, successCallback, errorCallback) {
         var options = {
             type: Method[method],
             url: url,
             data: data,
             cache: false
         };
-        $.ajax(options).done(successCallback).fail(errorCallback || _defaultAjaxErrorCallback);
+        $.ajax(options).done(successCallback).fail(errorCallback || defaultAjaxErrorCallback);
     };
-    var _showLoader = function () { return $(_loadIndicatorSelector).removeClass(_loaderHideClass); };
-    var _hideLoader = function () { return $(_loadIndicatorSelector).addClass(_loaderHideClass); };
+    var showLoader = function () { return $(loadIndicatorSelector).removeClass(loaderHideClass); };
+    var hideLoader = function () { return $(loadIndicatorSelector).addClass(loaderHideClass); };
     money.init = function (addEntryUrl, netWorthUrl) {
         $.ajaxSetup({
             cache: false
         });
-        _addEntryUrl = addEntryUrl;
-        _netWorthUrl = netWorthUrl;
-        _modal = $('#add-entry-modal');
-        _modalTitle = _modal.find('.modal-title');
-        _modalContent = _modal.find('.modal-body');
-        _netWorth = $('#net-worth');
+        addEntryUrl = addEntryUrl;
+        netWorthUrl = netWorthUrl;
+        modal = $('#add-entry-modal');
+        modalTitle = modal.find('.modal-title');
+        modalContent = modal.find('.modal-body');
+        netWorth = $('#net-worth');
         $(document).on('click', '.btn-add-entry', function (e) {
             e.preventDefault();
             var button = $(e.currentTarget);
@@ -57,35 +57,36 @@ var money;
                 showCategorySelector: false,
                 remaining: button.attr('data-remaining') ? parseFloat(button.attr('data-remaining')) : 0
             };
-            _modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));
-            _showLoader();
-            _xhr(Method.GET, _addEntryUrl, data, function (html) {
-                _modalContent.html(html);
-                _modal.modal('show');
-                _hideLoader();
+            modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));
+            showLoader();
+            xhr(Method.GET, addEntryUrl, data, function (html) {
+                modalContent.html(html);
+                modal.modal('show');
+                hideLoader();
             });
         });
         $(document).on('submit', '#add-entry-form', function (e) {
             e.preventDefault();
-            _showLoader();
+            showLoader();
             var form = $(e.currentTarget);
-            _xhr(Method.POST, addEntryUrl, form.serialize(), function (response) {
-                _hideLoader();
+            xhr(Method.POST, addEntryUrl, form.serialize(), function (response) {
+                hideLoader();
                 if (!response.ok) {
                     alert('Form Invalid');
                 }
                 else {
                     response.updated.forEach(function (u) { return $('#account-' + u.id).html(u.html); });
-                    _netWorth.load(_netWorthUrl);
-                    _modal.modal('hide');
+                    netWorth.load(netWorthUrl);
+                    modal.modal('hide');
                     setTimeout(function () { return $('.progress-bar').removeClass('updated'); }, 1000);
                 }
             });
         });
         $(document).on('focus', '#Amount', function (e) {
             var input = $(e.currentTarget);
-            if (parseFloat(input.val()) == 0)
+            if (parseFloat(input.val()) === 0) {
                 input.val('');
+            }
         });
         $(document).on('click', '.btn-date-preset', function (e) {
             e.preventDefault();
@@ -98,6 +99,6 @@ var money;
     };
 })(money || (money = {}));
 $(function () {
-    money.init(_ADD_ENTRY_URL, _NET_WORTH_URL);
+    money.init(ADD_ENTRY_URL, NET_WORTH_URL);
 });
 //# sourceMappingURL=site.js.map
