@@ -95,10 +95,6 @@ var money;
             e.preventDefault();
             $('#Amount').val($(e.currentTarget).data('amount'));
         });
-        $(document).on('click', '.net-worth-expand', function (e) {
-            e.preventDefault();
-            $('.net-worth-balance-list').toggleClass('net-worth-balance-list-hidden');
-        });
     };
 })(money || (money = {}));
 $(function () {

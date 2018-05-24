@@ -4,9 +4,11 @@
     Layout = null;
 }
 
-<button class="btn btn-info btn-block text-center net-worth-expand">Net Worth: <span class="net-worth-total">@Model.NetWorth.ToString("0.00")</span></button>
+<h1 class="account-type-heading">Net Worth: <span class="text-right net-worth-balance @(Model.NetWorth == 0 ? "text-muted" : Model.NetWorth < 0 ? "text-danger" : "text-success")">@Model.NetWorth.ToString("0.00")</span></h1>
 
-<div class="well net-worth net-worth-balance-list net-worth-balance-list-hidden">
+<hr />
+
+<div class="well net-worth net-worth-balance-list">
 
     @foreach (var accountGroup in Model.Accounts.GroupBy(a => a.IsIncludedInNetWorth))
     {

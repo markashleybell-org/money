@@ -11,8 +11,12 @@ body {
 
 .row-account {
     margin-top: 10px;
-    padding-top: 10px;
-    border-top: solid 1px #e0e0e0;
+    padding-top: 0;
+}
+
+.row-account hr {
+    margin-top: 0;
+    margin-bottom: 10px;
 }
 
 .row-account h1 {
@@ -27,6 +31,10 @@ body {
 
 .row-budget [class^="col-"]:first-child {
     padding-right: 0;
+}
+
+.row-budget-lg {
+    font-size: 2em;
 }
 
 .account-balance {
@@ -113,6 +121,10 @@ body {
 
 #net-worth {
     margin-top: 15px;
+}
+
+#net-worth hr {
+    margin-top: 0;
 }
 
 .net-worth-header {

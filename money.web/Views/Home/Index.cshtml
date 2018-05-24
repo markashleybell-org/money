@@ -14,7 +14,7 @@
 
     foreach (var account in typeGroup)
     {
-        <div id="account-@account.ID">
+        <div id="account-@account.ID" class="account">
             @{ Html.RenderPartial("_Account", account); }
         </div>
     }
