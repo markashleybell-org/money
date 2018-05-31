@@ -43,8 +43,13 @@ namespace money.web.Controllers
 
         public ActionResult NetWorth()
         {
+            var parameters = new {
+                UserID = _userID,
+                NonZeroBalanceOnly = true
+            };
+
             var model = new NetWorthViewModel {
-                Accounts = _db.Query(conn => conn.QuerySP<AccountViewModel>("NetWorth", new { UserID = _userID }))
+                Accounts = _db.Query(conn => conn.QuerySP<AccountViewModel>("AccountList", parameters))
             };
 
             return View("_NetWorth", model);

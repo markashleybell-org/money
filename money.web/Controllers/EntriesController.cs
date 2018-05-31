@@ -246,8 +246,13 @@ namespace money.web.Controllers
 
         private string RenderAccountHtml(int accountID, int? updatedCategoryID = null)
         {
+            var parameters = new {
+                UserID = _userID,
+                AccountID = accountID
+            };
+
             var model = _db.Query(conn => {
-                using (var reader = conn.QueryMultipleSP("Account", new { AccountID = accountID }))
+                using (var reader = conn.QueryMultipleSP("DashboardAccount", parameters))
                 {
                     var account = reader.ReadSingle<AccountViewModel>();
                     var categories = reader.Read<CategoryViewModel>();
