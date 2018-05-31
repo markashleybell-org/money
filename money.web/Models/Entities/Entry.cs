@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using d = Dapper.Contrib.Extensions;
 
@@ -22,14 +22,22 @@ namespace money.web.Models.Entities
 
         [d.Key]
         public int ID { get; private set; }
+
         public int AccountID { get; private set; }
+
         public int? MonthlyBudgetID { get; private set; }
+
         public int? CategoryID { get; private set; }
+
         public int? PartyID { get; private set; }
+
         public DateTime Date { get; private set; }
+
         public decimal Amount { get; private set; }
+
         [StringLength(64)]
         public string Note { get; private set; }
+
         public Guid? TransferGUID { get; private set; }
     }
 }

@@ -5,9 +5,10 @@ using money.web.Abstract;
 
 namespace money.web.Concrete
 {
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public sealed class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private string _connectionString;
+        private readonly string _connectionString;
+
         private IDbConnection _connection;
         private IDbTransaction _transaction;
 
@@ -22,7 +23,9 @@ namespace money.web.Concrete
             }
 
             if (_transaction == null)
+            {
                 _transaction = _connection.BeginTransaction();
+            }
 
             return _transaction;
         }
@@ -35,10 +38,10 @@ namespace money.web.Concrete
                 {
                     _transaction.Commit();
                 }
-                catch (Exception ex)
+                catch
                 {
                     _transaction.Rollback();
-                    throw ex;
+                    throw;
                 }
                 finally
                 {

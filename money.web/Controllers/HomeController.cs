@@ -14,7 +14,8 @@ namespace money.web.Controllers
 {
     public class HomeController : ControllerBase
     {
-        public HomeController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
+        public HomeController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+            : base(unitOfWork, db, context) { }
 
         public ActionResult Index()
         {
@@ -26,7 +27,9 @@ namespace money.web.Controllers
                     var categories = reader.Read<CategoryViewModel>();
 
                     foreach (var account in accounts)
+                    {
                         account.Categories = categories.Where(c => c.AccountID == account.ID);
+                    }
 
                     return new IndexViewModel {
                         NetWorthAccounts = netWorthAccounts,
@@ -38,8 +41,13 @@ namespace money.web.Controllers
             return View(model);
         }
 
-        public ActionResult NetWorth() => View("_NetWorth", new NetWorthViewModel {
-            Accounts = _db.Query(conn => conn.QuerySP<AccountViewModel>("NetWorth", new { UserID = _userID }))
-        });
+        public ActionResult NetWorth()
+        {
+            var model = new NetWorthViewModel {
+                Accounts = _db.Query(conn => conn.QuerySP<AccountViewModel>("NetWorth", new { UserID = _userID }))
+            };
+
+            return View("_NetWorth", model);
+        }
     }
 }

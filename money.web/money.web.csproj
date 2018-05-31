@@ -38,6 +38,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
+    <CodeAnalysisRuleSet>..\MAB.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -164,11 +166,16 @@
     <Compile Include="Models\Entities\Category_MonthlyBudget.cs" />
     <Compile Include="Models\Entities\Entry.cs" />
     <Compile Include="Models\Entities\MonthlyBudget.cs" />
+    <Compile Include="Models\Entities\Partials\Account.cs" />
+    <Compile Include="Models\Entities\Partials\AccountExtensions.cs" />
+    <Compile Include="Models\Entities\Partials\CategoryExtensions.cs" />
+    <Compile Include="Models\Entities\Partials\EntryExtensions.cs" />
     <Compile Include="Models\Entities\Partials\MonthlyBudget.cs" />
+    <Compile Include="Models\Entities\Partials\MonthlyBudgetExtensions.cs" />
     <Compile Include="Models\Entities\Partials\Party.cs" />
     <Compile Include="Models\Entities\Partials\Entry.cs" />
     <Compile Include="Models\Entities\Partials\Category.cs" />
-    <Compile Include="Models\Entities\Partials\Account.cs" />
+    <Compile Include="Models\Entities\Partials\PartyExtensions.cs" />
     <Compile Include="Models\Entities\Party.cs" />
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\EntryType.cs" />
@@ -372,6 +379,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -8,10 +8,12 @@ namespace money.web.Models
     public class CreateMonthlyBudgetViewModel
     {
         public int AccountID { get; set; }
+
         [DataType(DataType.Date)]
         [Display(Name = "Start budget on")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
+
         [DataType(DataType.Date)]
         [Display(Name = "End budget on")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

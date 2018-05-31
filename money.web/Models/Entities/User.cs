@@ -15,8 +15,10 @@ namespace money.web.Models.Entities
 
         [d.Key]
         public int ID { get; private set; }
+
         [StringLength(256)]
         public string Email { get; private set; }
+
         [StringLength(2048)]
         public string Password { get; private set; }
     }

@@ -21,14 +21,22 @@ namespace money.web.Models.Entities
 
         [d.Key]
         public int ID { get; private set; }
+
         public int UserID { get; private set; }
+
         [StringLength(64)]
         public string Name { get; private set; }
+
         public AccountType Type { get; private set; }
+
         public decimal StartingBalance { get; private set; }
+
         public bool IsMainAccount { get; private set; }
+
         public bool IsIncludedInNetWorth { get; private set; }
+
         public bool IsDormant { get; private set; }
+
         public int DisplayOrder { get; private set; }
     }
 }

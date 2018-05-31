@@ -14,14 +14,30 @@ namespace money.web.Support
 {
     public static class Extensions
     {
-        public static string GetDisplayName(this Enum enumValue) => 
+        private static Func<Expression, object> _convertExpression => (Expression e) => {
+            if (e is ConstantExpression)
+            {
+                return (e as ConstantExpression).Value;
+            }
+
+            if (e is MemberExpression)
+            {
+                return (e as MemberExpression).GetValue();
+            }
+
+            return null;
+        };
+
+        public static string GetDisplayName(this Enum enumValue) =>
             enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>().Name;
 
-        public static ActionResult RedirectTo<T>(Expression<Func<T, ActionResult>> action) where T : ControllerBase =>
-            new RedirectToRouteResult(GetRouteValuesFor(action));
+        public static ActionResult RedirectTo<T>(Expression<Func<T, ActionResult>> action)
+            where T : ControllerBase =>
+                new RedirectToRouteResult(GetRouteValuesFor(action));
 
-        public static string Url<T>(Expression<Func<T, ActionResult>> action) where T : ControllerBase =>
-            new UrlHelper(HttpContext.Current.Request.RequestContext).RouteUrl(GetRouteValuesFor(action));
+        public static string Url<T>(Expression<Func<T, ActionResult>> action)
+            where T : ControllerBase =>
+                new UrlHelper(HttpContext.Current.Request.RequestContext).RouteUrl(GetRouteValuesFor(action));
 
         public static IEnumerable<SelectListItem> TypesSelectListItems(EntryType entryTypes, Func<IEnumerable<Account>> accountList)
         {
@@ -37,22 +53,29 @@ namespace money.web.Support
             }
 
             if (!entryTypes.HasFlag(EntryType.Debit))
+            {
                 types.RemoveAll(t => t.Value == EntryType.Debit.ToString());
+            }
 
             if (!entryTypes.HasFlag(EntryType.Credit))
+            {
                 types.RemoveAll(t => t.Value == EntryType.Credit.ToString());
+            }
 
             return types;
         }
 
-        private static RouteValueDictionary GetRouteValuesFor<T>(Expression<Func<T, ActionResult>> action) where T : ControllerBase
+        private static RouteValueDictionary GetRouteValuesFor<T>(Expression<Func<T, ActionResult>> action)
+            where T : ControllerBase
         {
             var methodCallExpression = action.Body as MethodCallExpression;
 
             if (methodCallExpression == null || methodCallExpression.Method.ReturnType != typeof(ActionResult))
+            {
                 throw new ArgumentException("Redirect action must be a method call which returns an ActionResult", nameof(action));
+            }
 
-            var controllerName = methodCallExpression.Object.Type.Name.Replace(CONTROLLER_SUFFIX, "");
+            var controllerName = methodCallExpression.Object.Type.Name.Replace(CONTROLLER_SUFFIX, string.Empty);
             var methodName = methodCallExpression.Method.Name;
 
             var parameters = methodCallExpression.Method.GetParameters().Select(p => p.Name).ToArray();
@@ -79,15 +102,5 @@ namespace money.web.Support
 
             return getter();
         }
-
-        private static Func<Expression, object> _convertExpression = (Expression e) => {
-            if (e is ConstantExpression)
-                return (e as ConstantExpression).Value;
-
-            if (e is MemberExpression)
-                return (e as MemberExpression).GetValue();
-
-            return null;
-        };
     }
 }

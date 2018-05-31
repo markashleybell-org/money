@@ -16,8 +16,11 @@ namespace money.web.Models.Entities
 
         [d.Key]
         public int ID { get; private set; }
+
         public int AccountID { get; private set; }
+
         public DateTime StartDate { get; private set; }
+
         public DateTime EndDate { get; private set; }
     }
 }

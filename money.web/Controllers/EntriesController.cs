@@ -58,9 +58,13 @@ namespace money.web.Controllers
             if (isCredit.HasValue)
             {
                 if (isCredit.Value == true)
+                {
                     types = EntryType.Credit;
+                }
                 else
+                {
                     types = EntryType.Debit | EntryType.Transfer;
+                }
             }
 
             var typeSelectListItems = TypesSelectListItems(types, _accountList(accountID));
@@ -89,9 +93,13 @@ namespace money.web.Controllers
                 if (model.IsCredit.HasValue)
                 {
                     if (model.IsCredit.Value == true)
+                    {
                         types = EntryType.Credit;
+                    }
                     else
+                    {
                         types = EntryType.Debit | EntryType.Transfer;
+                    }
                 }
 
                 model.Types = TypesSelectListItems(types, _accountList(model.AccountID));
@@ -109,12 +117,16 @@ namespace money.web.Controllers
             var monthlyBudgetID = GetLatestMonthlyBudget(model.AccountID);
 
             if (!Enum.TryParse<EntryType>(model.Type, out var entryType))
+            {
                 entryType = EntryType.Transfer;
+            }
 
             if (entryType == EntryType.Transfer)
             {
                 if (!int.TryParse(model.Type.Split('-')[1], out var destinationAccountID))
+                {
                     return Json(new { ok = false, msg = "Invalid destination account ID" });
+                }
 
                 var parameters = new { ids = new[] { model.AccountID, destinationAccountID } };
 
@@ -128,7 +140,6 @@ namespace money.web.Controllers
 
                 // For transfers, we set up separate entries for source and destination accounts
                 // Note that we ignore the credit/debit selection here (a transfer is always a debit)
-
                 _db.InsertOrUpdate(new Entry(
                     accountID: model.AccountID,
                     monthlyBudgetID: monthlyBudgetID,
@@ -153,7 +164,9 @@ namespace money.web.Controllers
             else
             {
                 if (entryType == EntryType.Debit)
+                {
                     amount = -amount;
+                }
 
                 _db.InsertOrUpdate(new Entry(
                     accountID: model.AccountID,
@@ -170,7 +183,7 @@ namespace money.web.Controllers
 
             _unitOfWork.CommitChanges();
 
-            var updated = ids.Select((id, i) => new { id, html = RenderAccountHtml(id, (i == 0 && !model.CategoryID.HasValue ? 0 : model.CategoryID)) });
+            var updated = ids.Select((id, i) => new { id, html = RenderAccountHtml(id, i == 0 && !model.CategoryID.HasValue ? 0 : model.CategoryID) });
 
             return Json(new { ok = true, updated });
         }

@@ -10,7 +10,8 @@ namespace money.web.Controllers
 {
     public class CategoriesController : ControllerBase
     {
-        public CategoriesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
+        public CategoriesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+            : base(unitOfWork, db, context) { }
 
         public ActionResult Index()
         {
@@ -72,7 +73,9 @@ namespace money.web.Controllers
         public ActionResult Update(UpdateCategoryViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
 
             var dto = _db.Get<Category>(model.ID);
 

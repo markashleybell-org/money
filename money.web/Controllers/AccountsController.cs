@@ -8,7 +8,8 @@ namespace money.web.Controllers
 {
     public class AccountsController : ControllerBase
     {
-        public AccountsController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
+        public AccountsController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+            : base(unitOfWork, db, context) { }
 
         public ActionResult Index() => View(new ListAccountsViewModel {
             Accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
@@ -20,7 +21,9 @@ namespace money.web.Controllers
         public ActionResult Create(CreateAccountViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
 
             var account = new Account(
                 userID: _userID,
@@ -58,7 +61,9 @@ namespace money.web.Controllers
         public ActionResult Update(UpdateAccountViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
 
             var dto = _db.Get<Account>(model.ID);
 

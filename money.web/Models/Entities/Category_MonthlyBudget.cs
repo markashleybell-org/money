@@ -14,8 +14,10 @@ namespace money.web.Models.Entities
 
         [d.ExplicitKey]
         public int MonthlyBudgetID { get; private set; }
+
         [d.ExplicitKey]
         public int CategoryID { get; private set; }
+
         public decimal Amount { get; private set; }
     }
 }

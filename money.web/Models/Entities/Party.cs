@@ -15,7 +15,9 @@ namespace money.web.Models.Entities
 
         [d.Key]
         public int ID { get; private set; }
+
         public int AccountID { get; private set; }
+
         [StringLength(64)]
         public string Name { get; private set; }
     }

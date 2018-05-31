@@ -10,7 +10,8 @@ namespace money.web.Controllers
 {
     public class UsersController : ControllerBase
     {
-        public UsersController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
+        public UsersController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+            : base(unitOfWork, db, context) { }
 
         [OverrideAuthorization]
         public ActionResult Login() => View();
@@ -20,18 +21,24 @@ namespace money.web.Controllers
         public ActionResult Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
 
             var user = _db.Query(conn => conn.QuerySingleOrDefault<User>("SELECT * FROM Users WHERE Email = @Email", new { model.Email }));
 
             if (user == null)
+            {
                 return View(model);
+            }
 
             var hasher = new PasswordHasher();
             var verificationResult = hasher.VerifyHashedPassword(user.Password, model.Password);
 
             if (verificationResult != PasswordVerificationResult.Success)
+            {
                 return View(model);
+            }
 
             _context.SetSessionItem(Globals.USER_SESSION_VARIABLE_NAME, user.ID);
 

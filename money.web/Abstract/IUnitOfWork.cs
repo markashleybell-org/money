@@ -5,6 +5,7 @@ namespace money.web.Abstract
     public interface IUnitOfWork
     {
         IDbTransaction GetTransaction();
+
         void CommitChanges();
     }
 }

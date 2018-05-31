@@ -12,6 +12,7 @@ using Ninject.Web.Mvc.FilterBindingSyntax;
 
 namespace money.web
 {
+#pragma warning disable SA1649 // File name must match first type name.
     public class MvcApplication : NinjectHttpApplication
     {
         protected override void OnApplicationStarted()

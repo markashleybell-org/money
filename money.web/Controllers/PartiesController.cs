@@ -10,7 +10,8 @@ namespace money.web.Controllers
 {
     public class PartiesController : ControllerBase
     {
-        public PartiesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
+        public PartiesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+            : base(unitOfWork, db, context) { }
 
         public ActionResult Index()
         {
@@ -70,7 +71,9 @@ namespace money.web.Controllers
         public ActionResult Update(UpdatePartyViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
 
             var dto = _db.Get<Party>(model.ID);
 

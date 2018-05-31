@@ -8,6 +8,7 @@ namespace money.web.Models
     {
         [Display(Name = "Account")]
         public int AccountID { get; set; }
+
         public string Name { get; set; }
 
         public IEnumerable<SelectListItem> Accounts { get; set; }

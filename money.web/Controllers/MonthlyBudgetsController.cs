@@ -13,7 +13,8 @@ namespace money.web.Controllers
 {
     public class MonthlyBudgetsController : ControllerBase
     {
-        public MonthlyBudgetsController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context) : base(unitOfWork, db, context) { }
+        public MonthlyBudgetsController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+            : base(unitOfWork, db, context) { }
 
         public ActionResult Index(int id) => View(new ListMonthlyBudgetsViewModel {
             AccountID = id,
@@ -49,7 +50,9 @@ namespace money.web.Controllers
             ));
 
             foreach (var category in categories)
+            {
                 _db.Execute((conn, tran) => conn.Insert(category, tran));
+            }
 
             _unitOfWork.CommitChanges();
 
@@ -96,7 +99,9 @@ namespace money.web.Controllers
             ));
 
             foreach (var category in categories)
+            {
                 _db.Execute((conn, tran) => conn.Insert(category, tran));
+            }
 
             _unitOfWork.CommitChanges();
 
@@ -123,19 +128,25 @@ namespace money.web.Controllers
 
             // Start the day after the old budget finished
             var startDate = dto.EndDate.AddDays(1);
+
             // End on the last day of the same month
             var endDate = startDate.LastDayOfMonth();
+
             // If the budget started just before the end of a month,
             // skip the end date to the end of the *next* month
             if ((endDate - startDate).Days < 28)
+            {
                 endDate = endDate.LastDayOfNextMonth();
+            }
 
-            return View(nameof(Create), new CreateMonthlyBudgetViewModel {
+            var model = new CreateMonthlyBudgetViewModel {
                 AccountID = dto.AccountID,
                 StartDate = startDate,
                 EndDate = endDate,
                 Categories = Categories(accountID: dto.AccountID, monthlyBudgetID: dto.ID)
-            });
+            };
+
+            return View(nameof(Create), model);
         }
 
         private IEnumerable<MonthlyBudgetCategoryViewModel> Categories(int accountID, int monthlyBudgetID = 0)
