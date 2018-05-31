@@ -52,7 +52,7 @@ AS
         @LatestMonthlyBudgets b ON b.AccountID = a.ID
     LEFT JOIN    
         -- Note: we don't join onto @Entries because that only includes entries within the current budget
-        Entries e ON e.AccountID = a.ID AND e.Date <= b.StartDate 
+        Entries e ON e.AccountID = a.ID AND e.Date <= b.StartDate AND e.MonthlyBudgetID != b.ID
     GROUP BY
         a.ID,
         a.StartingBalance
