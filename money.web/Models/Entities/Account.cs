@@ -6,7 +6,16 @@ namespace money.web.Models.Entities
     [d.Table("Accounts")]
     public partial class Account : Abstract.IEntity
     {
-        public Account(int id, int userID, string name, AccountType type, decimal startingBalance, bool isMainAccount, bool isIncludedInNetWorth, bool isDormant, int displayOrder)
+        public Account(
+            int id,
+            int userID,
+            string name,
+            AccountType type,
+            decimal startingBalance,
+            bool isMainAccount,
+            bool isIncludedInNetWorth,
+            bool isDormant,
+            int displayOrder)
         {
             ID = id;
             UserID = userID;

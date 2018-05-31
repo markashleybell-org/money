@@ -7,7 +7,16 @@ namespace money.web.Models.Entities
     [d.Table("Entries")]
     public partial class Entry : Abstract.IEntity
     {
-        public Entry(int id, int accountID, int? monthlyBudgetID, int? categoryID, int? partyID, DateTime date, decimal amount, string note, Guid? transferGuid)
+        public Entry(
+            int id,
+            int accountID,
+            int? monthlyBudgetID,
+            int? categoryID,
+            int? partyID,
+            DateTime date,
+            decimal amount,
+            string note,
+            Guid? transferGuid)
         {
             ID = id;
             AccountID = accountID;

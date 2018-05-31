@@ -6,7 +6,10 @@ namespace money.web.Models.Entities
     [d.Table("Users")]
     public partial class User : Abstract.IEntity
     {
-        public User(int id, string email, string password)
+        public User(
+            int id,
+            string email,
+            string password)
         {
             ID = id;
             Email = email;

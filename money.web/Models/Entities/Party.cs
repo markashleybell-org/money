@@ -6,7 +6,10 @@ namespace money.web.Models.Entities
     [d.Table("Parties")]
     public partial class Party : Abstract.IEntity
     {
-        public Party(int id, int accountID, string name)
+        public Party(
+            int id,
+            int accountID,
+            string name)
         {
             ID = id;
             AccountID = accountID;

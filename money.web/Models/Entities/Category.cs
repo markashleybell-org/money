@@ -6,7 +6,11 @@ namespace money.web.Models.Entities
     [d.Table("Categories")]
     public partial class Category : Abstract.IEntity
     {
-        public Category(int id, int accountID, string name, int displayOrder)
+        public Category(
+            int id,
+            int accountID,
+            string name,
+            int displayOrder)
         {
             ID = id;
             AccountID = accountID;

@@ -6,7 +6,11 @@ namespace money.web.Models.Entities
     [d.Table("MonthlyBudgets")]
     public partial class MonthlyBudget : Abstract.IEntity
     {
-        public MonthlyBudget(int id, int accountID, DateTime startDate, DateTime endDate)
+        public MonthlyBudget(
+            int id,
+            int accountID,
+            DateTime startDate,
+            DateTime endDate)
         {
             ID = id;
             AccountID = accountID;
