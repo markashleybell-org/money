@@ -197,10 +197,10 @@ let schemaSql = sprintf "%s%s%s%s%s%s%s%s%s%s%s"
                     (sprintf "%s%s%s" procedureSql br "PRINT 'Procedures Created'") br 
 
 // Write the schema file
-File.WriteAllText(@"..\db\schema\schema.sql", schemaSql)
+File.WriteAllText(@"..\db\schema\schema.sql", schemaSql, Encoding.UTF8)
 
 let writeFile (name, code) = 
-    File.WriteAllText(@"..\money.web\Models\Entities\" + name + ".cs", code)
+    File.WriteAllText(@"..\money.web\Models\Entities\" + name + ".cs", code, Encoding.UTF8)
 
 dtoClasses 
 |> List.map writeFile 
