@@ -16,11 +16,15 @@ namespace money.web.Concrete
 
         public void SetCookie(string name, string value, DateTime? expires = null)
         {
-            _context.Response.Cookies[name].Value = value;
+            var cookie = _context.Response.Cookies[name];
+
+            cookie.HttpOnly = true;
+            cookie.Secure = true;
+            cookie.Value = value;
 
             if (expires.HasValue)
             {
-                _context.Response.Cookies[name].Expires = expires.Value;
+                cookie.Expires = expires.Value;
             }
         }
 
