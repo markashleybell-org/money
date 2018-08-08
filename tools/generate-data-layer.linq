@@ -27,6 +27,26 @@ let users = {
     setters = PrivateSetter
 }
 
+let persistentsessions = {
+    sqlStatementType = CREATE
+    tableName = "PersistentSessions"
+    dtoClassName = "PersistentSession"
+    dtoNamespace = dtoNamespace
+    dtoBaseClassName = None
+    columnSpecifications = [NotNull("UserID", INT, NONE)
+                            NotNull("SeriesIdentifier", CHR(256), NONE)
+                            NotNull("Token", CHR(256), NONE)
+                            NotNull("Created", DATE, NONE)
+                            NotNull("Expires", DATE, NONE)] 
+    constraintSpecifications = [ForeignKey("UserID", "Users", "ID")]
+    indexSpecifications = []
+    addDapperAttributes = true
+    partial = true
+    generateConstructor = true
+    baseConstructorParameters = false
+    setters = PrivateSetter
+}
+
 let accounts = {
     sqlStatementType = CREATE
     tableName = "Accounts"
@@ -163,6 +183,7 @@ let categories_monthlybudgets = {
 // Add any new table definitions to this list
 let tables = [
     users
+    persistentsessions
     accounts
     categories
     parties

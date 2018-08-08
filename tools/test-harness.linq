@@ -5,23 +5,22 @@
   <Namespace>Ext = money.web.Support.Extensions</Namespace>
   <Namespace>money.common</Namespace>
   <Namespace>money.web.Models.Entities</Namespace>
+  <Namespace>money.web.Concrete</Namespace>
 </Query>
 
 void Main()
 {
-    IEnumerable<Account> accountList() => new List<Account> {  
-        new Account(100, 1, "Current", AccountType.Current, 100.00M, true, true, 100),
-        new Account(200, 1, "Savings", AccountType.Savings, 500.00M, false, true, 200)
-    };
+    var connectionString = "Server=localhost;Database=money;Trusted_Connection=yes";
     
-    Ext.TypesSelectListItems(EntryType.Credit, accountList).Dump();
-    Ext.TypesSelectListItems(EntryType.Debit, accountList).Dump();
-    Ext.TypesSelectListItems(EntryType.Transfer, accountList).Dump();
+    var uow = new UnitOfWork(connectionString);
     
-    Ext.TypesSelectListItems(EntryType.Credit | EntryType.Debit, accountList).Dump();
-    Ext.TypesSelectListItems(EntryType.Credit | EntryType.Transfer, accountList).Dump();
-    Ext.TypesSelectListItems(EntryType.Debit | EntryType.Transfer, accountList).Dump();
+    var db = new QueryHelper(uow, connectionString);
     
-    Ext.TypesSelectListItems(EntryType.Credit | EntryType.Debit | EntryType.Transfer, accountList).Dump();
+    var plm = new PersistentSessionManager(db);
+    
+    // plm.CreatePersistentLoginSession(1);
+    
+    plm.DestroyPersistentLoginSession(1, "8291050770084597166");
+    
+    uow.CommitChanges();
 }
-

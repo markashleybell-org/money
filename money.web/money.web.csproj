@@ -143,10 +143,12 @@
   <ItemGroup>
     <Compile Include="Abstract\IEntity.cs" />
     <Compile Include="Abstract\IQueryHelper.cs" />
+    <Compile Include="Abstract\IPersistentSessionManager.cs" />
     <Compile Include="Abstract\IRequestContext.cs" />
     <Compile Include="Abstract\IUnitOfWork.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Concrete\PersistentSessionManager.cs" />
     <Compile Include="Concrete\QueryHelper.cs" />
     <Compile Include="Concrete\RequestContext.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
@@ -174,11 +176,13 @@
     <Compile Include="Models\Entities\Partials\EntryExtensions.cs" />
     <Compile Include="Models\Entities\Partials\MonthlyBudget.cs" />
     <Compile Include="Models\Entities\Partials\MonthlyBudgetExtensions.cs" />
+    <Compile Include="Models\Entities\Partials\PersistentSessionExtensions.cs" />
     <Compile Include="Models\Entities\Partials\Party.cs" />
     <Compile Include="Models\Entities\Partials\Entry.cs" />
     <Compile Include="Models\Entities\Partials\Category.cs" />
     <Compile Include="Models\Entities\Partials\PartyExtensions.cs" />
     <Compile Include="Models\Entities\Party.cs" />
+    <Compile Include="Models\Entities\PersistentSession.cs" />
     <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Entities\EntryType.cs" />
     <Compile Include="Models\Entries\ListEntriesEntryViewModel.cs" />

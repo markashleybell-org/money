@@ -2,7 +2,8 @@
 {
     public static class CategoryExtensions
     {
-        public static Category WithUpdates(this Category category, string name) => new Category(
+        public static Category WithUpdates(this Category category, string name) =>
+            new Category(
                 category.ID,
                 category.AccountID,
                 name,

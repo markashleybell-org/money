@@ -10,8 +10,15 @@ namespace money.web.Controllers
 {
     public class UsersController : ControllerBase
     {
-        public UsersController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
-            : base(unitOfWork, db, context) { }
+        private IPersistentSessionManager _persistentSessionManager;
+
+        public UsersController(
+            IUnitOfWork unitOfWork,
+            IQueryHelper db,
+            IRequestContext context,
+            IPersistentSessionManager persistentSessionManager)
+            : base(unitOfWork, db, context) =>
+            _persistentSessionManager = persistentSessionManager;
 
         [OverrideAuthorization]
         public ActionResult Login() => View();
@@ -42,6 +49,18 @@ namespace money.web.Controllers
 
             _context.SetSessionItem(Globals.USER_SESSION_VARIABLE_NAME, user.ID);
 
+            DestroyCurrentPersistentSession();
+
+            var persistentSession = _persistentSessionManager.CreatePersistentSession(user.ID);
+
+            _unitOfWork.CommitChanges();
+
+            _context.SetCookie(
+                Globals.PERSISTENT_LOGIN_COOKIE_NAME,
+                persistentSession.AsCookieString(),
+                persistentSession.Expires
+            );
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -49,7 +68,25 @@ namespace money.web.Controllers
         {
             _context.DeleteSessionItem(Globals.USER_SESSION_VARIABLE_NAME);
 
+            DestroyCurrentPersistentSession();
+
+            _unitOfWork.CommitChanges();
+
             return RedirectToAction("Index", "Home");
+        }
+
+        private void DestroyCurrentPersistentSession()
+        {
+            var persistentSessionData = _context.GetCookieValue(Globals.PERSISTENT_LOGIN_COOKIE_NAME);
+
+            if (persistentSessionData != null)
+            {
+                var persistentSession = persistentSessionData.AsPersistentSession();
+
+                _persistentSessionManager.DestroyPersistentSession(persistentSession.UserID, persistentSession.SeriesIdentifier);
+            }
+
+            _context.DeleteCookie(Globals.PERSISTENT_LOGIN_COOKIE_NAME);
         }
     }
 }

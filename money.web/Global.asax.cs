@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -28,6 +29,9 @@ namespace money.web
 
             var connectionString = ConfigurationManager.ConnectionStrings["Main"].ConnectionString;
 
+            var persistentSessionLengthInDays =
+                Convert.ToInt32(ConfigurationManager.AppSettings["PersistentSessionLengthInDays"]);
+
             kernel.Bind<IUnitOfWork>()
                 .To<UnitOfWork>()
                 .InRequestScope()
@@ -37,6 +41,11 @@ namespace money.web
                 .To<QueryHelper>()
                 .InRequestScope()
                 .WithConstructorArgument("connectionString", connectionString);
+
+            kernel.Bind<IPersistentSessionManager>()
+                .To<PersistentSessionManager>()
+                .InRequestScope()
+                .WithConstructorArgument("sessionLengthInDays", persistentSessionLengthInDays);
 
             kernel.Bind<IRequestContext>()
                 .To<Concrete.RequestContext>()
