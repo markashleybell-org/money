@@ -43,12 +43,16 @@ namespace money.web.Support
         public static IEnumerable<SelectListItem> TypesSelectListItems(EntryType entryTypes, Func<IEnumerable<Account>> accountList)
         {
             var types = Enum.GetNames(typeof(EntryType)).Where(n => n != EntryType.Transfer.ToString())
-                    .Select(n => new SelectListItem { Value = n, Text = n }).ToList();
+                .Select(n => new SelectListItem { Value = n, Text = n }).ToList();
 
             if (entryTypes.HasFlag(EntryType.Transfer))
             {
                 var accounts = accountList()
-                   .Select(a => new SelectListItem { Value = $"Transfer-{a.ID}", Text = $"Transfer to {a.Name}" });
+                    .Where(a => !a.IsDormant)
+                    .Select(a => new SelectListItem {
+                        Value = $"Transfer-{a.ID}",
+                        Text = $"Transfer to {a.Name}"
+                    });
 
                 types.AddRange(accounts);
             }
