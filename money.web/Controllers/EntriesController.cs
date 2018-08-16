@@ -14,12 +14,25 @@ namespace money.web.Controllers
 {
     public class EntriesController : ControllerBase
     {
-        private Func<int, Func<IEnumerable<Account>>> _accountList = null;
+        private readonly Func<int, Func<IEnumerable<Account>>> _accountList = null;
 
-        public EntriesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
-            : base(unitOfWork, db, context) =>
-            _accountList = accountID => () =>
-                _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts WHERE ID != @AccountID ORDER BY DisplayOrder", new { accountID }));
+        public EntriesController(
+            IUnitOfWork unitOfWork,
+            IQueryHelper db,
+            IRequestContext context)
+            : base(unitOfWork, db, context)
+        {
+            var sql = @"SELECT 
+                            *
+                        FROM 
+                            Accounts 
+                        WHERE 
+                            ID != @AccountID 
+                        ORDER BY 
+                            DisplayOrder";
+
+            _accountList = accountID => () => _db.Query(conn => conn.Query<Account>(sql, new { accountID }));
+        }
 
         public ActionResult Index(int id)
         {

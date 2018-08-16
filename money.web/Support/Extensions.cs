@@ -14,19 +14,20 @@ namespace money.web.Support
 {
     public static class Extensions
     {
-        private static Func<Expression, object> _convertExpression => (Expression e) => {
-            if (e is ConstantExpression)
-            {
-                return (e as ConstantExpression).Value;
-            }
+        private static Func<Expression, object> _convertExpression =>
+            (Expression e) => {
+                if (e is ConstantExpression)
+                {
+                    return (e as ConstantExpression).Value;
+                }
 
-            if (e is MemberExpression)
-            {
-                return (e as MemberExpression).GetValue();
-            }
+                if (e is MemberExpression)
+                {
+                    return (e as MemberExpression).GetValue();
+                }
 
-            return null;
-        };
+                return null;
+            };
 
         public static string GetDisplayName(this Enum enumValue) =>
             enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>().Name;

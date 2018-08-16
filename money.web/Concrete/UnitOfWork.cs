@@ -12,13 +12,15 @@ namespace money.web.Concrete
         private IDbConnection _connection;
         private IDbTransaction _transaction;
 
-        public UnitOfWork(string connectionString) => _connectionString = connectionString;
+        public UnitOfWork(string connectionString) =>
+            _connectionString = connectionString;
 
         public IDbTransaction GetTransaction()
         {
             if (_connection == null)
             {
                 _connection = new SqlConnection(_connectionString);
+
                 _connection.Open();
             }
 
@@ -41,6 +43,7 @@ namespace money.web.Concrete
                 catch
                 {
                     _transaction.Rollback();
+
                     throw;
                 }
                 finally
@@ -55,12 +58,14 @@ namespace money.web.Concrete
             if (_transaction != null)
             {
                 _transaction.Dispose();
+
                 _transaction = null;
             }
 
             if (_connection != null)
             {
                 _connection.Dispose();
+
                 _connection = null;
             }
         }

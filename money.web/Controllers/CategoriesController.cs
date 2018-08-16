@@ -10,7 +10,10 @@ namespace money.web.Controllers
 {
     public class CategoriesController : ControllerBase
     {
-        public CategoriesController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+        public CategoriesController(
+            IUnitOfWork unitOfWork,
+            IQueryHelper db,
+            IRequestContext context)
             : base(unitOfWork, db, context) { }
 
         public ActionResult Index()
@@ -34,9 +37,10 @@ namespace money.web.Controllers
             });
         }
 
-        public ActionResult Create() => View(new CreateCategoryViewModel {
-            Accounts = AccountsSelectListItems()
-        });
+        public ActionResult Create() =>
+            View(new CreateCategoryViewModel {
+                Accounts = AccountsSelectListItems()
+            });
 
         [HttpPost]
         public ActionResult Create(CreateCategoryViewModel model)
@@ -44,6 +48,7 @@ namespace money.web.Controllers
             if (!ModelState.IsValid)
             {
                 model.Accounts = AccountsSelectListItems();
+
                 return View(model);
             }
 

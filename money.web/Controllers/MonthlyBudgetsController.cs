@@ -13,13 +13,28 @@ namespace money.web.Controllers
 {
     public class MonthlyBudgetsController : ControllerBase
     {
-        public MonthlyBudgetsController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+        public MonthlyBudgetsController(
+            IUnitOfWork unitOfWork,
+            IQueryHelper db,
+            IRequestContext context)
             : base(unitOfWork, db, context) { }
 
-        public ActionResult Index(int id) => View(new ListMonthlyBudgetsViewModel {
-            AccountID = id,
-            MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @ID ORDER BY StartDate DESC", new { id }))
-        });
+        public ActionResult Index(int id)
+        {
+            var sql = @"SELECT 
+                            * 
+                        FROM
+                            MonthlyBudgets
+                        WHERE
+                            AccountID = @ID 
+                        ORDER BY 
+                            StartDate DESC";
+
+            return View(new ListMonthlyBudgetsViewModel {
+                AccountID = id,
+                MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudget>(sql, new { id }))
+            });
+        }
 
         public ActionResult Create(int id) => View(new CreateMonthlyBudgetViewModel {
             AccountID = id,
@@ -34,6 +49,7 @@ namespace money.web.Controllers
             if (!ModelState.IsValid)
             {
                 model.Categories = Categories(accountID: model.AccountID);
+
                 return View(model);
             }
 
@@ -78,6 +94,7 @@ namespace money.web.Controllers
             if (!ModelState.IsValid)
             {
                 model.Categories = Categories(accountID: model.AccountID, monthlyBudgetID: model.ID);
+
                 return View(model);
             }
 
@@ -113,7 +130,9 @@ namespace money.web.Controllers
         {
             var dto = _db.Get<MonthlyBudget>(id);
 
-            _db.Execute((conn, tran) => conn.Execute("DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID", new { id }, tran));
+            var sql = "DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID";
+
+            _db.Execute((conn, tran) => conn.Execute(sql, new { id }, tran));
 
             _db.Delete(dto);
 

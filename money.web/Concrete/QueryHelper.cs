@@ -27,6 +27,7 @@ namespace money.web.Concrete
             using (var conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
+
                 return body(conn);
             }
         }
@@ -36,6 +37,7 @@ namespace money.web.Concrete
             using (var conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
+
                 return body(conn);
             }
         }
@@ -43,18 +45,21 @@ namespace money.web.Concrete
         public T Query<T>(Func<IDbConnection, IDbTransaction, T> body)
         {
             var transaction = _unitOfWork.GetTransaction();
+
             return body(transaction.Connection, transaction);
         }
 
         public IEnumerable<T> Query<T>(Func<IDbConnection, IDbTransaction, IEnumerable<T>> body)
         {
             var transaction = _unitOfWork.GetTransaction();
+
             return body(transaction.Connection, transaction);
         }
 
         public void Execute(Action<IDbConnection, IDbTransaction> body)
         {
             var transaction = _unitOfWork.GetTransaction();
+
             body(transaction.Connection, transaction);
         }
 

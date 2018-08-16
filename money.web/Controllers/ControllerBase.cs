@@ -16,7 +16,10 @@ namespace money.web.Controllers
         protected readonly int _userID;
 #pragma warning restore SA1401 // Fields must be private
 
-        public ControllerBase(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+        public ControllerBase(
+            IUnitOfWork unitOfWork,
+            IQueryHelper db,
+            IRequestContext context)
         {
             _unitOfWork = unitOfWork;
             _db = db;

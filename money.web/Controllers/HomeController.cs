@@ -14,7 +14,10 @@ namespace money.web.Controllers
 {
     public class HomeController : ControllerBase
     {
-        public HomeController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+        public HomeController(
+            IUnitOfWork unitOfWork,
+            IQueryHelper db,
+            IRequestContext context)
             : base(unitOfWork, db, context) { }
 
         public ActionResult Index()

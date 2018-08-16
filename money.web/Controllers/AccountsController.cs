@@ -8,14 +8,19 @@ namespace money.web.Controllers
 {
     public class AccountsController : ControllerBase
     {
-        public AccountsController(IUnitOfWork unitOfWork, IQueryHelper db, IRequestContext context)
+        public AccountsController(
+            IUnitOfWork unitOfWork,
+            IQueryHelper db,
+            IRequestContext context)
             : base(unitOfWork, db, context) { }
 
-        public ActionResult Index() => View(new ListAccountsViewModel {
-            Accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
-        });
+        public ActionResult Index() =>
+            View(new ListAccountsViewModel {
+                Accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
+            });
 
-        public ActionResult Create() => View();
+        public ActionResult Create() =>
+            View();
 
         [HttpPost]
         public ActionResult Create(CreateAccountViewModel model)

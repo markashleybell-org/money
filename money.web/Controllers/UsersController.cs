@@ -32,7 +32,9 @@ namespace money.web.Controllers
                 return View(model);
             }
 
-            var user = _db.Query(conn => conn.QuerySingleOrDefault<User>("SELECT * FROM Users WHERE Email = @Email", new { model.Email }));
+            var sql = "SELECT * FROM Users WHERE Email = @Email";
+
+            var user = _db.Query(conn => conn.QuerySingleOrDefault<User>(sql, new { model.Email }));
 
             if (user == null)
             {

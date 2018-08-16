@@ -8,11 +8,14 @@ namespace money.web.Concrete
     {
         private HttpContextBase _context;
 
-        public RequestContext(HttpContextBase context) => _context = context;
+        public RequestContext(HttpContextBase context) =>
+            _context = context;
 
-        public string RequestUrl => _context.Request.Url.AbsolutePath;
+        public string RequestUrl =>
+            _context.Request.Url.AbsolutePath;
 
-        public string GetCookieValue(string name) => _context.Request.Cookies[name]?.Value;
+        public string GetCookieValue(string name) =>
+            _context.Request.Cookies[name]?.Value;
 
         public void SetCookie(string name, string value, DateTime? expires = null)
         {
@@ -28,12 +31,16 @@ namespace money.web.Concrete
             }
         }
 
-        public void DeleteCookie(string name) => _context.Response.Cookies[name].Expires = DateTime.Now.AddDays(-1);
+        public void DeleteCookie(string name) =>
+            _context.Response.Cookies[name].Expires = DateTime.Now.AddDays(-1);
 
-        public object GetSessionItemValue(string name) => _context.Session[name];
+        public object GetSessionItemValue(string name) =>
+            _context.Session[name];
 
-        public void SetSessionItem(string name, object value) => _context.Session[name] = value;
+        public void SetSessionItem(string name, object value) =>
+            _context.Session[name] = value;
 
-        public void DeleteSessionItem(string name) => _context.Session[name] = null;
+        public void DeleteSessionItem(string name) =>
+            _context.Session[name] = null;
     }
 }
