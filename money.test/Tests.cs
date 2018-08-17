@@ -1,6 +1,6 @@
 ﻿using System;
-using NUnit.Framework;
 using money.web.Models.Entities;
+using NUnit.Framework;
 
 namespace money.test
 {
@@ -36,9 +36,9 @@ namespace money.test
         public void AsCookieString_Operation()
         {
             var session = new PersistentSession(
-                userID: 123, 
+                userID: 123,
                 seriesIdentifier: "ABCD",
-                token: "EFGH", 
+                token: "EFGH",
                 created: new DateTime(2018, 9, 1, 14, 42, 23),
                 expires: new DateTime(2018, 11, 30, 14, 42, 23)
             );
