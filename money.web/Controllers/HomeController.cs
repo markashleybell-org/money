@@ -23,7 +23,7 @@ namespace money.web.Controllers
         public ActionResult Index()
         {
             var model = _db.Query(conn => {
-                using (var reader = conn.QueryMultipleSP("Dashboard", new { UserID = _userID }))
+                using (var reader = conn.QueryMultipleSP("Dashboard", new { UserID }))
                 {
                     var netWorthAccounts = reader.Read<AccountViewModel>();
                     var accounts = reader.Read<AccountViewModel>();
@@ -47,7 +47,7 @@ namespace money.web.Controllers
         public ActionResult NetWorth()
         {
             var parameters = new {
-                UserID = _userID,
+                UserID,
                 NonZeroBalanceOnly = true
             };
 

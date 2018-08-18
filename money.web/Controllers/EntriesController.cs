@@ -260,7 +260,7 @@ namespace money.web.Controllers
         private string RenderAccountHtml(int accountID, int? updatedCategoryID = null)
         {
             var parameters = new {
-                UserID = _userID,
+                UserID,
                 AccountID = accountID
             };
 

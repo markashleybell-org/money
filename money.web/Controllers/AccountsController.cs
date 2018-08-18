@@ -31,7 +31,7 @@ namespace money.web.Controllers
             }
 
             var account = new Account(
-                userID: _userID,
+                userID: UserID,
                 name: model.Name,
                 type: model.Type.Value,
                 startingBalance: model.StartingBalance,

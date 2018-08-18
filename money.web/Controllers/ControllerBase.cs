@@ -13,7 +13,6 @@ namespace money.web.Controllers
         protected readonly IUnitOfWork _unitOfWork;
         protected readonly IQueryHelper _db;
         protected readonly IRequestContext _context;
-        protected readonly int _userID;
 #pragma warning restore SA1401 // Fields must be private
 
         public ControllerBase(
@@ -24,11 +23,10 @@ namespace money.web.Controllers
             _unitOfWork = unitOfWork;
             _db = db;
             _context = context;
-
-            var userID = _context.GetSessionItemValue(Globals.USER_SESSION_VARIABLE_NAME) as int?;
-
-            _userID = userID ?? -1;
         }
+
+        protected int UserID =>
+            _context.GetSessionItemValue(Globals.USER_SESSION_VARIABLE_NAME) as int? ?? -1;
 
         protected override void Dispose(bool disposing)
         {
