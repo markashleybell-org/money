@@ -42,6 +42,7 @@ AS
         Name NVARCHAR(64),
         Amount DECIMAL(18,2),
         Spent DECIMAL(18,2),
+        Remaining DECIMAL(18,2),
         DisplayOrder INT
     )
 
@@ -51,6 +52,7 @@ AS
         Name NVARCHAR(64),
         Amount DECIMAL(18,2),
         Spent DECIMAL(18,2),
+        Remaining DECIMAL(18,2),
         DisplayOrder INT
     )
 
@@ -140,6 +142,7 @@ AS
         c.Name,
         bc.Amount,
         ISNULL(SUM(e.Amount), 0) AS Spent,
+        bc.Amount - ISNULL(SUM(e.Amount), 0) AS Remaining,
         c.DisplayOrder
     FROM
         @LatestMonthlyBudgets b
@@ -166,6 +169,7 @@ AS
         ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.Amount > 0), 0) +
         ISNULL((SELECT SUM(bc.Amount) FROM @BudgetCategories bc WHERE bc.AccountID = a.ID), 0)) * -1 AS Amount,
         ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.CategoryID IS NULL AND e.Amount < 0), 0) AS Spent,
+        0 AS Remaining,
         1000000 AS DisplayOrder
     FROM
         @Accounts a
@@ -174,6 +178,13 @@ AS
         a.CurrentBalance,
         a.BalanceAtStartOfMonthlyBudget,
         a.LatestMonthlyBudgetID
+
+    UPDATE
+        ucc
+    SET
+        ucc.Remaining = ((ucc.Amount - ucc.Spent) + ISNULL((SELECT SUM(e.Remaining) FROM @BudgetCategories e WHERE e.AccountID = ucc.AccountID AND e.Remaining > 0), 0))
+    FROM
+        @UncategorisedCategories ucc
 
     INSERT INTO
         @BudgetCategories
@@ -186,7 +197,7 @@ AS
 
     SELECT * FROM @Accounts WHERE CurrentBalance != 0
     SELECT * FROM @Accounts
-    SELECT *, Amount - Spent AS Remaining FROM @BudgetCategories ORDER BY AccountID, DisplayOrder
+    SELECT * FROM @BudgetCategories ORDER BY AccountID, DisplayOrder
 
 GO
 
