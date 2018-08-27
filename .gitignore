@@ -304,9 +304,6 @@ __pycache__/
 # OpenCover UI analysis results
 OpenCover/
 
-# Ignore local Web.config
-money.web/Web.config
-
 # Don't ignore DB release folder
 !db/[Rr]elease/
 
