@@ -8,11 +8,11 @@ namespace money.web.Models.Entities
     {
         public Party(
             int id,
-            int accountID,
+            int accountId,
             string name)
         {
             ID = id;
-            AccountID = accountID;
+            AccountID = accountId;
             Name = name;
         }
 

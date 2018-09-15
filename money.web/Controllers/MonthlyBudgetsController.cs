@@ -60,8 +60,8 @@ namespace money.web.Controllers
             ));
 
             var categories = model.Categories.Where(c => c.Amount != 0).Select(c => new Category_MonthlyBudget(
-                monthlyBudgetID: monthlyBudgetID,
-                categoryID: c.CategoryID,
+                monthlyBudgetId: monthlyBudgetID,
+                categoryId: c.CategoryID,
                 amount: c.Amount < 0 ? c.Amount : -c.Amount
             ));
 
@@ -110,8 +110,8 @@ namespace money.web.Controllers
             _db.Execute((conn, tran) => conn.Execute("DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID", new { model.ID }, tran));
 
             var categories = model.Categories.Where(c => c.Amount != 0).Select(c => new Category_MonthlyBudget(
-                monthlyBudgetID: model.ID,
-                categoryID: c.CategoryID,
+                monthlyBudgetId: model.ID,
+                categoryId: c.CategoryID,
                 amount: c.Amount < 0 ? c.Amount : -c.Amount
             ));
 

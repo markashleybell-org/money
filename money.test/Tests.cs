@@ -36,7 +36,7 @@ namespace money.test
         public void AsCookieString_Operation()
         {
             var session = new PersistentSession(
-                userID: 123,
+                userId: 123,
                 seriesIdentifier: "ABCD",
                 token: "EFGH",
                 created: new DateTime(2018, 9, 1, 14, 42, 23),

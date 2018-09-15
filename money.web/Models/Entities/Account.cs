@@ -8,7 +8,7 @@ namespace money.web.Models.Entities
     {
         public Account(
             int id,
-            int userID,
+            int userId,
             string name,
             AccountType type,
             decimal startingBalance,
@@ -18,7 +18,7 @@ namespace money.web.Models.Entities
             int displayOrder)
         {
             ID = id;
-            UserID = userID;
+            UserID = userId;
             Name = name;
             Type = type;
             StartingBalance = startingBalance;

@@ -4,7 +4,7 @@
     {
         public static Party WithUpdates(this Party party, string name) => new Party(
                 id: party.ID,
-                accountID: party.AccountID,
+                accountId: party.AccountID,
                 name: name
             );
     }

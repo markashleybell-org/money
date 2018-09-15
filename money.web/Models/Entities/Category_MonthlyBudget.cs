@@ -6,12 +6,12 @@ namespace money.web.Models.Entities
     public partial class Category_MonthlyBudget
     {
         public Category_MonthlyBudget(
-            int monthlyBudgetID,
-            int categoryID,
+            int monthlyBudgetId,
+            int categoryId,
             decimal amount)
         {
-            MonthlyBudgetID = monthlyBudgetID;
-            CategoryID = categoryID;
+            MonthlyBudgetID = monthlyBudgetId;
+            CategoryID = categoryId;
             Amount = amount;
         }
 

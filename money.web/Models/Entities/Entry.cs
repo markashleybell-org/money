@@ -9,20 +9,20 @@ namespace money.web.Models.Entities
     {
         public Entry(
             int id,
-            int accountID,
-            int? monthlyBudgetID,
-            int? categoryID,
-            int? partyID,
+            int accountId,
+            int? monthlyBudgetId,
+            int? categoryId,
+            int? partyId,
             DateTime date,
             decimal amount,
             string note,
             Guid? transferGuid)
         {
             ID = id;
-            AccountID = accountID;
-            MonthlyBudgetID = monthlyBudgetID;
-            CategoryID = categoryID;
-            PartyID = partyID;
+            AccountID = accountId;
+            MonthlyBudgetID = monthlyBudgetId;
+            CategoryID = categoryId;
+            PartyID = partyId;
             Date = date;
             Amount = amount;
             Note = note;

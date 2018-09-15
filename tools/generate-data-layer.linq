@@ -1,6 +1,10 @@
 <Query Kind="FSharpProgram">
   <Reference Relative="lib\fsdl.dll">C:\Src\money\tools\lib\fsdl.dll</Reference>
-  <Namespace>fsdl</Namespace>
+  <Reference Relative="..\money.web\bin\money.web.dll">C:\Src\money\money.web\bin\money.web.dll</Reference>
+  <NuGetReference>FSharp.Data</NuGetReference>
+  <Namespace>fsdl.CodeGeneration</Namespace>
+  <Namespace>fsdl.Types</Namespace>
+  <Namespace>money.web.Models.Entities</Namespace>
 </Query>
 
 let commonColumns = []
@@ -15,10 +19,16 @@ let users = {
     dtoClassName = "User"
     dtoNamespace = dtoNamespace
     dtoBaseClassName = Some("Abstract.IEntity")
-    columnSpecifications = [Identity("ID", INT, 1, 1)
-                            NotNull("Email", CHR(256), NONE)
-                            NotNull("Password", CHR(2048), NONE)] 
-    constraintSpecifications = [PrimaryKey(["ID"])]
+    columnSpecifications = 
+        [
+            Identity("ID", INT, 1, 1)
+            NotNull("Email", CHR(256), NONE)
+            NotNull("Password", CHR(2048), NONE)
+        ] 
+    constraintSpecifications = 
+        [
+            PrimaryKey(["ID"])
+        ]
     indexSpecifications = []
     addDapperAttributes = true
     partial = true
@@ -33,12 +43,18 @@ let persistentsessions = {
     dtoClassName = "PersistentSession"
     dtoNamespace = dtoNamespace
     dtoBaseClassName = None
-    columnSpecifications = [NotNull("UserID", INT, NONE)
-                            NotNull("SeriesIdentifier", CHR(256), NONE)
-                            NotNull("Token", CHR(256), NONE)
-                            NotNull("Created", DATE, NONE)
-                            NotNull("Expires", DATE, NONE)] 
-    constraintSpecifications = [ForeignKey("UserID", "Users", "ID")]
+    columnSpecifications =
+        [
+            NotNull("UserID", INT, NONE)
+            NotNull("SeriesIdentifier", CHR(256), NONE)
+            NotNull("Token", CHR(256), NONE)
+            NotNull("Created", DATE, NONE)
+            NotNull("Expires", DATE, NONE)
+        ] 
+    constraintSpecifications = 
+        [
+            ForeignKey("UserID", "Users", "ID")
+        ]
     indexSpecifications = []
     addDapperAttributes = true
     partial = true
@@ -53,17 +69,23 @@ let accounts = {
     dtoClassName = "Account"
     dtoNamespace = dtoNamespace
     dtoBaseClassName = Some("Abstract.IEntity")
-    columnSpecifications = [Identity("ID", INT, 1, 1)
-                            NotNull("UserID", INT, NONE)
-                            NotNull("Name", CHR(64), NONE)
-                            NotNull("Type", INT, NONE)
-                            NotNull("StartingBalance", MONEY, NONE)
-                            NotNull("IsMainAccount", BIT, NONE)
-                            NotNull("IsIncludedInNetWorth", BIT, NONE)
-                            NotNull("IsDormant", BIT, NONE)
-                            NotNull("DisplayOrder", INT, NONE)] 
-    constraintSpecifications = [PrimaryKey(["ID"])
-                                ForeignKey("UserID", "Users", "ID")]
+    columnSpecifications =
+        [
+            Identity("ID", INT, 1, 1)
+            NotNull("UserID", INT, NONE)
+            NotNull("Name", CHR(64), NONE)
+            NotNull("Type", ENUM(typeof<AccountType>), NONE)
+            NotNull("StartingBalance", MONEY, NONE)
+            NotNull("IsMainAccount", BIT, NONE)
+            NotNull("IsIncludedInNetWorth", BIT, NONE)
+            NotNull("IsDormant", BIT, NONE)
+            NotNull("DisplayOrder", INT, NONE)
+        ]
+    constraintSpecifications = 
+        [
+            PrimaryKey(["ID"])
+            ForeignKey("UserID", "Users", "ID")
+        ]
     indexSpecifications = []
     addDapperAttributes = true
     partial = true
@@ -78,12 +100,18 @@ let categories = {
     dtoClassName = "Category"
     dtoNamespace = dtoNamespace
     dtoBaseClassName = Some("Abstract.IEntity")
-    columnSpecifications = [Identity("ID", INT, 1, 1)
-                            NotNull("AccountID", INT, NONE)
-                            NotNull("Name", CHR(64), NONE)
-                            NotNull("DisplayOrder", INT, NONE)] 
-    constraintSpecifications = [PrimaryKey(["ID"])
-                                ForeignKey("AccountID", "Accounts", "ID")]
+    columnSpecifications = 
+        [
+            Identity("ID", INT, 1, 1)
+            NotNull("AccountID", INT, NONE)
+            NotNull("Name", CHR(64), NONE)
+            NotNull("DisplayOrder", INT, NONE)
+        ] 
+    constraintSpecifications = 
+        [
+            PrimaryKey(["ID"])
+            ForeignKey("AccountID", "Accounts", "ID")
+        ]
     indexSpecifications = []
     addDapperAttributes = true
     partial = true
@@ -98,11 +126,17 @@ let parties = {
     dtoClassName = "Party"
     dtoNamespace = dtoNamespace
     dtoBaseClassName = Some("Abstract.IEntity")
-    columnSpecifications = [Identity("ID", INT, 1, 1)
-                            NotNull("AccountID", INT, NONE)
-                            NotNull("Name", CHR(64), NONE)] 
-    constraintSpecifications = [PrimaryKey(["ID"])
-                                ForeignKey("AccountID", "Accounts", "ID")]
+    columnSpecifications = 
+        [
+            Identity("ID", INT, 1, 1)
+            NotNull("AccountID", INT, NONE)
+            NotNull("Name", CHR(64), NONE)
+        ] 
+    constraintSpecifications = 
+        [
+            PrimaryKey(["ID"])
+            ForeignKey("AccountID", "Accounts", "ID")
+        ]
     indexSpecifications = []
     addDapperAttributes = true
     partial = true
@@ -117,14 +151,23 @@ let monthlybudgets = {
     dtoClassName = "MonthlyBudget"
     dtoNamespace = dtoNamespace
     dtoBaseClassName = Some("Abstract.IEntity")
-    columnSpecifications = [Identity("ID", INT, 1, 1)
-                            NotNull("AccountID", INT, NONE)
-                            NotNull("StartDate", DATE, NONE)
-                            NotNull("EndDate", DATE, NONE)] 
-    constraintSpecifications = [PrimaryKey(["ID"])
-                                ForeignKey("AccountID", "Accounts", "ID")]
-    indexSpecifications = [NonClustered(["StartDate"; "EndDate"])
-                           NonClustered(["EndDate"; "StartDate"])]
+    columnSpecifications = 
+        [
+            Identity("ID", INT, 1, 1)
+            NotNull("AccountID", INT, NONE)
+            NotNull("StartDate", DATE, NONE)
+            NotNull("EndDate", DATE, NONE)
+        ] 
+    constraintSpecifications = 
+        [
+            PrimaryKey(["ID"])
+            ForeignKey("AccountID", "Accounts", "ID")
+        ]
+    indexSpecifications = 
+        [
+            NonClustered(["StartDate"; "EndDate"])
+            NonClustered(["EndDate"; "StartDate"])
+        ]                   
     addDapperAttributes = true
     partial = true
     generateConstructor = true
@@ -138,20 +181,26 @@ let entries = {
     dtoClassName = "Entry"
     dtoNamespace = dtoNamespace
     dtoBaseClassName = Some("Abstract.IEntity")
-    columnSpecifications = [Identity("ID", INT, 1, 1)
-                            NotNull("AccountID", INT, NONE)
-                            Null("MonthlyBudgetID", INT)
-                            Null("CategoryID", INT)
-                            Null("PartyID", INT)
-                            NotNull("Date", DATE, NONE)
-                            NotNull("Amount", MONEY, NONE)
-                            Null("Note", CHR(64))
-                            Null("TransferGUID", GUID)] 
-    constraintSpecifications = [PrimaryKey(["ID"])
-                                ForeignKey("AccountID", "Accounts", "ID")
-                                ForeignKey("MonthlyBudgetID", "MonthlyBudgets", "ID")
-                                ForeignKey("CategoryID", "Categories", "ID")
-                                ForeignKey("PartyID", "Parties", "ID")]
+    columnSpecifications = 
+        [
+            Identity("ID", INT, 1, 1)
+            NotNull("AccountID", INT, NONE)
+            Null("MonthlyBudgetID", INT)
+            Null("CategoryID", INT)
+            Null("PartyID", INT)
+            NotNull("Date", DATE, NONE)
+            NotNull("Amount", MONEY, NONE)
+            Null("Note", CHR(64))
+            Null("TransferGUID", GUID)
+        ] 
+    constraintSpecifications = 
+        [
+            PrimaryKey(["ID"])
+            ForeignKey("AccountID", "Accounts", "ID")
+            ForeignKey("MonthlyBudgetID", "MonthlyBudgets", "ID")
+            ForeignKey("CategoryID", "Categories", "ID")
+            ForeignKey("PartyID", "Parties", "ID")
+        ]
     indexSpecifications = []   
     addDapperAttributes = true
     partial = true
@@ -166,12 +215,18 @@ let categories_monthlybudgets = {
     dtoClassName = "Category_MonthlyBudget"
     dtoNamespace = dtoNamespace
     dtoBaseClassName = None
-    columnSpecifications = [NotNull("MonthlyBudgetID", INT, NONE)
-                            NotNull("CategoryID", INT, NONE)
-                            NotNull("Amount", MONEY, NONE)] 
-    constraintSpecifications = [PrimaryKey(["MonthlyBudgetID"; "CategoryID"])
-                                ForeignKey("MonthlyBudgetID", "MonthlyBudgets", "ID")
-                                ForeignKey("CategoryID", "Categories", "ID")]
+    columnSpecifications = 
+        [
+            NotNull("MonthlyBudgetID", INT, NONE)
+            NotNull("CategoryID", INT, NONE)
+            NotNull("Amount", MONEY, NONE)
+        ] 
+    constraintSpecifications = 
+        [
+            PrimaryKey(["MonthlyBudgetID"; "CategoryID"])
+            ForeignKey("MonthlyBudgetID", "MonthlyBudgets", "ID")
+            ForeignKey("CategoryID", "Categories", "ID")
+        ]
     indexSpecifications = []
     addDapperAttributes = true
     partial = true
@@ -192,10 +247,10 @@ let tables = [
     categories_monthlybudgets
 ]
 
-let tableSql = fsdl.generateTableDefinitions tables commonColumns
-let indexSql = fsdl.generateIndexDefinitions tables
-let constraintSql = fsdl.generateConstraintDefinitions tables commonConstraints
-let dtoClasses = fsdl.generateDTOClassDefinitionList tables commonColumns
+let tableSql = generateTableDefinitions tables commonColumns
+let indexSql = generateIndexDefinitions tables
+let constraintSql = generateConstraintDefinitions tables commonConstraints
+let dtoClasses = generateDTOClassDefinitionList tables commonColumns
 
 let br = Environment.NewLine
 let brbr = br + br
@@ -204,9 +259,10 @@ let brbr = br + br
 Directory.SetCurrentDirectory (Path.GetDirectoryName Util.CurrentQueryPath)
 
 // Load any extra SQL which needs to be executed before/during/after the generated SQL
-let procedureSql = Directory.GetFiles(@"..\db\schema\procedures", "*.sql") 
-                   |> Array.map File.ReadAllText 
-                   |> String.concat brbr
+let procedureSql = 
+    Directory.GetFiles(@"..\db\schema\procedures", "*.sql") 
+    |> Array.map File.ReadAllText 
+    |> String.concat brbr
 
 let schemaSql = sprintf "%s%s%s%s%s%s%s%s%s%s%s" 
                     "CREATE DATABASE [$(DatabaseName)]" brbr 

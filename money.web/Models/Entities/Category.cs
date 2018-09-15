@@ -8,12 +8,12 @@ namespace money.web.Models.Entities
     {
         public Category(
             int id,
-            int accountID,
+            int accountId,
             string name,
             int displayOrder)
         {
             ID = id;
-            AccountID = accountID;
+            AccountID = accountId;
             Name = name;
             DisplayOrder = displayOrder;
         }

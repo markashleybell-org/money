@@ -9,7 +9,7 @@ namespace money.web.Models.Entities
             DateTime startDate,
             DateTime endDate) => new MonthlyBudget(
                 id: monthlyBudget.ID,
-                accountID: monthlyBudget.AccountID,
+                accountId: monthlyBudget.AccountID,
                 startDate: startDate,
                 endDate: endDate
             );

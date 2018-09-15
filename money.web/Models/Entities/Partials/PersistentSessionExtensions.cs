@@ -36,7 +36,7 @@ namespace money.web.Models.Entities
             try
             {
                 return new PersistentSession(
-                    userID: Convert.ToInt32(parts[0]),
+                    userId: Convert.ToInt32(parts[0]),
                     seriesIdentifier: parts[1],
                     token: parts[2],
                     created: DateTime.ParseExact(parts[3], COOKIE_DATE_FORMAT, null),

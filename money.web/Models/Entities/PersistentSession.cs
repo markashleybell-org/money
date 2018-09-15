@@ -8,13 +8,13 @@ namespace money.web.Models.Entities
     public partial class PersistentSession
     {
         public PersistentSession(
-            int userID,
+            int userId,
             string seriesIdentifier,
             string token,
             DateTime created,
             DateTime expires)
         {
-            UserID = userID;
+            UserID = userId;
             SeriesIdentifier = seriesIdentifier;
             Token = token;
             Created = created;

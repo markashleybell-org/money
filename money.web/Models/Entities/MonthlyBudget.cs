@@ -8,12 +8,12 @@ namespace money.web.Models.Entities
     {
         public MonthlyBudget(
             int id,
-            int accountID,
+            int accountId,
             DateTime startDate,
             DateTime endDate)
         {
             ID = id;
-            AccountID = accountID;
+            AccountID = accountId;
             StartDate = startDate;
             EndDate = endDate;
         }
