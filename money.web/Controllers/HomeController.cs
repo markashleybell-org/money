@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Dapper;
 using money.web.Abstract;
 using money.web.Models;
-using money.web.Models.Entities;
 using money.web.Support;
-using static money.web.Support.Extensions;
 
 namespace money.web.Controllers
 {
@@ -18,7 +12,11 @@ namespace money.web.Controllers
             IUnitOfWork unitOfWork,
             IQueryHelper db,
             IRequestContext context)
-            : base(unitOfWork, db, context) { }
+            : base(
+                  unitOfWork,
+                  db,
+                  context)
+        { }
 
         public ActionResult Index()
         {

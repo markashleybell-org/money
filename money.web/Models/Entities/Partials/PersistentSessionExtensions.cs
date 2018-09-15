@@ -7,8 +7,10 @@ namespace money.web.Models.Entities
     {
         private const string PersistentCookieValueParseErrorMessage = "Could not parse persistent session cookie value";
 
-        public static PersistentSession WithUpdates(this PersistentSession session, string token) =>
-            new PersistentSession(
+        public static PersistentSession WithUpdates(
+            this PersistentSession session,
+            string token)
+            => new PersistentSession(
                 session.UserID,
                 session.SeriesIdentifier,
                 token,

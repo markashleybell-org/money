@@ -20,7 +20,10 @@ namespace money.web.Controllers
             IUnitOfWork unitOfWork,
             IQueryHelper db,
             IRequestContext context)
-            : base(unitOfWork, db, context)
+            : base(
+                  unitOfWork,
+                  db,
+                  context)
         {
             var sql = @"SELECT 
                             *

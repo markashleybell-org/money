@@ -17,8 +17,11 @@ namespace money.web.Controllers
             IQueryHelper db,
             IRequestContext context,
             IPersistentSessionManager persistentSessionManager)
-            : base(unitOfWork, db, context) =>
-            _persistentSessionManager = persistentSessionManager;
+            : base(
+                  unitOfWork,
+                  db,
+                  context)
+            => _persistentSessionManager = persistentSessionManager;
 
         [OverrideAuthorization]
         public ActionResult Login() => View();

@@ -10,7 +10,8 @@ namespace money.web.Models.Entities
             int? partyID,
             DateTime date,
             decimal amount,
-            string note) => new Entry(
+            string note)
+            => new Entry(
                 id: entry.ID,
                 accountId: entry.AccountID,
                 monthlyBudgetId: entry.MonthlyBudgetID,
