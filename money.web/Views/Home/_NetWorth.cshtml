@@ -1,10 +1,23 @@
 ﻿@model NetWorthViewModel
 
+@functions {
+    string ClassForValue(decimal value)
+    {
+        return value != 0
+            ? value < 0 ? "text-danger" : "text-success"
+            : "text-muted";
+    }
+}
+
 @{
     Layout = null;
 }
 
-<h1 class="account-type-heading">Net Worth: <span class="text-right net-worth-balance @(Model.NetWorth == 0 ? "text-muted" : Model.NetWorth < 0 ? "text-danger" : "text-success")">@Model.NetWorth.ToString("0.00")</span></h1>
+<h1 class="account-type-heading">
+    Net Worth:
+    <span class="text-right net-worth-balance @ClassForValue(Model.NetWorth)">@Model.NetWorth.ToString("0.00")</span>
+    <span class="text-right net-worth-total-balance @ClassForValue(Model.NetWorthTotal)">@Model.NetWorthTotal.ToString("0.00")</span>
+</h1>
 
 <hr />
 
