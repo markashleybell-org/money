@@ -18,7 +18,8 @@ AS
         IsIncludedInNetWorth BIT,
         IsDormant BIT,
         LatestMonthlyBudgetID INT DEFAULT 0,
-        BalanceAtStartOfMonthlyBudget DECIMAL(18,2) DEFAULT 0
+        BalanceAtStartOfMonthlyBudget DECIMAL(18,2) DEFAULT 0,
+        DisplayOrder INT
     )
 
     DECLARE @LatestMonthlyBudgets TABLE (
@@ -190,7 +191,7 @@ AS
     WHERE
         Amount < 0
 
-    SELECT * FROM @Accounts
+    SELECT * FROM @Accounts ORDER BY DisplayOrder
     SELECT * FROM @BudgetCategories ORDER BY AccountID, DisplayOrder
 
 GO

@@ -19,7 +19,8 @@ AS
         IsIncludedInNetWorth BIT, 
         IsDormant BIT, 
         LatestMonthlyBudgetID INT DEFAULT 0, 
-        BalanceAtStartOfMonthlyBudget DECIMAL(18,2) DEFAULT 0
+        BalanceAtStartOfMonthlyBudget DECIMAL(18,2) DEFAULT 0,
+        DisplayOrder INT
     )
 
     INSERT INTO
@@ -33,7 +34,8 @@ AS
         a.IsIncludedInNetWorth,
         a.IsDormant,
         0 AS LatestMonthlyBudgetID,
-        0 AS BalanceAtStartOfMonthlyBudget
+        0 AS BalanceAtStartOfMonthlyBudget,
+        a.DisplayOrder
     FROM   
         Accounts a
     LEFT JOIN
@@ -54,9 +56,9 @@ AS
         a.DisplayOrder
 
     IF @NonZeroBalanceOnly = 1
-        SELECT * FROM @Accounts WHERE CurrentBalance != 0
+        SELECT * FROM @Accounts WHERE CurrentBalance != 0 ORDER BY DisplayOrder
     ELSE
-        SELECT * FROM @Accounts
+        SELECT * FROM @Accounts ORDER BY DisplayOrder
 
 GO
 
