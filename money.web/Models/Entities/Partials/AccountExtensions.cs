@@ -7,6 +7,7 @@
             string name,
             AccountType type,
             decimal startingBalance,
+            int displayOrder,
             bool isIncludedInNetWorth,
             bool isDormant) => new Account(
                 account.ID,
@@ -17,7 +18,7 @@
                 account.IsMainAccount,
                 isIncludedInNetWorth,
                 isDormant,
-                account.DisplayOrder
+                displayOrder
             );
     }
 }

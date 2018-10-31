@@ -11,11 +11,13 @@ namespace money.web.Models
 
         public bool IsMainAccount { get; set; }
 
-        public bool IncludeInNetWorth { get; set; }
-
+        [Display(Name = "Display order")]
         public int DisplayOrder { get; set; }
 
         [Display(Name = "Starting balance")]
         public decimal StartingBalance { get; set; }
+
+        [Display(Name = "Include balance in net worth")]
+        public bool IncludeInNetWorth { get; set; }
     }
 }
