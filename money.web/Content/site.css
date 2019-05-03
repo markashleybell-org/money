@@ -131,12 +131,13 @@ body {
     font-size: 11px;
     color: #969696;
     text-transform: uppercase;
-    padding: 10px 0 2px 0;
+    padding: 0 0 2px 0;
     font-weight: bold;
+    margin: 12px 0 5px 0;
 }
 
 .well.net-worth {
-    padding: 10px 15px 15px 15px;
+    padding: 0 15px 15px 15px;
 }
 
 .net-worth-total {
