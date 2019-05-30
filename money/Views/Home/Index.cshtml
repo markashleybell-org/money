@@ -1,7 +1,15 @@
-﻿@{
+﻿@model IndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <p>Index View</p>
 
 <p class="test"></p>
+
+<p>@Model.RequestContext.RequestUrl</p>
+
+<p>@Model.UnitOfWork.ConnectionString</p>
+
+<p>@Model.TestData</p>

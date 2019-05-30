@@ -5,15 +5,19 @@
         <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
         <TypeScriptToolsVersion>3.4.5</TypeScriptToolsVersion>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Dapper" Version="1.60.6" />
+        <PackageReference Include="Dapper.Contrib" Version="1.60.1" />
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
         <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.4.5">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     </ItemGroup>
 
 </Project>

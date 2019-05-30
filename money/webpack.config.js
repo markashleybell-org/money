@@ -2,7 +2,6 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-    // Specify the output file name and location
     output: {
         filename: '[name].js',
         path: __dirname + '/wwwroot/js/dist',
@@ -11,10 +10,8 @@ module.exports = {
     entry: {
         'site': './wwwroot/js/site.ts'
     },
-    // Enable sourcemaps for debugging webpack's output
     devtool: 'source-map',
     plugins: [
-        // Remove the output folder before build
         new CleanWebpackPlugin(),
         // This automatically adds aliases to the application scope for the specified packages
         // So packages which look for the 'jQuery' global alias still work within our app closure
@@ -24,7 +21,6 @@ module.exports = {
         })
     ],
     resolve: {
-        // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: ['.ts', '.tsx', '.js', '.json'],
         alias: {
             'handlebars': 'handlebars/dist/handlebars.js'
