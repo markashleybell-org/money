@@ -1,0 +1,16 @@
+﻿@model DateTime
+
+@{
+
+    var par = new {
+        @class = "form-control date-picker" + ((ViewData["class"] != null) ? " " + ViewData["class"] : ""),
+
+        // TODO: What's the .NET Core equivalent here?
+        // id = (ViewData["id"] != null) ? ViewData["id"] : ViewData.TemplateInfo.GetFullHtmlFieldId(""),
+
+        type = "date"
+    };
+
+}
+
+@Html.TextBox("", Model.ToString("dd/MM/yyyy"), par)

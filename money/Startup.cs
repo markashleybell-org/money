@@ -22,6 +22,8 @@ namespace money
 
             services.Configure<Settings>(Configuration);
 
+            services.AddScoped<ViewRenderer>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(connectionString));
             services.AddScoped<IQueryHelper, QueryHelper>();
             services.AddScoped<IRequestContext, RequestContext>();

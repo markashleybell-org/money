@@ -100,5 +100,23 @@ namespace money.Entities
         public string Note { get; private set; }
 
         public Guid? TransferGUID { get; private set; }
+
+        public Entry WithUpdates(
+            int? categoryID,
+            int? partyID,
+            DateTime date,
+            decimal amount,
+            string note)
+            => new Entry(
+                id: ID,
+                accountId: AccountID,
+                monthlyBudgetId: MonthlyBudgetID,
+                categoryId: categoryID,
+                partyId: partyID,
+                date: date,
+                amount: amount,
+                note: note,
+                transferGuid: TransferGUID
+            );
     }
 }

@@ -6,6 +6,12 @@ namespace money.Entities
     [d.Table("Categories")]
     public partial class Category : IEntity
     {
+        public Category(int accountID, string name)
+        {
+            AccountID = accountID;
+            Name = name;
+        }
+
         public Category(
             int id,
             int accountId,
@@ -27,5 +33,13 @@ namespace money.Entities
         public string Name { get; private set; }
 
         public int DisplayOrder { get; private set; }
+
+        public Category WithUpdates(string name) =>
+            new Category(
+                ID,
+                AccountID,
+                name,
+                DisplayOrder
+            );
     }
 }

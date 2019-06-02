@@ -1,0 +1,16 @@
+﻿@model MonthlyBudgetCategoryViewModel
+
+@{ 
+    // TODO: What's the .NET Core equivalent here?
+    // var fieldID = ViewData.TemplateInfo.GetFullHtmlFieldId("CategoryID");
+
+    var fieldID = "TEMP";
+}
+
+<div class="form-group">
+    <label for="@fieldID" class="col-sm-5 control-label">@Model.Name</label>
+    <div class="col-sm-4">
+        @Html.HiddenFor(x => x.CategoryID)
+        @Html.EditorFor(x => x.Amount)
+    </div>
+</div>

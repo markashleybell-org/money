@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using money.Entities;
 
 namespace money.Support
@@ -17,10 +18,6 @@ namespace money.Support
 
         int InsertOrUpdate<T>(T dto)
             where T : class, IEntity;
-
-        IEnumerable<T> Query<T>(Func<IDbConnection, IDbTransaction, IEnumerable<T>> body);
-
-        T Query<T>(Func<IDbConnection, IDbTransaction, T> body);
 
         IEnumerable<T> Query<T>(Func<IDbConnection, IEnumerable<T>> body);
 

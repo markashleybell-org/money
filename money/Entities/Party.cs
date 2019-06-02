@@ -29,5 +29,13 @@ namespace money.Entities
 
         [StringLength(64)]
         public string Name { get; private set; }
+
+        public Party WithUpdates(
+            string name)
+            => new Party(
+                id: ID,
+                accountId: AccountID,
+                name: name
+            );
     }
 }

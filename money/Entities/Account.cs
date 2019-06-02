@@ -67,5 +67,23 @@ namespace money.Entities
         public bool IsDormant { get; private set; }
 
         public int DisplayOrder { get; private set; }
+
+        public Account WithUpdates(
+            string name,
+            AccountType type,
+            decimal startingBalance,
+            int displayOrder,
+            bool isIncludedInNetWorth,
+            bool isDormant) => new Account(
+                ID,
+                UserID,
+                name,
+                type,
+                startingBalance,
+                IsMainAccount,
+                isIncludedInNetWorth,
+                isDormant,
+                displayOrder
+            );
     }
 }

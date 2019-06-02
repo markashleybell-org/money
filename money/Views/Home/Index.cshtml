@@ -2,14 +2,48 @@
 
 @{
     ViewData["Title"] = "Home Page";
+
+    var netWorthModel = new NetWorthViewModel {
+        Accounts = Model.NetWorthAccounts
+    };
 }
 
-<p>Index View</p>
+<div id="net-worth">
+    <partial name="_NetWorth" model="netWorthModel" />
+</div>
 
-<p class="test"></p>
+@foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type).OrderBy(a => a.Key))
+{
+    <h1 class="account-type-heading">@typeGroup.Key.GetDisplayName()</h1>
 
-<p>@Model.RequestContext.RequestUrl</p>
+    foreach (var account in typeGroup)
+    {
+        <div id="account-@account.ID" class="account">
+            <partial name="_Account" model="account" />
+        </div>
+    }
+}
 
-<p>@Model.UnitOfWork.ConnectionString</p>
 
-<p>@Model.TestData</p>
+<!-- Add Entry Modal -->
+<div class="modal fade" id="add-entry-modal" tabindex="-1" role="dialog" aria-labelledby="add-entry-modal-label">
+    @using (Html.BeginForm("Create", "Entries", FormMethod.Post, new { id = "add-entry-form" }))
+    {
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add-entry-modal-label">New Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Content -->
+                </div>
+                <div class="modal-footer">
+                    <div class="load-indicator btn-height"><img src="~/img/ajax-loader-dark.gif" class="load-indicator-hidden" /></div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -38,20 +38,6 @@ namespace money.Support
             }
         }
 
-        public T Query<T>(Func<IDbConnection, IDbTransaction, T> body)
-        {
-            var transaction = _unitOfWork.GetTransaction();
-
-            return body(transaction.Connection, transaction);
-        }
-
-        public IEnumerable<T> Query<T>(Func<IDbConnection, IDbTransaction, IEnumerable<T>> body)
-        {
-            var transaction = _unitOfWork.GetTransaction();
-
-            return body(transaction.Connection, transaction);
-        }
-
         public void Execute(Action<IDbConnection, IDbTransaction> body)
         {
             var transaction = _unitOfWork.GetTransaction();

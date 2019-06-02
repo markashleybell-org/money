@@ -36,5 +36,15 @@ namespace money.Entities
         public DateTime StartDate { get; private set; }
 
         public DateTime EndDate { get; private set; }
+
+        public MonthlyBudget WithUpdates(
+            DateTime startDate,
+            DateTime endDate)
+            => new MonthlyBudget(
+                id: ID,
+                accountId: AccountID,
+                startDate: startDate,
+                endDate: endDate
+            );
     }
 }

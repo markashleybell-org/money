@@ -1,0 +1,23 @@
+﻿@model CreateCategoryViewModel
+
+@{
+    ViewBag.Title = "Create Category";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Create Category</h1>
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                @Html.LabelFor(x => x.AccountID)
+                @Html.DropDownListFor(x => x.AccountID, Model.Accounts, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Name)
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        }
+    </div>
+</div>

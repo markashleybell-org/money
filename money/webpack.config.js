@@ -8,7 +8,7 @@ module.exports = {
         library: 'Money'
     },
     entry: {
-        'site': './wwwroot/js/site.ts'
+        'money': './wwwroot/js/money.ts'
     },
     devtool: 'source-map',
     plugins: [
