@@ -24,5 +24,8 @@ namespace money.Entities
 
         [StringLength(2048)]
         public string Password { get; private set; }
+
+        public void SetPassword(string password) =>
+            Password = password;
     }
 }

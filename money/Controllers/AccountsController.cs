@@ -13,13 +13,11 @@ namespace money.web.Controllers
         public AccountsController(
             IOptionsMonitor<Settings> optionsMonitor,
             IUnitOfWork unitOfWork,
-            IQueryHelper db,
-            IRequestContext ctx)
+            IQueryHelper db)
             : base(
                   optionsMonitor,
                   unitOfWork,
-                  db,
-                  ctx)
+                  db)
         {
         }
 

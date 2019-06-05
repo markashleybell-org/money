@@ -35,11 +35,6 @@ namespace money.Support
             where T : ControllerBase =>
                 new RedirectToRouteResult(GetRouteValuesFor(action));
 
-        // TODO: Translate this
-        //public static string Url<T>(Expression<Func<T, IActionResult>> action)
-        //    where T : ControllerBase =>
-        //        new UrlHelper(HttpContext.Current.Request.RequestContext).RouteUrl(GetRouteValuesFor(action));
-
         public static IEnumerable<SelectListItem> TypesSelectListItems(EntryType entryTypes, Func<IEnumerable<Account>> accountList)
         {
             var types = Enum.GetNames(typeof(EntryType)).Where(n => n != EntryType.Transfer.ToString())

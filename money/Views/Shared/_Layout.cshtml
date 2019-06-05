@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -29,8 +31,16 @@
                         <a class="nav-link" asp-controller="Parties" asp-action="Index">Parties</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Users" asp-action="Login">Log In</a>
-                        @*<a class="nav-link" asp-controller="Users" asp-action="Login">Log Out</a>*@
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var id = User.Claims.Single(c => c.Type == ClaimTypes.Sid).Value;
+
+                            <a class="nav-link" asp-controller="Users" asp-action="Logout">Log Out (ID: @id)</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link" asp-controller="Users" asp-action="Login">Log In</a>
+                        }
                     </li>
                 </ul>
             </div>

@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,16 +20,33 @@ namespace money
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetValue<string>("ConnectionString");
+            var authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
             services.AddHttpContextAccessor();
 
             services.Configure<Settings>(Configuration);
 
+            services.Configure<CookiePolicyOptions>(options => {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.Strict;
+                options.HttpOnly = HttpOnlyPolicy.Always;
+                options.Secure = CookieSecurePolicy.Always;
+            });
+
+            services.AddAuthentication(authenticationScheme)
+                .AddCookie(authenticationScheme, options =>
+                {
+                    options.LoginPath = "/users/login";
+                    options.LogoutPath = "/users/logout";
+
+                    // options.AccessDeniedPath = "????";
+                });
+
             services.AddScoped<ViewRenderer>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(connectionString));
             services.AddScoped<IQueryHelper, QueryHelper>();
-            services.AddScoped<IRequestContext, RequestContext>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -42,7 +62,11 @@ namespace money
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseCookiePolicy();
+
+            app.UseAuthentication();
+
             app.UseMvcWithDefaultRoute();
         }
     }

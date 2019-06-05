@@ -24,13 +24,11 @@ namespace money.web.Controllers
             IOptionsMonitor<Settings> optionsMonitor,
             IUnitOfWork unitOfWork,
             IQueryHelper db,
-            IRequestContext ctx,
             ViewRenderer viewRenderer)
             : base(
                   optionsMonitor,
                   unitOfWork,
-                  db,
-                  ctx)
+                  db)
         {
             _viewRenderer = viewRenderer;
 
