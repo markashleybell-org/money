@@ -1,10 +1,7 @@
 ﻿@model MonthlyBudgetCategoryViewModel
 
 @{ 
-    // TODO: What's the .NET Core equivalent here?
-    // var fieldID = ViewData.TemplateInfo.GetFullHtmlFieldId("CategoryID");
-
-    var fieldID = "TEMP";
+    var fieldID = Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName(nameof(Model.CategoryID)));
 }
 
 <div class="form-group">

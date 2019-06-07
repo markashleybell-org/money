@@ -4,9 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 using money.Entities;
 using static money.Support.Globals;
@@ -23,6 +25,8 @@ namespace money.Support
                         return ce.Value;
                     case MemberExpression me:
                         return me.GetValue();
+                    case UnaryExpression ue:
+                        return (ue.Operand as MemberExpression).GetValue();
                 }
 
                 return null;

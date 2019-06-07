@@ -5,8 +5,7 @@
     var par = new {
         @class = "form-control date-picker" + ((ViewData["class"] != null) ? " " + ViewData["class"] : ""),
 
-        // TODO: What's the .NET Core equivalent here?
-        // id = (ViewData["id"] != null) ? ViewData["id"] : ViewData.TemplateInfo.GetFullHtmlFieldId(""),
+        id = (ViewData["id"] != null) ? ViewData["id"] : Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName("")),
 
         type = "date"
     };
