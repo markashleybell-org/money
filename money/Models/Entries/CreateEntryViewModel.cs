@@ -7,20 +7,16 @@ namespace money.Models
 {
     public class CreateEntryViewModel
     {
-        [Display(Name = "Account")]
         public int AccountID { get; set; }
 
-        [Display(Name = "Category")]
         public int? CategoryID { get; set; }
 
-        [Display(Name = "Party")]
         public int? PartyID { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; } = DateTime.Now;
 
-        [Display(Name = "Transaction Type")]
         public string Type { get; set; }
 
         public decimal Amount { get; set; }

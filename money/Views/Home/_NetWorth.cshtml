@@ -28,10 +28,10 @@
         if (!accountGroup.Key)
         {
             <div class="row row-budget">
-                <div class="col-xs-8">
+                <div class="col-sm-8">
                     <h1 class="net-worth-header">Excluded From Net Worth</h1>
                 </div>
-                <div class="col-xs-4 text-right">
+                <div class="col-sm-4 text-right">
                     <h1 class="net-worth-header">@accountGroup.Sum(a => a.CurrentBalance)</h1>
                 </div>
             </div>
@@ -39,10 +39,10 @@
             foreach (var account in accountGroup)
             {
                 <div class="row row-budget">
-                    <div class="col-xs-8">
+                    <div class="col-sm-8">
                         @account.Name
                     </div>
-                    <div class="col-xs-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
+                    <div class="col-sm-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
                         @account.CurrentBalance
                     </div>
                 </div>
@@ -53,10 +53,10 @@
             foreach (var group in accountGroup.GroupBy(a => a.Type))
             {
                 <div class="row row-budget">
-                    <div class="col-xs-8">
+                    <div class="col-sm-8">
                         <h1 class="net-worth-header">@group.Key</h1>
                     </div>
-                    <div class="col-xs-4 text-right">
+                    <div class="col-sm-4 text-right">
                         <h1 class="net-worth-header">@group.Sum(a => a.CurrentBalance)</h1>
                     </div>
                 </div>
@@ -64,10 +64,10 @@
                 foreach (var account in group)
                 {
                     <div class="row row-budget">
-                        <div class="col-xs-8">
+                        <div class="col-sm-8">
                             @account.Name
                         </div>
-                        <div class="col-xs-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
+                        <div class="col-sm-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
                             @account.CurrentBalance
                         </div>
                     </div>

@@ -4,8 +4,8 @@
     var fieldID = Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName(nameof(Model.CategoryID)));
 }
 
-<div class="form-group">
-    <label for="@fieldID" class="col-sm-5 control-label">@Model.Name</label>
+<div class="form-group row">
+    <label for="@fieldID" class="col-sm-3 col-form-label">@Model.Name</label>
     <div class="col-sm-4">
         @Html.HiddenFor(x => x.CategoryID)
         @Html.EditorFor(x => x.Amount)

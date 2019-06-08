@@ -6,7 +6,6 @@ namespace money.Models
 {
     public class CreateCategoryViewModel
     {
-        [Display(Name = "Account")]
         public int AccountID { get; set; }
 
         public string Name { get; set; }

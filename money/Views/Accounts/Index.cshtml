@@ -1,14 +1,14 @@
 ﻿@model ListAccountsViewModel
 
-@{
-    ViewBag.Title = "Accounts";
+@section title {
+    <title>Accounts</title>
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col">
         <h1>Accounts</h1>
-        <table class="table table-condensed table-striped">
-            <thead>
+        <table class="table table-sm table-striped">
+            <thead class="thead-light">
                 <tr>
                     <th>Name</th>
                     <th class="text-center">Net Worth</th>
@@ -17,27 +17,27 @@
                     <th class="text-center">Budgets</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type).OrderBy(a => a.Key))
-                {
+            @foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type).OrderBy(a => a.Key))
+            {
+                <thead class="thead-dark">
                     <tr>
                         <th colspan="5">@typeGroup.Key.GetDisplayName()</th>
                     </tr>
-
-                    foreach (var account in typeGroup)
+                </thead>
+                <tbody>
+                    @foreach (var account in typeGroup)
                     {
                         <tr class="@(account.IsDormant ? "dormant text-muted" : "")">
                             <td>@account.Name</td>
                             <td class="text-center">@(account.IsIncludedInNetWorth ? "Yes" : "No")</td>
                             <td class="text-center">@(account.IsDormant ? "Yes" : "No")</td>
-                            <td class="text-center">@Html.ActionLink("Edit", "Update", new { id = account.ID })</td>
-                            <td class="text-center">@Html.ActionLink("View", "Index", "MonthlyBudgets", new { id = account.ID }, null)</td>
+                            <td class="text-center"><a asp-action="Update" asp-route-id="@account.ID">Edit</a></td>
+                            <td class="text-center"><a asp-action="Index" asp-controller="MonthlyBudgets" asp-route-id="@account.ID">View</a></td>
                         </tr>
                     }
-                }
-            </tbody>
+                </tbody>
+            }
         </table>
-
-        <p>@Html.ActionLink("New", "Create")</p>
+        <p><a asp-action="Create">New</a></p>
     </div>
 </div>

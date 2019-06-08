@@ -2,78 +2,65 @@
 
 @{
     Layout = null;
+
+    var isCredit = Model.IsCredit ?? false;
 }
 
-<div class="row">
-    <div class="col-md-12">
-        @Html.HiddenFor(x => x.AccountID)
-        @if (Model.Types.Count() == 1)
-        {
-            @Html.HiddenFor(x => x.Type)
-        }
-        else
-        {
-            <div class="form-group">
-                @Html.LabelFor(x => x.Type)
-                @Html.DropDownListFor(x => x.Type, Model.Types, new { @class = "form-control" })
-            </div>
-        }
+<form asp-action="Create" asp-controller="Entries" method="post">
+    <input type="hidden" asp-for="AccountID" />
+    @if (Model.Types.Count() == 1)
+    {
+        <input type="hidden" asp-for="Type" />
+    }
+    else
+    {
         <div class="form-group">
-            @if (Model.IsCredit.HasValue && Model.IsCredit.Value)
-            {
-                <label for="Amount" class="control-label">Credit Amount</label>
-            }
-            else
-            {
-                <label for="Amount" class="control-label">Amount</label>
-            }
-            <div class="row">
-                <div class="col-xs-5">
-                    @Html.EditorFor(x => x.Amount)
-                </div>
-                <div class="col-xs-7">
-                    @if (!Model.IsCredit.HasValue || !Model.IsCredit.Value)
-                    {
-                        <div class="btn-group btn-group-justified" role="group">
-                            <div class="btn-group">
-                                <button class="btn btn-default btn-amount-preset" data-amount="-10.00">£10</button>
-                            </div>
-                            <div class="btn-group">
-                                <button class="btn btn-default btn-amount-preset" data-amount="-20.00">£20</button>
-                            </div>
-                            <div class="btn-group">
-                                <button class="btn btn-default btn-amount-preset" data-amount="@Model.Remaining.ToString("0.00")" @(Model.Remaining == 0 ? "disabled" : "")>All</button>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
+            <label asp-for="Type">Transaction Type</label>
+            <select asp-for="Type" asp-items="Model.Types" class="form-control"></select>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.Date)
-            <div class="row">
-                <div class="col-xs-7">
-                    @Html.EditorFor(x => x.Date)
-                </div>
-                <div class="col-xs-5">
-                    <button class="btn btn-default btn-block btn-date-preset" data-date="@DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd")">Yesterday</button>
-                </div>
-            </div>
+    }
+    <div class="row">
+        <div class="form-group col-sm-5">
+            <label asp-for="Amount">@(isCredit ? "Credit Amount" : "Amount")</label>
+            <editor for="Amount" />
         </div>
-        @if (Model.ShowCategorySelector)
-        {
-            <div class="form-group">
-                @Html.LabelFor(x => x.CategoryID)
-                @Html.DropDownListFor(x => x.CategoryID, Model.Categories, "--", new { @class = "form-control" })
-            </div>
-        }
-        else
-        {
-            @Html.HiddenFor(x => x.CategoryID)
-        }
-        <div class="form-group">
-            @Html.LabelFor(x => x.PartyID)
-            @Html.DropDownListFor(x => x.PartyID, Model.Parties, "--", new { @class = "form-control" })
+        <div class="form-group-nolabel col-sm-7">
+            @if (!isCredit)
+            {
+                <div class="btn-group d-flex" role="group">
+                    <button type="button" class="btn btn-light btn-amount-preset" data-amount="-10.00">£10</button>
+                    <button type="button" class="btn btn-light btn-amount-preset" data-amount="-20.00">£20</button>
+                    <button type="button" class="btn btn-light btn-amount-preset" data-amount="@Model.Remaining.ToString("0.00")" @(Model.Remaining == 0 ? "disabled" : "")>All</button>
+                </div>
+            }
         </div>
     </div>
-</div>
+    <div class="row">
+        <div class="form-group col-sm-7">
+            <label asp-for="Date">Date</label>
+            <editor for="Date" />
+        </div>
+        <div class="form-group-nolabel col-sm-5">
+            <button class="btn btn-light btn-block btn-date-preset" data-date="@DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd")">Yesterday</button>
+        </div>
+    </div>
+    @if (Model.ShowCategorySelector)
+    {
+        <div class="form-group">
+            <label asp-for="CategoryID">Category</label>
+            <select asp-for="CategoryID" asp-items="Model.Categories" class="form-control">
+                <option value="">--</option>
+            </select>
+        </div>
+    }
+    else
+    {
+        <input type="hidden" asp-for="CategoryID" />
+    }
+    <div class="form-group">
+        <label asp-for="PartyID">Party</label>
+        <select asp-for="PartyID" asp-items="Model.Parties" class="form-control">
+            <option value="">--</option>
+        </select>
+    </div>
+</form>

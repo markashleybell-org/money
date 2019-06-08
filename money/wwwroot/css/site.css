@@ -1,3 +1,7 @@
 ﻿body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
+.form-group-nolabel {
+    padding-top: 32px;
+}

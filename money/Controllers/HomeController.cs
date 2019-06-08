@@ -36,8 +36,10 @@ namespace money.Controllers
 
                     return new IndexViewModel
                     {
-                        NetWorthAccounts = netWorthAccounts,
-                        Accounts = accounts.Where(a => !a.IsDormant)
+                        Accounts = accounts.Where(a => !a.IsDormant),
+                        NetWorthViewModel = new NetWorthViewModel {
+                            Accounts = netWorthAccounts
+                        }
                     };
                 }
             });

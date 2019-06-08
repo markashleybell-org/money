@@ -1,27 +1,27 @@
 ﻿@model UpdatePartyViewModel
 
-@{
-    ViewBag.Title = "Update Party";
+@section title {
+    <title>Update Party</title>
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col">
         <h1>Update Party</h1>
-        @using (Html.BeginForm())
-        {
+        <form method="post">
             <div class="form-group">
-                @Html.LabelFor(x => x.Name)
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" class="form-control" />
             </div>
-
-            @Html.HiddenFor(x => x.ID)
             <button type="submit" class="btn btn-primary">Update</button>
-        }
+        </form>
+    </div>
+</div>
 
-        @using (Html.BeginForm("Delete", "Parties"))
-        {
-            @Html.HiddenFor(x => x.ID)
+<div class="row">
+    <div class="col">
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="ID" />
             <button type="submit" class="btn btn-danger">Delete</button>
-        }
+        </form>
     </div>
 </div>

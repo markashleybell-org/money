@@ -1,23 +1,24 @@
 ﻿@model CreatePartyViewModel
 
-@{
-    ViewBag.Title = "Create Party";
+@section title {
+    <title>Create Party</title>
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col">
         <h1>Create Party</h1>
-        @using (Html.BeginForm())
-        {
+        <form method="post">
             <div class="form-group">
-                @Html.LabelFor(x => x.AccountID)
-                @Html.DropDownListFor(x => x.AccountID, Model.Accounts, new { @class = "form-control" })
+                <label asp-for="AccountID">Account</label>
+                <select asp-for="AccountID" asp-items="Model.Accounts" class="form-control">
+                    <option value="">Please select...</option>
+                </select>
             </div>
             <div class="form-group">
-                @Html.LabelFor(x => x.Name)
-                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" class="form-control" />
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
-        }
+        </form>
     </div>
 </div>

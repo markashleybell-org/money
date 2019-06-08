@@ -1,36 +1,37 @@
 ﻿@model ListCategoriesViewModel
 
-@{
-    ViewBag.Title = "Categories";
+@section title {
+    <title>Categories</title>
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col">
         <h1>Categories</h1>
-        <table class="table table-condensed table-striped">
-            <thead>
+        <table class="table table-sm table-striped">
+            <thead class="thead-light">
                 <tr>
                     <th>Name</th>
                     <th class="text-center">Edit</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var accountGroup in Model.Categories)
-                {
+            @foreach (var accountGroup in Model.Categories)
+            {
+                <thead class="thead-dark">
                     <tr>
                         <th colspan="2">@accountGroup.Key</th>
                     </tr>
-
-                    foreach (var category in accountGroup)
+                </thead>
+                <tbody>
+                    @foreach (var category in accountGroup)
                     {
                         <tr>
                             <td>@category.Name</td>
-                            <td class="text-center">@Html.ActionLink("Edit", "Update", new { id = category.ID })</td>
+                            <td class="text-center"><a asp-action="Update" asp-route-id="@category.ID">Edit</a></td>
                         </tr>
                     }
-                }
-            </tbody>
+                </tbody>
+            }
         </table>
-        @Html.ActionLink("New", "Create")
+        <p><a asp-action="Create">New</a></p>
     </div>
 </div>

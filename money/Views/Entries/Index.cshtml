@@ -1,36 +1,37 @@
 ﻿@model ListEntriesViewModel
 
-@{
-    ViewBag.Title = "Entries";
+@section title {
+    <title>Entries</title>
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col">
         <h1>@(Model?.Entries?.FirstOrDefault()?.FirstOrDefault()?.Account)</h1>
-        <table class="table table-condensed table-striped">
-            <thead>
+        <table class="table table-sm table-striped">
+            <thead class="thead-light">
                 <tr>
                     <th>Category/Party</th>
                     <th class="text-right">Amount</th>
                     <th class="text-right"></th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var group in Model.Entries)
-                {
+            @foreach (var group in Model.Entries)
+            {
+                <thead class="thead-dark">
                     <tr>
                         <th>@group.Key.ToString("dd/MM/yyyy")</th>
                         <th class="text-right">@*@group.Sum(g => g.Amount).ToString("0.00")*@</th>
                         <th></th>
                     </tr>
-
-                    foreach (var entry in group)
+                </thead>
+                <tbody>
+                    @foreach (var entry in group)
                     {
                         var party = entry.Party;
 
                         var category = string.IsNullOrWhiteSpace(entry.Category)
                                      ? null
-                                     : string.IsNullOrWhiteSpace(entry.Party)
+                                     : string.IsNullOrWhiteSpace(party)
                                      ? entry.Category
                                      : $"({entry.Category})";
 
@@ -42,11 +43,11 @@
                         <tr>
                             <td>@partyAndCategory</td>
                             <td class="text-right">@entry.Amount.ToString("0.00")</td>
-                            <td class="text-right">@Html.ActionLink("Edit", "Update", new { id = entry.ID })</td>
+                            <td class="text-right"><a asp-action="Update" asp-route-id="@entry.ID">Edit</a></td>
                         </tr>
                     }
-                }
-            </tbody>
+                </tbody>
+            }
         </table>
     </div>
 </div>

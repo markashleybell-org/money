@@ -75,9 +75,9 @@ namespace money.Support
         {
             var methodCallExpression = action.Body as MethodCallExpression;
 
-            if (methodCallExpression == null || methodCallExpression.Method.ReturnType != typeof(ActionResult))
+            if (methodCallExpression == null || !methodCallExpression.Method.ReturnType.IsAssignableFrom(typeof(IActionResult)))
             {
-                throw new ArgumentException("Redirect action must be a method call which returns an ActionResult", nameof(action));
+                throw new ArgumentException("Redirect action must be a method call which returns IActionResult", nameof(action));
             }
 
             var controllerName = methodCallExpression.Object.Type.Name.Replace(CONTROLLER_SUFFIX, string.Empty);

@@ -1,13 +1,13 @@
 ﻿@model ListMonthlyBudgetsViewModel
 
-@{
-    ViewBag.Title = "Monthly Budgets";
+@section title {
+    <title>Monthly Budgets</title>
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col">
         <h1>Monthly Budgets</h1>
-        <table class="table table-condensed table-striped">
+        <table class="table table-sm table-striped">
             <thead>
                 <tr>
                     <th>Start</th>
@@ -22,12 +22,12 @@
                     <tr>
                         <td>@monthlyBudget.StartDate.ToString("dd/MM/yyyy")</td>
                         <td>@monthlyBudget.EndDate.ToString("dd/MM/yyyy")</td>
-                        <td class="text-center">@Html.ActionLink("Edit", "Update", new { id = monthlyBudget.ID })</td>
-                        <td class="text-center">@Html.ActionLink("Copy", "Copy", new { id = monthlyBudget.ID })</td>
+                        <td class="text-center"><a asp-action="Update" asp-route-id="@monthlyBudget.ID">Edit</a></td>
+                        <td class="text-center"><a asp-action="Copy" asp-route-id="@monthlyBudget.ID">Copy</a></td>
                     </tr>
                 }
             </tbody>
         </table>
-        <p>@Html.ActionLink("New", "Create", new { id = Model.AccountID })</p>
+        <p><a asp-action="Create" asp-route-id="@Model.AccountID">New</a></p>
     </div>
 </div>

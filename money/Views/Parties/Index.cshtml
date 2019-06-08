@@ -1,36 +1,37 @@
 ﻿@model ListPartiesViewModel
 
-@{
-    ViewBag.Title = "Parties";
+@section title {
+    <title>Parties</title>
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col">
         <h1>Parties</h1>
-        <table class="table table-condensed table-striped">
-            <thead>
+        <table class="table table-sm table-striped">
+            <thead class="thead-light">
                 <tr>
                     <th>Name</th>
                     <th class="text-center">Edit</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var partyGroup in Model.Parties)
-                {
+            @foreach (var partyGroup in Model.Parties)
+            {
+                <thead class="thead-dark">
                     <tr>
                         <th colspan="2">@partyGroup.Key</th>
                     </tr>
-
-                    foreach (var party in partyGroup)
+                </thead>
+                <tbody>
+                    @foreach (var party in partyGroup)
                     {
                         <tr>
                             <td>@party.Name</td>
-                            <td class="text-center">@Html.ActionLink("Edit", "Update", new { id = party.ID })</td>
+                            <td class="text-center"><a asp-action="Update" asp-route-id="@party.ID">Edit</a></td>
                         </tr>
                     }
-                }
-            </tbody>
+                </tbody>
+            }
         </table>
-        @Html.ActionLink("New", "Create")
+        <p><a asp-action="Create">New</a></p>
     </div>
 </div>

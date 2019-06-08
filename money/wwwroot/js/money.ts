@@ -38,6 +38,27 @@ $.ajaxSetup({
     cache: false
 });
 
+modal.on('click', '.btn-primary', e => {
+    e.preventDefault();
+
+    showLoader();
+
+    const form = modalContent.find('form');
+
+    xhr(Method.POST, ADD_ENTRY_URL, form.serialize(), response => {
+        hideLoader();
+
+        if (!response.ok) {
+            alert('Form Invalid');
+        } else {
+            response.updated.forEach((u: any) => $('#account-' + u.id).html(u.html));
+            netWorth.load(NET_WORTH_URL);
+            modal.modal('hide');
+            setTimeout(() => $('.progress-bar').removeClass('updated'), 1000);
+        }
+    });
+});
+
 $(document).on('click', '.btn-add-entry', e => {
     e.preventDefault();
 
@@ -73,27 +94,6 @@ $(document).on('click', '.btn-add-entry', e => {
         modalContent.html(html);
         modal.modal('show');
         hideLoader();
-    });
-});
-
-$(document).on('submit', '#add-entry-form', e => {
-    e.preventDefault();
-
-    showLoader();
-
-    const form = $(e.currentTarget);
-
-    xhr(Method.POST, ADD_ENTRY_URL, form.serialize(), response => {
-        hideLoader();
-
-        if (!response.ok) {
-            alert('Form Invalid');
-        } else {
-            response.updated.forEach((u: any) => $('#account-' + u.id).html(u.html));
-            netWorth.load(NET_WORTH_URL);
-            modal.modal('hide');
-            setTimeout(() => $('.progress-bar').removeClass('updated'), 1000);
-        }
     });
 });
 

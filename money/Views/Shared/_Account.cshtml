@@ -4,19 +4,21 @@
     Layout = null;
 
     var hasBudget = Model.Categories.Count() > 0;
+    var isCredit = hasBudget.ToString().ToLower();
 }
 
 <div class="row row-account">
-    <div class="col-xs-12">
+    <div class="col-sm-12">
         <hr />
     </div>
-    <div class="col-xs-6">
-        <h1>@Html.ActionLink(Model.Name, "Index", "Entries", new { id = Model.ID }, new { @class = "btn-height" })</h1>
+    <div class="col-sm-6">
+        <h1>
+        <a asp-action="Index" asp-controller="Entries" asp-route-id="@Model.ID">@Model.Name</a></h1>
     </div>
-    <div class="col-xs-4 text-right">
+    <div class="col-sm-4 text-right">
         <span class="btn-height account-balance">@Model.CurrentBalance.ToString("0.00")</span>
     </div>
-    <div class="col-xs-2 text-right">
+    <div class="col-sm-2 text-right">
         <button data-accountid="@Model.ID" data-accountname="@Model.Name" @Html.Raw(hasBudget ? "data-iscredit=\"true\"" : "") data-remaining="@Model.CurrentBalance" class="btn btn-primary btn-add-entry"><i class="fa fa-plus"></i></button>
     </div>
 </div>
@@ -26,17 +28,16 @@
     foreach (var category in Model.Categories)
     {
         <div class="row row-budget">
-    
-            <div class="col-xs-10">
+            <div class="col-sm-10">
                 <div class="progress">
                     <span class="category-name">@category.Name</span>
                     <span class="category-remaining">@((-category.Remaining).ToString("0.00"))</span>
-                    <div class="progress-bar progress-bar-@(category.Remaining <= 0 ? "success" : "danger") @(Model.UpdatedCategoryID == category.ID ? "updated" : "")" role="progressbar" aria-valuenow="@category.PercentageSpent" aria-valuemin="0" aria-valuemax="100" style="width: @(category.PercentageSpent > 100 ? 100 : category.PercentageSpent)%">
+                    <div class="progress-bar bg-@(category.Remaining <= 0 ? "success" : "danger") @(Model.UpdatedCategoryID == category.ID ? "updated" : "")" role="progressbar" aria-valuenow="@category.PercentageSpent" aria-valuemin="0" aria-valuemax="100" style="width: @(category.PercentageSpent > 100 ? 100 : category.PercentageSpent)%">
                         <span class="sr-only">@category.PercentageSpent%</span>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-2 text-right">
+            <div class="col-sm-2 text-right">
                 <button data-accountid="@Model.ID" data-accountname="@Model.Name" data-iscredit="false" data-categoryid="@category.ID" data-categoryname="@category.Name" data-remaining="@category.Remaining" class="btn btn-primary btn-add-entry"><i class="fa fa-minus"></i></button>
             </div>
         </div>

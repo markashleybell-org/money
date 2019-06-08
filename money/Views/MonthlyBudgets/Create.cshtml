@@ -1,30 +1,24 @@
 ﻿@model CreateMonthlyBudgetViewModel
 
-@{
-    ViewBag.Title = "Create Monthly Budget";
+@section title {
+    <title>Create Monthly Budget</title>
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col">
         <h1>Create Monthly Budget</h1>
-        @using (Html.BeginForm("Create", "MonthlyBudgets"))
-        {
+        <form method="post">
             <div class="form-group">
-                @Html.LabelFor(x => x.StartDate)
-                @Html.EditorFor(x => x.StartDate)
+                <label asp-for="StartDate">Start budget on</label>
+                <editor for="StartDate" />
             </div>
-
             <div class="form-group">
-                @Html.LabelFor(x => x.EndDate)
-                @Html.EditorFor(x => x.EndDate)
+                <label asp-for="EndDate">End budget on</label>
+                <editor for="EndDate" />
             </div>
-
-            <div class="form-horizontal">
-                @Html.EditorFor(x => x.Categories)
-            </div>
-
-            @Html.HiddenFor(x => x.AccountID)
+            <editor for="Categories" />
+            <input type="hidden" asp-for="AccountID" />
             <button type="submit" class="btn btn-primary">Create</button>
-        }
+        </form>
     </div>
 </div>
