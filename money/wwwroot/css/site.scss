@@ -9,25 +9,25 @@ body {
 .row-account {
     margin-top: 10px;
     padding-top: 0;
-}
+    
+    hr {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
 
-.row-account hr {
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.row-account h1 {
-    margin: 0;
-    font-size: 14px;
-    font-weight: bold;
+    h1 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: bold;
+    }
 }
 
 .row-budget {
     margin-top: 5px;
-}
 
-.row-budget [class^="col-"]:first-child {
-    padding-right: 0;
+    [class^="col-"]:first-child {
+        padding-right: 0;
+    }
 }
 
 .row-budget-lg {
@@ -42,13 +42,13 @@ body {
     position: relative;
     margin-bottom: 0;
     height: 34px;
-}
 
-.progress span {
-    line-height: 34px;
-    position: absolute;
-    top: 0;
-    left: 15px;
+    span {
+        line-height: 34px;
+        position: absolute;
+        top: 0;
+        left: 15px;
+    }
 }
 
 .category-name {
@@ -63,11 +63,11 @@ body {
 }
 
 .progress-bar {
-    transition: background-color 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
+    transition: background-color 3s cubic-bezier(0.910, 0.065, 0.950, 0.540);
 }
 
 .updated {
-    transition: background-color 0 cubic-bezier(0.91, 0.065, 0.95, 0.54);
+    transition: background-color 0 cubic-bezier(0.910, 0.065, 0.950, 0.540);
     background-color: #ff6a00;
 }
 
@@ -79,6 +79,7 @@ body {
     line-height: 1.42857143;
     white-space: nowrap;
     vertical-align: middle;
+    -ms-touch-action: manipulation;
     touch-action: manipulation;
     cursor: pointer;
     -webkit-user-select: text;
@@ -115,10 +116,10 @@ body {
 
 #net-worth {
     margin-top: 15px;
-}
 
-#net-worth hr {
-    margin-top: 0;
+    hr {
+        margin-top: 0;
+    }
 }
 
 .net-worth-header {
