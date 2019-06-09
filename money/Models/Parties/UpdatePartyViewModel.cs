@@ -1,4 +1,4 @@
-﻿namespace money.Models
+namespace money.Models
 {
     public class UpdatePartyViewModel
     {

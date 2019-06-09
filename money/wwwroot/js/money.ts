@@ -1,4 +1,4 @@
-﻿declare var ADD_ENTRY_URL: string;
+declare var ADD_ENTRY_URL: string;
 declare var NET_WORTH_URL: string;
 
 enum Method {

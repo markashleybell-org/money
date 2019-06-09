@@ -1,4 +1,4 @@
-﻿const ProvidePlugin = require('webpack').ProvidePlugin;
+const ProvidePlugin = require('webpack').ProvidePlugin;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {

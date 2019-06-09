@@ -1,4 +1,4 @@
-﻿/// <binding ProjectOpened='watch' />
+/// <binding ProjectOpened='watch-scss' />
 
 const gulp = require('gulp');
 const sass = require('gulp-sass');

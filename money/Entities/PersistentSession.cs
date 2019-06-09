@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using d = Dapper.Contrib.Extensions;
 using static money.Support.Globals;

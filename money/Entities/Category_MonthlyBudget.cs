@@ -1,4 +1,4 @@
-﻿using d = Dapper.Contrib.Extensions;
+using d = Dapper.Contrib.Extensions;
 
 namespace money.Entities
 {

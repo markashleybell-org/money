@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using d = Dapper.Contrib.Extensions;
 
 namespace money.Entities

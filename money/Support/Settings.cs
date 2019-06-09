@@ -1,4 +1,4 @@
-﻿namespace money.Support
+namespace money.Support
 {
     public class Settings
     {
