@@ -10,7 +10,7 @@
 
 @foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type).OrderBy(a => a.Key))
 {
-    <h1 class="account-type-heading">@typeGroup.Key.GetDisplayName()</h1>
+    <h1 class="account-type">@typeGroup.Key.GetDisplayName()</h1>
 
     foreach (var account in typeGroup)
     {
@@ -19,7 +19,6 @@
         </div>
     }
 }
-
 
 <!-- Add Entry Modal -->
 <div class="modal fade" id="add-entry-modal" tabindex="-1" role="dialog" aria-labelledby="add-entry-modal-label">
@@ -34,8 +33,8 @@
             <div class="modal-body">
                 <!-- Content -->
             </div>
-            <div class="modal-footer">
-                <div class="load-indicator btn-height"><img src="~/img/ajax-loader-dark.gif" class="load-indicator-hidden" /></div>
+            <div class="modal-footer d-flex align-items-center">
+                <div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Add</button>
             </div>

@@ -1,4 +1,4 @@
-@using System.Security.Claims
+﻿@using System.Security.Claims
 
 <!DOCTYPE html>
 <html>
@@ -36,7 +36,7 @@
                         {
                             var id = User.Claims.Single(c => c.Type == ClaimTypes.Sid).Value;
 
-                            <a class="nav-link" asp-controller="Users" asp-action="Logout">Log Out (ID: @id)</a>
+                            <a class="nav-link" asp-controller="Users" asp-action="Logout">Log Out</a>
                         }
                         else
                         {

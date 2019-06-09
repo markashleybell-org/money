@@ -1,65 +1,76 @@
+$horizontal-gutter: 10px;
+$horizontal-gutter-double: $horizontal-gutter * 2;
+$vertical-gutter: 10px;
+$vertical-gutter-half: $vertical-gutter / 2;
+$vertical-gutter-double: $vertical-gutter * 2;
+$divider-border: solid 1px #e0e0e0;
+$progress-bar-padding: 14px;
+
 body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.body-content {
+    padding-top: $vertical-gutter-double;
+    padding-bottom: $vertical-gutter-double + $vertical-gutter;
 }
 
 .form-group-nolabel {
     padding-top: 32px;
 }
 
-.row-account {
-    margin-top: 10px;
-    padding-top: 0;
-    
-    hr {
-        margin-top: 0;
-        margin-bottom: 10px;
-    }
+.account {
+    padding-bottom: $vertical-gutter;
+    margin-bottom: $vertical-gutter;
+    border-bottom: $divider-border;
 
-    h1 {
-        margin: 0;
-        font-size: 14px;
-        font-weight: bold;
+    .row {
+        padding-top: $vertical-gutter-half;
+        padding-bottom: $vertical-gutter-half;
     }
 }
 
-.row-budget {
-    margin-top: 5px;
-
-    [class^="col-"]:first-child {
-        padding-right: 0;
-    }
+.account-type {
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: $vertical-gutter;
+    margin-top: $vertical-gutter-double;
+    margin-bottom: $vertical-gutter;
+    border-bottom: $divider-border;
 }
 
-.row-budget-lg {
-    font-size: 2em;
+.account-name {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
 }
 
 .account-balance {
     font-weight: bold;
+    padding-right: $progress-bar-padding + $horizontal-gutter-double;
 }
 
 .progress {
     position: relative;
-    margin-bottom: 0;
-    height: 34px;
+    font-size: 1rem;
+    height: auto;
+    margin-right: $horizontal-gutter-double;
 
-    span {
-        line-height: 34px;
+    .overlay {
         position: absolute;
         top: 0;
-        left: 15px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        div {
+            padding: $progress-bar-padding;
+        }
+
+        :last-child {
+            text-align: right;
+        }
     }
-}
-
-.category-name {
-    font-weight: bold;
-}
-
-.category-remaining {
-    font-weight: bold;
-    left: auto;
-    right: 15px;
-    text-align: right;
 }
 
 .progress-bar {
@@ -71,68 +82,37 @@ body {
     background-color: #ff6a00;
 }
 
-.btn-height {
-    display: inline-block;
-    padding: 6px 0;
-    margin-bottom: 0;
-    font-size: 14px;
-    line-height: 1.42857143;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
-    background-image: none;
-    border: 1px solid transparent;
-}
-
-.navbar-header .load-indicator {
-    float: left;
-    padding: 15px;
-    line-height: 20px;
-}
-
-.modal-footer .load-indicator {
-    float: left;
-    padding-left: 5px;
-}
-
-.load-indicator-hidden {
-    visibility: hidden;
-}
-
-.account-type-heading {
-    font-size: 18px;
-    font-weight: bold;
-}
-
 .dormant {
     background-color: #f3f9ff !important;
 }
 
-#net-worth {
-    margin-top: 15px;
+.delete-form {
+    padding-top: $vertical-gutter-double + $vertical-gutter;
+}
 
-    hr {
-        margin-top: 0;
+#net-worth {
+    h1 {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .card {
+        background-color: #f8f8f8;
+        border-color: rgba(175, 175, 175, 0.125);
+    }
+
+    .card-body {
+        padding-top: .5rem;
     }
 }
 
 .net-worth-header {
-    font-size: 11px;
+    font-size: 12px;
     color: #969696;
     text-transform: uppercase;
     padding: 0 0 2px 0;
     font-weight: bold;
     margin: 12px 0 5px 0;
-}
-
-.well.net-worth {
-    padding: 0 15px 15px 15px;
 }
 
 .net-worth-total {
@@ -146,7 +126,6 @@ body {
 .net-worth-total-balance {
     font-weight: normal;
     opacity: 0.6;
-    padding-left: 20px;
     float: right;
 }
 
