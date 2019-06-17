@@ -44,7 +44,7 @@ namespace Money.Controllers
             });
         }
 
-        public IActionResult Create() => 
+        public IActionResult Create() =>
             View(new CreatePartyViewModel {
                 Accounts = AccountsSelectListItems()
             });

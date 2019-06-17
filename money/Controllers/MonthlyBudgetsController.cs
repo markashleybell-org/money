@@ -41,7 +41,7 @@ namespace Money.Controllers
             });
         }
 
-        public IActionResult Create(int id) => 
+        public IActionResult Create(int id) =>
             View(new CreateMonthlyBudgetViewModel {
                 AccountID = id,
                 StartDate = DateTime.Now.FirstDayOfMonth(),
