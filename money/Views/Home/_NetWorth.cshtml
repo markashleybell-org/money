@@ -19,59 +19,56 @@
     <span class="text-right net-worth-total-balance @ClassForValue(Model.NetWorthTotal)">@Model.NetWorthTotal.ToString("0.00")</span>
 </h1>
 
-<div class="card net-worth net-worth-balance-list">
-    <div class="card-body">
-        @foreach (var accountGroup in Model.Accounts.GroupBy(a => a.IsIncludedInNetWorth))
+@foreach (var accountGroup in Model.Accounts.GroupBy(a => a.IsIncludedInNetWorth))
+{
+    if (!accountGroup.Key)
+    {
+        <div class="row">
+            <div class="col-8">
+                <h2 class="net-worth-header">Excluded From Net Worth</h2>
+            </div>
+            <div class="col-4 text-right">
+                <h2 class="net-worth-header">@accountGroup.Sum(a => a.CurrentBalance)</h2>
+            </div>
+        </div>
+
+        foreach (var account in accountGroup)
         {
-            if (!accountGroup.Key)
+            <div class="row">
+                <div class="col-8">
+                    @account.Name
+                </div>
+                <div class="col-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
+                    @account.CurrentBalance
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        foreach (var group in accountGroup.GroupBy(a => a.Type))
+        {
+            <div class="row">
+                <div class="col-8">
+                    <h2 class="net-worth-header">@group.Key</h2>
+                </div>
+                <div class="col-4 text-right">
+                    <h2 class="net-worth-header">@group.Sum(a => a.CurrentBalance)</h2>
+                </div>
+            </div>
+
+            foreach (var account in group)
             {
                 <div class="row">
-                    <div class="col-sm-8">
-                        <h2 class="net-worth-header">Excluded From Net Worth</h2>
+                    <div class="col-8">
+                        @account.Name
                     </div>
-                    <div class="col-sm-4 text-right">
-                        <h2 class="net-worth-header">@accountGroup.Sum(a => a.CurrentBalance)</h2>
+                    <div class="col-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
+                        @account.CurrentBalance
                     </div>
                 </div>
-
-                foreach (var account in accountGroup)
-                {
-                    <div class="row">
-                        <div class="col-sm-8">
-                            @account.Name
-                        </div>
-                        <div class="col-sm-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
-                            @account.CurrentBalance
-                        </div>
-                    </div>
-                }
-            }
-            else
-            {
-                foreach (var group in accountGroup.GroupBy(a => a.Type))
-                {
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <h2 class="net-worth-header">@group.Key</h2>
-                        </div>
-                        <div class="col-sm-4 text-right">
-                            <h2 class="net-worth-header">@group.Sum(a => a.CurrentBalance)</h2>
-                        </div>
-                    </div>
-
-                    foreach (var account in group)
-                    {
-                        <div class="row">
-                            <div class="col-sm-8">
-                                @account.Name
-                            </div>
-                            <div class="col-sm-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
-                                @account.CurrentBalance
-                            </div>
-                        </div>
-                    }
-                }
             }
         }
-    </div>
-</div>
+    }
+}
+

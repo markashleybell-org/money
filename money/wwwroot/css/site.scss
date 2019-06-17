@@ -93,20 +93,9 @@ body {
     padding-top: $vertical-gutter-double + $vertical-gutter;
 }
 
-#net-worth {
-    h1 {
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .card {
-        background-color: #f8f8f8;
-        border-color: rgba(175, 175, 175, 0.125);
-    }
-
-    .card-body {
-        padding-top: .5rem;
-    }
+#net-worth h1 {
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .net-worth-header {
@@ -130,14 +119,6 @@ body {
     font-weight: normal;
     opacity: 0.6;
     float: right;
-}
-
-.net-worth-balance-list {
-    margin-top: 12px;
-}
-
-.net-worth-balance-list-hidden {
-    display: none;
 }
 
 @media (min-width: 600px) {
