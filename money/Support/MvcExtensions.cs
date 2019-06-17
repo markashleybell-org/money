@@ -17,7 +17,7 @@ namespace Money.Support
 {
     public static class MvcExtensions
     {
-        private static Func<Expression, object> _convertExpression =>
+        private static Func<Expression, object> ValueFromExpression =>
             (Expression e) => {
                 switch (e)
                 {
@@ -83,7 +83,7 @@ namespace Money.Support
             var methodName = methodCallExpression.Method.Name;
 
             var parameters = methodCallExpression.Method.GetParameters().Select(p => p.Name).ToArray();
-            var arguments = methodCallExpression.Arguments.Select(_convertExpression).ToArray();
+            var arguments = methodCallExpression.Arguments.Select(ValueFromExpression).ToArray();
 
             var routeValues = new RouteValueDictionary {
                 { "controller", controllerName },
