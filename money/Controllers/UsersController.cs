@@ -47,7 +47,12 @@ namespace Money.Controllers
 
             var principal = _userService.GetClaimsPrincipal(id.Value, model.Email);
 
-            await HttpContext.SignInAsync(principal);
+            var authenticationProperties = new AuthenticationProperties {
+                IsPersistent = true,
+                ExpiresUtc = DateTimeService.Now.AddDays(Cfg.PersistentSessionLengthInDays)
+            };
+
+            await HttpContext.SignInAsync(principal, authenticationProperties);
 
             return RedirectToAction("Index", "Home");
         }
