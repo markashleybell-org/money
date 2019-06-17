@@ -5,7 +5,6 @@
 
 trigger:
 - master
-- net-core
 
 pool:
   vmImage: 'ubuntu-latest'
