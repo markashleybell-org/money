@@ -17,6 +17,6 @@ namespace Money.Models
         public decimal Remaining { get; set; }
 
         public int PercentageSpent =>
-            (Spent == 0 || Amount == 0) ? 0 : (int)Math.Round((100 * Spent) / Amount);
+            (Spent == 0 || Amount == 0) ? 0 : (int)Math.Round(100 * Spent / Amount);
     }
 }

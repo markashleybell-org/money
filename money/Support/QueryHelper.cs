@@ -12,7 +12,7 @@ namespace Money.Support
         private readonly IUnitOfWork _unitOfWork;
 
         // TODO: Inject user ID, lock down queries
-        public QueryHelper(IUnitOfWork unitOfWork) => 
+        public QueryHelper(IUnitOfWork unitOfWork) =>
             _unitOfWork = unitOfWork;
 
         public T Get<T>(int id)

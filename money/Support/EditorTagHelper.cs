@@ -1,26 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Money.Support
 {
-    /// <summary>
-    /// Renders the HTML markup from an editor template for the specified model expression.
-    /// </summary>
     [HtmlTargetElement("editor", Attributes = "for", TagStructure = TagStructure.WithoutEndTag)]
     public class EditorTagHelper : TagHelper
     {
         private readonly IHtmlHelper _htmlHelper;
 
-        public EditorTagHelper(IHtmlHelper htmlHelper) => 
+        public EditorTagHelper(IHtmlHelper htmlHelper) =>
             _htmlHelper = htmlHelper;
 
-        /// <summary>
-        /// An expression to be evaluated against the current model.
-        /// </summary>
         [HtmlAttributeName("for")]
         public ModelExpression For { get; set; }
 

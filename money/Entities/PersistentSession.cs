@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using d = Dapper.Contrib.Extensions;
 using static Money.Support.Globals;
+using d = Dapper.Contrib.Extensions;
 
 namespace Money.Entities
 {

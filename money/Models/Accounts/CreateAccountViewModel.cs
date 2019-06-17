@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Money.Entities;
 
 namespace Money.Models
