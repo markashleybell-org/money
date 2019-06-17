@@ -121,6 +121,10 @@ body {
     float: right;
 }
 
+.spinner-border-hidden {
+    display: none;
+}
+
 @media (min-width: 600px) {
     .container {
         width: 600px;

@@ -8,8 +8,8 @@ enum Method {
 
 type XHRErrorCallback = (request: JQueryXHR, status: string, error: string) => void;
 
-const loadIndicatorSelector = '.load-indicator > img';
-const loaderHideClass = 'load-indicator-hidden';
+const loadIndicatorSelector = '.spinner-border';
+const loaderHideClass = 'spinner-border-hidden';
 
 const modal = $('#add-entry-modal');
 const modalTitle = modal.find('.modal-title');
