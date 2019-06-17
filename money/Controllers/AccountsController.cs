@@ -24,7 +24,7 @@ namespace Money.Controllers
         public IActionResult Index() =>
             View(new ListAccountsViewModel
             {
-                Accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
+                Accounts = Db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
             });
 
         public IActionResult Create() =>
@@ -49,16 +49,16 @@ namespace Money.Controllers
                 displayOrder: model.DisplayOrder
             );
 
-            _db.InsertOrUpdate(account);
+            Db.InsertOrUpdate(account);
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Update(int id)
         {
-            var dto = _db.Get<Account>(id);
+            var dto = Db.Get<Account>(id);
 
             return View(new UpdateAccountViewModel
             {
@@ -80,7 +80,7 @@ namespace Money.Controllers
                 return View(model);
             }
 
-            var dto = _db.Get<Account>(model.ID);
+            var dto = Db.Get<Account>(model.ID);
 
             var updated = dto.WithUpdates(
                 name: model.Name,
@@ -91,9 +91,9 @@ namespace Money.Controllers
                 displayOrder: model.DisplayOrder
             );
 
-            _db.InsertOrUpdate(updated);
+            Db.InsertOrUpdate(updated);
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index));
         }
@@ -101,11 +101,11 @@ namespace Money.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var dto = _db.Get<Account>(id);
+            var dto = Db.Get<Account>(id);
 
-            _db.Delete(dto);
+            Db.Delete(dto);
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index));
         }

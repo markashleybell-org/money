@@ -10,28 +10,28 @@ namespace Money.Controllers
     [Authorize]
     public abstract class MoneyControllerBase : Controller
     {
-        protected readonly Settings _cfg;
-
-        protected readonly IUnitOfWork _unitOfWork;
-        protected readonly IQueryHelper _db;
-
         protected MoneyControllerBase(
             IOptionsMonitor<Settings> optionsMonitor,
             IUnitOfWork unitOfWork,
             IQueryHelper db)
         {
-            _cfg = optionsMonitor.CurrentValue;
-
-            _unitOfWork = unitOfWork;
-            _db = db;
+            Cfg = optionsMonitor.CurrentValue;
+            UnitOfWork = unitOfWork;
+            Db = db;
         }
+
+        protected Settings Cfg { get; }
+
+        protected IUnitOfWork UnitOfWork { get; }
+
+        protected IQueryHelper Db { get; }
 
         protected int UserID =>
             Convert.ToInt32(HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && _unitOfWork is IDisposable uowDisposable)
+            if (disposing && UnitOfWork is IDisposable uowDisposable)
             {
                 uowDisposable.Dispose();
             }

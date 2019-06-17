@@ -41,7 +41,7 @@ namespace Money.Controllers
                         ORDER BY 
                             DisplayOrder";
 
-            _accountList = accountID => () => _db.Query(conn => conn.Query<Account>(sql, new { accountID }));
+            _accountList = accountID => () => Db.Query(conn => conn.Query<Account>(sql, new { accountID }));
         }
 
         public IActionResult Index(int id)
@@ -67,7 +67,7 @@ namespace Money.Controllers
                             e.Date DESC, 
                             e.ID DESC";
 
-            var entries = _db.Query(conn => conn.Query<ListEntriesEntryViewModel>(sql, new { id }));
+            var entries = Db.Query(conn => conn.Query<ListEntriesEntryViewModel>(sql, new { id }));
 
             return View(new ListEntriesViewModel
             {
@@ -145,7 +145,7 @@ namespace Money.Controllers
 
                 var parameters = new { ids = new[] { model.AccountID, destinationAccountID } };
 
-                var accounts = _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts WHERE ID IN @ids", parameters));
+                var accounts = Db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts WHERE ID IN @ids", parameters));
                 var sourceAccountName = accounts.Single(a => a.ID == model.AccountID).Name;
                 var destinationAccountName = accounts.Single(a => a.ID == destinationAccountID).Name;
 
@@ -155,7 +155,7 @@ namespace Money.Controllers
 
                 // For transfers, we set up separate entries for source and destination accounts
                 // Note that we ignore the credit/debit selection here (a transfer is always a debit)
-                _db.InsertOrUpdate(new Entry(
+                Db.InsertOrUpdate(new Entry(
                     accountID: model.AccountID,
                     monthlyBudgetID: monthlyBudgetID,
                     categoryID: model.CategoryID,
@@ -165,7 +165,7 @@ namespace Money.Controllers
                     transferGuid: guid
                 ));
 
-                _db.InsertOrUpdate(new Entry(
+                Db.InsertOrUpdate(new Entry(
                     accountID: destinationAccountID,
                     monthlyBudgetID: destinationMonthlyBudgetID,
                     date: model.Date,
@@ -183,7 +183,7 @@ namespace Money.Controllers
                     amount = -amount;
                 }
 
-                _db.InsertOrUpdate(new Entry(
+                Db.InsertOrUpdate(new Entry(
                     accountID: model.AccountID,
                     monthlyBudgetID: monthlyBudgetID,
                     categoryID: model.CategoryID,
@@ -196,7 +196,7 @@ namespace Money.Controllers
                 ids = new[] { model.AccountID };
             }
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             var getHtmlForUpdatedAccounts = ids.Select(async (id, i) =>
             {
@@ -211,7 +211,7 @@ namespace Money.Controllers
 
         public IActionResult Update(int id)
         {
-            var dto = _db.Get<Entry>(id);
+            var dto = Db.Get<Entry>(id);
 
             return View(new UpdateEntryViewModel
             {
@@ -237,7 +237,7 @@ namespace Money.Controllers
                 return View(model);
             }
 
-            var dto = _db.Get<Entry>(model.ID);
+            var dto = Db.Get<Entry>(model.ID);
 
             var updated = dto.WithUpdates(
                 categoryID: model.CategoryID,
@@ -247,9 +247,9 @@ namespace Money.Controllers
                 note: model.Note
             );
 
-            _db.InsertOrUpdate(updated);
+            Db.InsertOrUpdate(updated);
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectTo<HomeController>(c => c.Index());
         }
@@ -257,11 +257,11 @@ namespace Money.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var dto = _db.Get<Entry>(id);
+            var dto = Db.Get<Entry>(id);
 
-            _db.Delete(dto);
+            Db.Delete(dto);
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index), new { id = dto.AccountID });
         }
@@ -274,7 +274,7 @@ namespace Money.Controllers
                 AccountID = accountID
             };
 
-            var model = _db.Query(conn =>
+            var model = Db.Query(conn =>
             {
                 using (var reader = conn.QueryMultipleSP("DashboardAccount", parameters))
                 {
@@ -298,7 +298,7 @@ namespace Money.Controllers
         private int? GetLatestMonthlyBudget(int accountID)
         {
             var sql = "SELECT TOP 1 ID FROM MonthlyBudgets WHERE AccountID = @AccountID AND GETDATE() <= EndDate ORDER BY EndDate DESC, ID DESC";
-            return _db.Query(conn => conn.QuerySingleOrDefault<int?>(sql, new { accountID }));
+            return Db.Query(conn => conn.QuerySingleOrDefault<int?>(sql, new { accountID }));
         }
 
         private IEnumerable<SelectListItem> AccountsSelectListItems() =>
@@ -306,15 +306,15 @@ namespace Money.Controllers
                .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
 
         private IEnumerable<SelectListItem> CategoriesSelectListItems(int accountID) =>
-            _db.Query(conn => conn.Query<Category>("SELECT * FROM Categories WHERE AccountID = @AccountID ORDER BY Name", new { accountID }))
+            Db.Query(conn => conn.Query<Category>("SELECT * FROM Categories WHERE AccountID = @AccountID ORDER BY Name", new { accountID }))
                .Select(c => new SelectListItem { Value = c.ID.ToString(), Text = c.Name });
 
         private IEnumerable<SelectListItem> PartiesSelectListItems(int accountID) =>
-            _db.Query(conn => conn.Query<Party>("SELECT * FROM Parties WHERE AccountID = @AccountID ORDER BY Name", new { accountID }))
+            Db.Query(conn => conn.Query<Party>("SELECT * FROM Parties WHERE AccountID = @AccountID ORDER BY Name", new { accountID }))
                .Select(p => new SelectListItem { Value = p.ID.ToString(), Text = p.Name });
 
         private IEnumerable<SelectListItem> MonthlyBudgetsSelectListItems(int accountID) =>
-            _db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @AccountID", new { accountID }))
+            Db.Query(conn => conn.Query<MonthlyBudget>("SELECT * FROM MonthlyBudgets WHERE AccountID = @AccountID", new { accountID }))
                .Select(b => new SelectListItem { Value = b.ID.ToString(), Text = b.StartDate.ToString("dd/MM/yyyy") + " - " + b.EndDate.ToString("dd/MM/yyyy") });
     }
 }

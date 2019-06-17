@@ -39,7 +39,7 @@ namespace Money.Controllers
             return View(new ListMonthlyBudgetsViewModel
             {
                 AccountID = id,
-                MonthlyBudgets = _db.Query(conn => conn.Query<MonthlyBudget>(sql, new { id }))
+                MonthlyBudgets = Db.Query(conn => conn.Query<MonthlyBudget>(sql, new { id }))
             });
         }
 
@@ -61,7 +61,7 @@ namespace Money.Controllers
                 return View(model);
             }
 
-            var monthlyBudgetID = _db.InsertOrUpdate(new MonthlyBudget(
+            var monthlyBudgetID = Db.InsertOrUpdate(new MonthlyBudget(
                 accountID: model.AccountID,
                 startDate: model.StartDate.WithZeroedTime(),
                 endDate: model.EndDate.SetTime(23, 59, 59)
@@ -75,17 +75,17 @@ namespace Money.Controllers
 
             foreach (var category in categories)
             {
-                _db.Execute((conn, tran) => conn.Insert(category, tran));
+                Db.Execute((conn, tran) => conn.Insert(category, tran));
             }
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index), new { id = model.AccountID });
         }
 
         public IActionResult Update(int id)
         {
-            var dto = _db.Get<MonthlyBudget>(id);
+            var dto = Db.Get<MonthlyBudget>(id);
 
             return View(new UpdateMonthlyBudgetViewModel
             {
@@ -107,16 +107,16 @@ namespace Money.Controllers
                 return View(model);
             }
 
-            var dto = _db.Get<MonthlyBudget>(model.ID);
+            var dto = Db.Get<MonthlyBudget>(model.ID);
 
             var updated = dto.WithUpdates(
                 startDate: model.StartDate.WithZeroedTime(),
                 endDate: model.EndDate.SetTime(23, 59, 59)
             );
 
-            _db.InsertOrUpdate(updated);
+            Db.InsertOrUpdate(updated);
 
-            _db.Execute((conn, tran) => conn.Execute("DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID", new { model.ID }, tran));
+            Db.Execute((conn, tran) => conn.Execute("DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID", new { model.ID }, tran));
 
             var categories = model.Categories.Where(c => c.Amount != 0).Select(c => new Category_MonthlyBudget(
                 monthlyBudgetId: model.ID,
@@ -126,10 +126,10 @@ namespace Money.Controllers
 
             foreach (var category in categories)
             {
-                _db.Execute((conn, tran) => conn.Insert(category, tran));
+                Db.Execute((conn, tran) => conn.Insert(category, tran));
             }
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index), new { id = model.AccountID });
         }
@@ -137,22 +137,22 @@ namespace Money.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var dto = _db.Get<MonthlyBudget>(id);
+            var dto = Db.Get<MonthlyBudget>(id);
 
             var sql = "DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID";
 
-            _db.Execute((conn, tran) => conn.Execute(sql, new { id }, tran));
+            Db.Execute((conn, tran) => conn.Execute(sql, new { id }, tran));
 
-            _db.Delete(dto);
+            Db.Delete(dto);
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index), new { id = dto.AccountID });
         }
 
         public IActionResult Copy(int id)
         {
-            var dto = _db.Get<MonthlyBudget>(id);
+            var dto = Db.Get<MonthlyBudget>(id);
 
             // Start the day after the old budget finished
             var startDate = dto.EndDate.AddDays(1);
@@ -197,7 +197,7 @@ namespace Money.Controllers
 
             var parameters = new { accountID, monthlyBudgetID };
 
-            return _db.Query(conn => conn.Query<MonthlyBudgetCategoryViewModel>(sql, parameters));
+            return Db.Query(conn => conn.Query<MonthlyBudgetCategoryViewModel>(sql, parameters));
         }
     }
 }

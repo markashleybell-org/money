@@ -38,7 +38,7 @@ namespace Money.Controllers
                             a.DisplayOrder,
                             p.Name";
 
-            var parties = _db.Query(conn => conn.Query<ListPartiesPartyViewModel>(sql));
+            var parties = Db.Query(conn => conn.Query<ListPartiesPartyViewModel>(sql));
 
             return View(new ListPartiesViewModel
             {
@@ -61,19 +61,19 @@ namespace Money.Controllers
                 return View(model);
             }
 
-            _db.InsertOrUpdate(new Party(
+            Db.InsertOrUpdate(new Party(
                 accountID: model.AccountID,
                 name: model.Name
             ));
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Update(int id)
         {
-            var dto = _db.Get<Party>(id);
+            var dto = Db.Get<Party>(id);
 
             return View(new UpdatePartyViewModel
             {
@@ -90,13 +90,13 @@ namespace Money.Controllers
                 return View(model);
             }
 
-            var dto = _db.Get<Party>(model.ID);
+            var dto = Db.Get<Party>(model.ID);
 
             var updated = dto.WithUpdates(name: model.Name);
 
-            _db.InsertOrUpdate(updated);
+            Db.InsertOrUpdate(updated);
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index));
         }
@@ -104,17 +104,17 @@ namespace Money.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var dto = _db.Get<Party>(id);
+            var dto = Db.Get<Party>(id);
 
-            _db.Delete(dto);
+            Db.Delete(dto);
 
-            _unitOfWork.CommitChanges();
+            UnitOfWork.CommitChanges();
 
             return RedirectToAction(nameof(Index));
         }
 
         private IEnumerable<SelectListItem> AccountsSelectListItems() =>
-            _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
+            Db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
                .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
     }
 }

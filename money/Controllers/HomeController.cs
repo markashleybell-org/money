@@ -21,7 +21,7 @@ namespace Money.Controllers
 
         public IActionResult Index()
         {
-            var model = _db.Query(conn =>
+            var model = Db.Query(conn =>
             {
                 using (var reader = conn.QueryMultipleSP("Dashboard", new { UserID }))
                 {
@@ -57,7 +57,7 @@ namespace Money.Controllers
 
             var model = new NetWorthViewModel
             {
-                Accounts = _db.Query(conn => conn.QuerySP<AccountViewModel>("AccountList", parameters))
+                Accounts = Db.Query(conn => conn.QuerySP<AccountViewModel>("AccountList", parameters))
             };
 
             return View("_NetWorth", model);
