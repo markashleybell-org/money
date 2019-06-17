@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using money.Entities;
+using Money.Entities;
 
-namespace money.Support
+namespace Money.Support
 {
     public interface IQueryHelper
     {

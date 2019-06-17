@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using money.Controllers;
-using money.Models;
-using money.Support;
+using Money.Controllers;
+using Money.Models;
+using Money.Support;
 
-namespace money.web.Controllers
+namespace Money.Controllers
 {
     public class UsersController : MoneyControllerBase
     {

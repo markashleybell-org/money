@@ -3,7 +3,7 @@ using System.Data;
 using System.Threading.Tasks;
 using static Dapper.SqlMapper;
 
-namespace money.Support
+namespace Money.Support
 {
     public static partial class SqlMapperExtensions
     {

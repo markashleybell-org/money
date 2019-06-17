@@ -1,7 +1,7 @@
 using System;
 using d = Dapper.Contrib.Extensions;
 
-namespace money.Entities
+namespace Money.Entities
 {
     [d.Table("MonthlyBudgets")]
     public partial class MonthlyBudget : IEntity

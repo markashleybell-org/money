@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using money.Support;
+using Money.Support;
 
-namespace money
+namespace Money
 {
     public class Startup
     {

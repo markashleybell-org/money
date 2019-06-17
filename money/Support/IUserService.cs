@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace money.Support
+namespace Money.Support
 {
     public interface IUserService
     {

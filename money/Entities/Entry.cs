@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using d = Dapper.Contrib.Extensions;
 
-namespace money.Entities
+namespace Money.Entities
 {
     [d.Table("Entries")]
     public partial class Entry : IEntity

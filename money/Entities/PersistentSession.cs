@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using d = Dapper.Contrib.Extensions;
-using static money.Support.Globals;
+using static Money.Support.Globals;
 
-namespace money.Entities
+namespace Money.Entities
 {
     [d.Table("PersistentSessions")]
     public partial class PersistentSession

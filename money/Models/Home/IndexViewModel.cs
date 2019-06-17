@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace money.Models
+namespace Money.Models
 {
     public class IndexViewModel
     {

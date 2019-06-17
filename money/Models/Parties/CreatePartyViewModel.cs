@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace money.Models
+namespace Money.Models
 {
     public class CreatePartyViewModel
     {

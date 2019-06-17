@@ -4,12 +4,12 @@ using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
-using money.Controllers;
-using money.Entities;
-using money.Models;
-using money.Support;
+using Money.Controllers;
+using Money.Entities;
+using Money.Models;
+using Money.Support;
 
-namespace money.web.Controllers
+namespace Money.Controllers
 {
     public class PartiesController : MoneyControllerBase
     {

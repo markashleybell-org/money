@@ -1,6 +1,6 @@
 using d = Dapper.Contrib.Extensions;
 
-namespace money.Entities
+namespace Money.Entities
 {
     [d.Table("Categories_MonthlyBudgets")]
     public partial class Category_MonthlyBudget

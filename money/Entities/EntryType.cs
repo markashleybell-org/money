@@ -1,6 +1,6 @@
 using System;
 
-namespace money.Entities
+namespace Money.Entities
 {
     [Flags]
     public enum EntryType

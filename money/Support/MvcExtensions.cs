@@ -10,10 +10,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
-using money.Entities;
-using static money.Support.Globals;
+using Money.Entities;
+using static Money.Support.Globals;
 
-namespace money.Support
+namespace Money.Support
 {
     public static class MvcExtensions
     {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace money.Support
+namespace Money.Support
 {
     /// <summary>
     /// Renders the HTML markup from an editor template for the specified model expression.

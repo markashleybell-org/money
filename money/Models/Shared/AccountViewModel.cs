@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using money.Entities;
+using Money.Entities;
 
-namespace money.Models
+namespace Money.Models
 {
     public class AccountViewModel
     {

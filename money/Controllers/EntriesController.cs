@@ -6,13 +6,13 @@ using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
-using money.Controllers;
-using money.Entities;
-using money.Models;
-using money.Support;
-using static money.Support.MvcExtensions;
+using Money.Controllers;
+using Money.Entities;
+using Money.Models;
+using Money.Support;
+using static Money.Support.MvcExtensions;
 
-namespace money.web.Controllers
+namespace Money.Controllers
 {
     public class EntriesController : MoneyControllerBase
     {

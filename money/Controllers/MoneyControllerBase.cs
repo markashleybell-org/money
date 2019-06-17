@@ -3,9 +3,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using money.Support;
+using Money.Support;
 
-namespace money.Controllers
+namespace Money.Controllers
 {
     [Authorize]
     public abstract class MoneyControllerBase : Controller

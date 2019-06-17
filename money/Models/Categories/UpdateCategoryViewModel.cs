@@ -1,4 +1,4 @@
-namespace money.Models
+namespace Money.Models
 {
     public class UpdateCategoryViewModel
     {

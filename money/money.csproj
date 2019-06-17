@@ -6,6 +6,7 @@
         <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
         <LangVersion>latest</LangVersion>
+        <RootNamespace>Money</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

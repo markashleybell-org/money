@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace money.Models
+namespace Money.Models
 {
     public class MonthlyBudgetCategoryViewModel
     {

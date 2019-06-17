@@ -1,4 +1,4 @@
-namespace money.Entities
+namespace Money.Entities
 {
     public interface IEntity
     {

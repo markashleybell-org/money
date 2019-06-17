@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace money.Support
+namespace Money.Support
 {
     public static partial class DateTimeExtensions
     {

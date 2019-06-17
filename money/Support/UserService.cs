@@ -2,9 +2,9 @@ using System.Security.Claims;
 using Dapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using money.Entities;
+using Money.Entities;
 
-namespace money.Support
+namespace Money.Support
 {
     public class UserService : IUserService
     {

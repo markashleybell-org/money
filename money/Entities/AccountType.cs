@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace money.Entities
+namespace Money.Entities
 {
     public enum AccountType
     {

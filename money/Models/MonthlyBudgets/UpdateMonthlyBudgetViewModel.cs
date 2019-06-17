@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace money.Models
+namespace Money.Models
 {
     public class UpdateMonthlyBudgetViewModel
     {

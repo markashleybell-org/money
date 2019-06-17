@@ -2,7 +2,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace money.Support
+namespace Money.Support
 {
     public sealed class UnitOfWork : IUnitOfWork, IDisposable
     {

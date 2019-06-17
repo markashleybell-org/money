@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using money.Entities;
+using Money.Entities;
 
-namespace money.Models
+namespace Money.Models
 {
     public class CreateAccountViewModel
     {

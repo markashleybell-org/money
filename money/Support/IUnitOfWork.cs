@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace money.Support
+namespace Money.Support
 {
     public interface IUnitOfWork
     {
