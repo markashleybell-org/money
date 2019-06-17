@@ -14,10 +14,12 @@ namespace Money.Controllers
     {
         public CategoriesController(
             IOptionsMonitor<Settings> optionsMonitor,
+            IDateTimeService dateTimeService,
             IUnitOfWork unitOfWork,
             IQueryHelper db)
             : base(
                   optionsMonitor,
+                  dateTimeService,
                   unitOfWork,
                   db)
         {

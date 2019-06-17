@@ -12,10 +12,12 @@ namespace Money.Controllers
     {
         protected MoneyControllerBase(
             IOptionsMonitor<Settings> optionsMonitor,
+            IDateTimeService dateTimeService,
             IUnitOfWork unitOfWork,
             IQueryHelper db)
         {
             Cfg = optionsMonitor.CurrentValue;
+            DateTimeService = dateTimeService;
             UnitOfWork = unitOfWork;
             Db = db;
         }
@@ -25,6 +27,8 @@ namespace Money.Controllers
         protected IUnitOfWork UnitOfWork { get; }
 
         protected IQueryHelper Db { get; }
+
+        protected IDateTimeService DateTimeService { get; }
 
         protected int UserID =>
             Convert.ToInt32(HttpContext.User.FindFirst(ClaimTypes.Sid)?.Value);

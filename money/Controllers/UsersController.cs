@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -14,11 +15,13 @@ namespace Money.Controllers
 
         public UsersController(
             IOptionsMonitor<Settings> optionsMonitor,
+            IDateTimeService dateTimeService,
             IUnitOfWork unitOfWork,
             IQueryHelper db,
             IUserService userService)
             : base(
                   optionsMonitor,
+                  dateTimeService,
                   unitOfWork,
                   db) =>
             _userService = userService;

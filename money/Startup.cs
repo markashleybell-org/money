@@ -46,6 +46,7 @@ namespace Money
             services.AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(connectionString));
             services.AddScoped<IQueryHelper, QueryHelper>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDateTimeService, DateTimeService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

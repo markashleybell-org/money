@@ -21,11 +21,13 @@ namespace Money.Controllers
 
         public EntriesController(
             IOptionsMonitor<Settings> optionsMonitor,
+            IDateTimeService dateTimeService,
             IUnitOfWork unitOfWork,
             IQueryHelper db,
             ViewRenderer viewRenderer)
             : base(
                   optionsMonitor,
+                  dateTimeService,
                   unitOfWork,
                   db)
         {
