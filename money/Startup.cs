@@ -34,8 +34,7 @@ namespace Money
             });
 
             services.AddAuthentication(authenticationScheme)
-                .AddCookie(authenticationScheme, options =>
-                {
+                .AddCookie(authenticationScheme, options => {
                     options.LoginPath = "/users/login";
                     options.LogoutPath = "/users/logout";
 

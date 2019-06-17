@@ -39,16 +39,15 @@ namespace Money.Controllers
 
             var parties = Db.Query(conn => conn.Query<ListPartiesPartyViewModel>(sql));
 
-            return View(new ListPartiesViewModel
-            {
+            return View(new ListPartiesViewModel {
                 Parties = parties.GroupBy(p => p.Account)
             });
         }
 
-        public IActionResult Create() => View(new CreatePartyViewModel
-        {
-            Accounts = AccountsSelectListItems()
-        });
+        public IActionResult Create() => 
+            View(new CreatePartyViewModel {
+                Accounts = AccountsSelectListItems()
+            });
 
         [HttpPost]
         public IActionResult Create(CreatePartyViewModel model)
@@ -74,8 +73,7 @@ namespace Money.Controllers
         {
             var dto = Db.Get<Party>(id);
 
-            return View(new UpdatePartyViewModel
-            {
+            return View(new UpdatePartyViewModel {
                 ID = dto.ID,
                 Name = dto.Name
             });

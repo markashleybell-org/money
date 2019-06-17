@@ -35,20 +35,19 @@ namespace Money.Controllers
                         ORDER BY 
                             StartDate DESC";
 
-            return View(new ListMonthlyBudgetsViewModel
-            {
+            return View(new ListMonthlyBudgetsViewModel {
                 AccountID = id,
                 MonthlyBudgets = Db.Query(conn => conn.Query<MonthlyBudget>(sql, new { id }))
             });
         }
 
-        public IActionResult Create(int id) => View(new CreateMonthlyBudgetViewModel
-        {
-            AccountID = id,
-            StartDate = DateTime.Now.FirstDayOfMonth(),
-            EndDate = DateTime.Now.LastDayOfMonth(),
-            Categories = Categories(accountID: id)
-        });
+        public IActionResult Create(int id) => 
+            View(new CreateMonthlyBudgetViewModel {
+                AccountID = id,
+                StartDate = DateTime.Now.FirstDayOfMonth(),
+                EndDate = DateTime.Now.LastDayOfMonth(),
+                Categories = Categories(accountID: id)
+            });
 
         [HttpPost]
         public IActionResult Create(CreateMonthlyBudgetViewModel model)
@@ -86,8 +85,7 @@ namespace Money.Controllers
         {
             var dto = Db.Get<MonthlyBudget>(id);
 
-            return View(new UpdateMonthlyBudgetViewModel
-            {
+            return View(new UpdateMonthlyBudgetViewModel {
                 ID = dto.ID,
                 AccountID = dto.AccountID,
                 StartDate = dto.StartDate,
@@ -166,8 +164,7 @@ namespace Money.Controllers
                 endDate = endDate.LastDayOfNextMonth();
             }
 
-            var model = new CreateMonthlyBudgetViewModel
-            {
+            var model = new CreateMonthlyBudgetViewModel {
                 AccountID = dto.AccountID,
                 StartDate = startDate,
                 EndDate = endDate,

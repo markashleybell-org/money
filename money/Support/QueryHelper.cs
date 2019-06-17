@@ -16,7 +16,8 @@ namespace Money.Support
             _unitOfWork = unitOfWork;
 
         public T Get<T>(int id)
-            where T : class, IEntity => Query(conn => conn.Get<T>(id));
+            where T : class, IEntity =>
+            Query(conn => conn.Get<T>(id));
 
         public T Query<T>(Func<IDbConnection, T> body)
         {
@@ -48,8 +49,7 @@ namespace Money.Support
         public int InsertOrUpdate<T>(T dto)
             where T : class, IEntity
         {
-            Execute((conn, transaction) =>
-            {
+            Execute((conn, transaction) => {
                 if (dto.ID == 0)
                 {
                     conn.Insert(dto, transaction);

@@ -21,8 +21,7 @@ namespace Money.Controllers
         }
 
         public IActionResult Index() =>
-            View(new ListAccountsViewModel
-            {
+            View(new ListAccountsViewModel {
                 Accounts = Db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
             });
 
@@ -59,8 +58,7 @@ namespace Money.Controllers
         {
             var dto = Db.Get<Account>(id);
 
-            return View(new UpdateAccountViewModel
-            {
+            return View(new UpdateAccountViewModel {
                 ID = dto.ID,
                 Name = dto.Name,
                 Type = dto.Type,

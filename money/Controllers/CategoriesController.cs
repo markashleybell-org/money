@@ -39,15 +39,13 @@ namespace Money.Controllers
 
             var categories = Db.Query(conn => conn.Query<ListCategoriesCategoryViewModel>(sql));
 
-            return View(new ListCategoriesViewModel
-            {
+            return View(new ListCategoriesViewModel {
                 Categories = categories.GroupBy(c => c.Account)
             });
         }
 
         public IActionResult Create() =>
-            View(new CreateCategoryViewModel
-            {
+            View(new CreateCategoryViewModel {
                 Accounts = AccountsSelectListItems()
             });
 
@@ -77,8 +75,7 @@ namespace Money.Controllers
         {
             var dto = Db.Get<Category>(id);
 
-            return View(new UpdateCategoryViewModel
-            {
+            return View(new UpdateCategoryViewModel {
                 ID = dto.ID,
                 Name = dto.Name
             });

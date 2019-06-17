@@ -111,7 +111,7 @@ csharp_style_inlined_variable_declaration = true:suggestion
 ###############################
 
 # New line preferences
-csharp_new_line_before_open_brace = all
+csharp_new_line_before_open_brace = accessors, anonymous_methods, control_blocks, events, indexers, methods, properties, types
 csharp_new_line_before_else = true
 csharp_new_line_before_catch = true
 csharp_new_line_before_finally = true

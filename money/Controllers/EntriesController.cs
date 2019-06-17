@@ -68,8 +68,7 @@ namespace Money.Controllers
 
             var entries = Db.Query(conn => conn.Query<ListEntriesEntryViewModel>(sql, new { id }));
 
-            return View(new ListEntriesViewModel
-            {
+            return View(new ListEntriesViewModel {
                 Entries = entries.GroupBy(e => e.Date)
             });
         }
@@ -87,8 +86,7 @@ namespace Money.Controllers
 
             var typeSelectListItems = TypesSelectListItems(types, _accountList(accountID));
 
-            return View(new CreateEntryViewModel
-            {
+            return View(new CreateEntryViewModel {
                 AccountID = accountID,
                 CategoryID = categoryID,
                 Types = typeSelectListItems,
@@ -197,8 +195,7 @@ namespace Money.Controllers
 
             UnitOfWork.CommitChanges();
 
-            var getHtmlForUpdatedAccounts = ids.Select(async (id, i) =>
-            {
+            var getHtmlForUpdatedAccounts = ids.Select(async (id, i) => {
                 var html = await RenderAccountHtml(id, i == 0 && !model.CategoryID.HasValue ? 0 : model.CategoryID);
                 return new { id, html };
             });
@@ -212,8 +209,7 @@ namespace Money.Controllers
         {
             var dto = Db.Get<Entry>(id);
 
-            return View(new UpdateEntryViewModel
-            {
+            return View(new UpdateEntryViewModel {
                 ID = dto.ID,
                 CategoryID = dto.CategoryID,
                 PartyID = dto.PartyID,
@@ -267,21 +263,18 @@ namespace Money.Controllers
 
         private async Task<string> RenderAccountHtml(int accountID, int? updatedCategoryID = null)
         {
-            var parameters = new
-            {
+            var parameters = new {
                 UserID,
                 AccountID = accountID
             };
 
-            var model = Db.Query(conn =>
-            {
+            var model = Db.Query(conn => {
                 using (var reader = conn.QueryMultipleSP("DashboardAccount", parameters))
                 {
                     var account = reader.ReadSingle<AccountViewModel>();
                     var categories = reader.Read<CategoryViewModel>();
 
-                    return new AccountViewModel
-                    {
+                    return new AccountViewModel {
                         ID = account.ID,
                         Name = account.Name,
                         CurrentBalance = account.CurrentBalance,
