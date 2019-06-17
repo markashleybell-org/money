@@ -73,9 +73,8 @@ namespace Money.Support
         private static RouteValueDictionary GetRouteValuesFor<T>(Expression<Func<T, IActionResult>> action)
             where T : ControllerBase
         {
-            var methodCallExpression = action.Body as MethodCallExpression;
-
-            if (methodCallExpression == null || !methodCallExpression.Method.ReturnType.IsAssignableFrom(typeof(IActionResult)))
+            if (!(action.Body is MethodCallExpression methodCallExpression)
+                || !methodCallExpression.Method.ReturnType.IsAssignableFrom(typeof(IActionResult)))
             {
                 throw new ArgumentException("Redirect action must be a method call which returns IActionResult", nameof(action));
             }
