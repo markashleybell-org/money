@@ -301,10 +301,6 @@ namespace Money.Controllers
             return Db.Query(conn => conn.QuerySingleOrDefault<int?>(sql, new { accountID }));
         }
 
-        private IEnumerable<SelectListItem> AccountsSelectListItems() =>
-            _db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts ORDER BY DisplayOrder"))
-               .Select(a => new SelectListItem { Value = a.ID.ToString(), Text = a.Name });
-
         private IEnumerable<SelectListItem> CategoriesSelectListItems(int accountID) =>
             Db.Query(conn => conn.Query<Category>("SELECT * FROM Categories WHERE AccountID = @AccountID ORDER BY Name", new { accountID }))
                .Select(c => new SelectListItem { Value = c.ID.ToString(), Text = c.Name });
