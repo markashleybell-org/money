@@ -205,6 +205,10 @@ body {
     background-color: #f3f9ff !important;
 }
 
+.btn-submit, .btn-new {
+    margin-top: 20px;
+}
+
 .delete-form {
     padding-top: 30px;
 }
