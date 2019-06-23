@@ -7,14 +7,13 @@
 <div class="row">
     <div class="col">
         <h1>Accounts</h1>
-        <table class="table table-sm table-striped">
+        <table class="table table-striped">
             <thead class="thead-light">
                 <tr>
                     <th>Name</th>
                     <th class="text-center">Net Worth</th>
-                    <th class="text-center">Dormant</th>
-                    <th class="text-center">Edit</th>
-                    <th class="text-center">Budgets</th>
+                    <th class="text-right"><span class="sr-only">Edit</span></th>
+                    <th class="text-right"><span class="sr-only">Budgets</span></th>
                 </tr>
             </thead>
             @foreach (var typeGroup in Model.Accounts.GroupBy(a => a.Type).OrderBy(a => a.Key))
@@ -28,11 +27,10 @@
                     @foreach (var account in typeGroup)
                     {
                         <tr class="@(account.IsDormant ? "dormant text-muted" : "")">
-                            <td>@account.Name</td>
-                            <td class="text-center">@(account.IsIncludedInNetWorth ? "Yes" : "No")</td>
-                            <td class="text-center">@(account.IsDormant ? "Yes" : "No")</td>
-                            <td class="text-center"><a asp-action="Update" asp-route-id="@account.ID">Edit</a></td>
-                            <td class="text-center"><a asp-action="Index" asp-controller="MonthlyBudgets" asp-route-id="@account.ID">View</a></td>
+                            <td class="align-middle">@account.Name @(account.IsDormant ? "[Dormant]" : "")</td>
+                            <td class="text-center align-middle">@(account.IsIncludedInNetWorth ? "Yes" : "No")</td>
+                            <td class="text-right"><a asp-action="Update" asp-route-id="@account.ID" class="btn btn-primary btn-sm">Edit</a></td>
+                            <td class="text-right"><a asp-action="Index" asp-controller="MonthlyBudgets" asp-route-id="@account.ID" class="btn btn-primary btn-sm">Budgets</a></td>
                         </tr>
                     }
                 </tbody>

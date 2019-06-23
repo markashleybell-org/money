@@ -7,11 +7,11 @@
 <div class="row">
     <div class="col">
         <h1>Categories</h1>
-        <table class="table table-sm table-striped">
+        <table class="table table-striped">
             <thead class="thead-light">
                 <tr>
                     <th>Name</th>
-                    <th class="text-center">Edit</th>
+                    <th class="text-right"><span class="sr-only">Edit</span></th>
                 </tr>
             </thead>
             @foreach (var accountGroup in Model.Categories)
@@ -25,8 +25,8 @@
                     @foreach (var category in accountGroup)
                     {
                         <tr>
-                            <td>@category.Name</td>
-                            <td class="text-center"><a asp-action="Update" asp-route-id="@category.ID">Edit</a></td>
+                            <td class="align-middle">@category.Name</td>
+                            <td class="text-right"><a asp-action="Update" asp-route-id="@category.ID" class="btn btn-primary btn-sm">Edit</a></td>
                         </tr>
                     }
                 </tbody>

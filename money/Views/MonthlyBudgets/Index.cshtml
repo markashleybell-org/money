@@ -8,23 +8,23 @@
     <div class="col">
         <h1>Monthly Budgets</h1>
         <h2>@Model.AccountName</h2>
-        <table class="table table-sm table-striped">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Start</th>
                     <th>End</th>
-                    <th class="text-center">Edit</th>
-                    <th class="text-center">Copy</th>
+                    <th class="text-right"><span class="sr-only">Edit</span></th>
+                    <th class="text-right"><span class="sr-only">Copy</span></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var monthlyBudget in Model.MonthlyBudgets)
                 {
                     <tr>
-                        <td>@monthlyBudget.StartDate.ToString("dd/MM/yyyy")</td>
-                        <td>@monthlyBudget.EndDate.ToString("dd/MM/yyyy")</td>
-                        <td class="text-center"><a asp-action="Update" asp-route-id="@monthlyBudget.ID">Edit</a></td>
-                        <td class="text-center"><a asp-action="Copy" asp-route-id="@monthlyBudget.ID">Copy</a></td>
+                        <td class="align-middle">@monthlyBudget.StartDate.ToString("dd/MM/yyyy")</td>
+                        <td class="align-middle">@monthlyBudget.EndDate.ToString("dd/MM/yyyy")</td>
+                        <td class="text-right"><a asp-action="Update" asp-route-id="@monthlyBudget.ID" class="btn btn-primary btn-sm">Edit</a></td>
+                        <td class="text-right"><a asp-action="Copy" asp-route-id="@monthlyBudget.ID" class="btn btn-primary btn-sm">Copy</a></td>
                     </tr>
                 }
             </tbody>
