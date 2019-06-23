@@ -10,6 +10,8 @@ namespace Money.Models
 
         public int AccountID { get; set; }
 
+        public string AccountName { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }

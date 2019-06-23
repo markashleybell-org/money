@@ -7,6 +7,8 @@ namespace Money.Models
     {
         public int AccountID { get; set; }
 
+        public string AccountName { get; set; }
+
         public IEnumerable<MonthlyBudget> MonthlyBudgets { get; set; }
     }
 }

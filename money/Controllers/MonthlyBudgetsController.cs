@@ -39,6 +39,7 @@ namespace Money.Controllers
 
             return View(new ListMonthlyBudgetsViewModel {
                 AccountID = id,
+                AccountName = AccountName(accountID: id),
                 MonthlyBudgets = Db.Query(conn => conn.Query<MonthlyBudget>(sql, new { id }))
             });
         }
@@ -46,6 +47,7 @@ namespace Money.Controllers
         public IActionResult Create(int id) =>
             View(new CreateMonthlyBudgetViewModel {
                 AccountID = id,
+                AccountName = AccountName(accountID: id),
                 StartDate = DateTime.Now.FirstDayOfMonth(),
                 EndDate = DateTime.Now.LastDayOfMonth(),
                 Categories = Categories(accountID: id)
@@ -56,6 +58,7 @@ namespace Money.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.AccountName = AccountName(accountID: model.AccountID);
                 model.Categories = Categories(accountID: model.AccountID);
 
                 return View(model);
@@ -90,6 +93,7 @@ namespace Money.Controllers
             return View(new UpdateMonthlyBudgetViewModel {
                 ID = dto.ID,
                 AccountID = dto.AccountID,
+                AccountName = AccountName(accountID: dto.AccountID),
                 StartDate = dto.StartDate,
                 EndDate = dto.EndDate,
                 Categories = Categories(accountID: dto.AccountID, monthlyBudgetID: dto.ID)
@@ -101,6 +105,7 @@ namespace Money.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.AccountName = AccountName(accountID: model.AccountID);
                 model.Categories = Categories(accountID: model.AccountID, monthlyBudgetID: model.ID);
 
                 return View(model);
@@ -168,12 +173,25 @@ namespace Money.Controllers
 
             var model = new CreateMonthlyBudgetViewModel {
                 AccountID = dto.AccountID,
+                AccountName = AccountName(dto.AccountID),
                 StartDate = startDate,
                 EndDate = endDate,
                 Categories = Categories(accountID: dto.AccountID, monthlyBudgetID: dto.ID)
             };
 
             return View(nameof(Create), model);
+        }
+
+        private string AccountName(int accountID)
+        {
+            var sql = @"SELECT 
+                            Name
+                        FROM
+                            Accounts a
+                        WHERE
+                            a.ID = @AccountID";
+
+            return Db.Query(conn => conn.QuerySingleOrDefault<string>(sql, new { accountID }));
         }
 
         private IEnumerable<MonthlyBudgetCategoryViewModel> Categories(int accountID, int monthlyBudgetID = 0)
