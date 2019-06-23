@@ -88,6 +88,11 @@ body {
 .dormant {
     background-color: #f3f9ff !important;
 
+    .btn-primary {
+        opacity: 0.6 !important;
+    }
+}
+
 .btn-submit, .btn-new {
     margin-top: $vertical-gutter-double;
 }
