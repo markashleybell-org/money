@@ -12,7 +12,6 @@
                 <tr>
                     <th>Category/Party</th>
                     <th class="text-right">Amount</th>
-                    <th class="text-right"></th>
                 </tr>
             </thead>
             @foreach (var group in Model.Entries)
@@ -21,7 +20,6 @@
                     <tr>
                         <th>@group.Key.ToString("dd/MM/yyyy")</th>
                         <th class="text-right">@*@group.Sum(g => g.Amount).ToString("0.00")*@</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,9 +39,8 @@
                                              : $"{party} {category}";
 
                         <tr>
-                            <td>@partyAndCategory</td>
+                            <td>@partyAndCategory <span class="entry-edit">[<a asp-action="Update" asp-route-id="@entry.ID">Edit</a>]</span></td>
                             <td class="text-right">@entry.Amount.ToString("0.00")</td>
-                            <td class="text-right"><a asp-action="Update" asp-route-id="@entry.ID">Edit</a></td>
                         </tr>
                     }
                 </tbody>

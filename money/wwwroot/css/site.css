@@ -217,6 +217,19 @@ body {
     padding-top: 30px;
 }
 
+.entry-edit {
+    padding-left: 10px;
+}
+
+.entry-edit, .entry-edit a {
+    color: #999;
+}
+
+.table-sm td, .table-sm th {
+    padding-left: .75rem;
+    padding-right: .75rem;
+}
+
 #net-worth h1 {
     font-size: 18px;
     font-weight: bold;
