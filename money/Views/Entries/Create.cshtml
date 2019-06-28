@@ -6,7 +6,7 @@
     var isCredit = Model.IsCredit ?? false;
 }
 
-<form asp-action="Create" asp-controller="Entries" method="post">
+<form asp-controller="Entries" asp-action="Create" method="post">
     <input type="hidden" asp-for="AccountID" />
     @if (Model.Types.Count() == 1)
     {

@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col">
         <h1>Update Account</h1>
-        <form method="post">
+        <form asp-controller="Accounts" asp-action="Update" method="post">
             <div class="form-group">
                 <label asp-for="Name">Name</label>
                 <input asp-for="Name" class="form-control" />
@@ -44,7 +44,7 @@
 
 <div class="row">
     <div class="col">
-        <form asp-action="Delete" method="post" class="delete-form">
+        <form asp-controller="Accounts" asp-action="Delete" method="post" class="delete-form">
             <input type="hidden" asp-for="ID" />
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>

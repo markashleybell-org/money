@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col">
         <h1>Create Party</h1>
-        <form method="post">
+        <form asp-controller="Parties" asp-action="Create" method="post">
             <div class="form-group">
                 <label asp-for="AccountID">Account</label>
                 <select asp-for="AccountID" asp-items="Model.Accounts" class="form-control">

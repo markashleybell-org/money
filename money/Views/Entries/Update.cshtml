@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col">
         <h1>Update Entry</h1>
-        <form method="post">
+        <form asp-controller="Entries" asp-action="Update" method="post">
             <div class="form-row">
                 <div class="form-group col-5">
                     <label asp-for="Amount">Amount</label>
@@ -42,7 +42,7 @@
 
 <div class="row">
     <div class="col">
-        <form asp-action="Delete" method="post" class="delete-form">
+        <form asp-controller="Entries" asp-action="Delete" method="post" class="delete-form">
             <input type="hidden" asp-for="ID" />
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>

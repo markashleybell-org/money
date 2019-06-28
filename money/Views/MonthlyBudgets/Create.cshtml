@@ -8,7 +8,7 @@
     <div class="col">
         <h1>Create Monthly Budget</h1>
         <h2>@Model.AccountName</h2>
-        <form method="post">
+        <form asp-controller="MonthlyBudgets" asp-action="Create" method="post">
             <div class="form-group">
                 <label asp-for="StartDate">Start budget on</label>
                 <editor for="StartDate" />
