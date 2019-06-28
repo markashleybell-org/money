@@ -71,7 +71,6 @@
     <Build Include="Tables\Entries.sql" />
     <Build Include="Tables\Accounts.sql" />
     <Build Include="Tables\Categories_MonthlyBudgets.sql" />
-    <Build Include="Tables\PersistentSessions.sql" />
     <Build Include="Stored Procedures\AccountList.sql" />
     <Build Include="Stored Procedures\Dashboard.sql" />
     <Build Include="Stored Procedures\DashboardAccount.sql" />
