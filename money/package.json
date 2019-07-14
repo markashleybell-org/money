@@ -4,7 +4,6 @@
     "private": true,
     "devDependencies": {
         "@types/bootstrap": "4.3.1",
-        "@types/bootstrap-datepicker": "0.0.13",
         "@types/jquery": "3.3.30",
         "@types/jquery-validation-unobtrusive": "3.2.32",
         "@types/jquery.validation": "1.16.6",
@@ -22,7 +21,6 @@
     },
     "dependencies": {
         "bootstrap": "4.3.1",
-        "bootstrap-datepicker": "1.9.0",
         "handlebars": "4.1.2",
         "jquery": "3.4.1",
         "jquery-validation": "1.19.1",
