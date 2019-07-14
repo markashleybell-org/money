@@ -81,7 +81,7 @@ AS
     ON
         b1.AccountID = b2.AccountID
     AND
-        (b1.EndDate < b2.EndDate OR (b1.EndDate = b2.EndDate AND b1.Id < b2.Id))
+        (b1.EndDate < b2.EndDate OR (b1.EndDate = b2.EndDate AND b1.ID < b2.ID))
     WHERE
         b2.AccountID IS NULL
     AND
