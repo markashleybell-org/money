@@ -8,6 +8,7 @@
     <ProfileVersionNumber>1</ProfileVersionNumber>
     <TargetConnectionString>Data Source=localhost;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False</TargetConnectionString>
     <DropObjectsNotInSource>True</DropObjectsNotInSource>
+    <DropExtendedPropertiesNotInSource>False</DropExtendedPropertiesNotInSource>
     <DoNotDropUsers>True</DoNotDropUsers>
     <DoNotDropApplicationRoles>True</DoNotDropApplicationRoles>
     <DoNotDropDatabaseRoles>True</DoNotDropDatabaseRoles>
@@ -72,5 +73,8 @@
     <DoNotDropCryptographicProviders>True</DoNotDropCryptographicProviders>
     <BackupDatabaseBeforeChanges>False</BackupDatabaseBeforeChanges>
     <UnmodifiableObjectWarnings>False</UnmodifiableObjectWarnings>
+    <GenerateSmartDefaults>True</GenerateSmartDefaults>
+    <IncludeTransactionalScripts>True</IncludeTransactionalScripts>
+    <ExcludeUsers>True</ExcludeUsers>
   </PropertyGroup>
 </Project>
