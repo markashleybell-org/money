@@ -78,5 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish\db.publish.xml" />
+    <None Include="Publish\staging.publish.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
