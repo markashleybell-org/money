@@ -46,7 +46,7 @@
     }
     else
     {
-        foreach (var group in accountGroup.GroupBy(a => a.Type))
+        foreach (var group in accountGroup.GroupBy(a => a.Type).OrderBy(a => a.Key))
         {
             <div class="row">
                 <div class="col-8">
