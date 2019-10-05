@@ -7,12 +7,19 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: MSBuild@1
+  inputs:
+    solution: '**/db.sqlproj'
+    configuration: '$(buildConfiguration)'
+    clean: true
+    msbuildArguments: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
+
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
