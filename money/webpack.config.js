@@ -21,10 +21,7 @@ module.exports = {
         })
     ],
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.json'],
-        alias: {
-            'handlebars': 'handlebars/dist/handlebars.js'
-        }
+        extensions: ['.ts', '.tsx', '.js', '.json']
     },
     module: {
         rules: [
@@ -35,7 +32,6 @@ module.exports = {
         ]
     },
     externals: {
-        jquery: 'jQuery',
-        handlebars: 'Handlebars'
+        jquery: 'jQuery'
     }
 };
