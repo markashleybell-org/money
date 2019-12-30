@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Money.Support;
 
 namespace Money
@@ -27,7 +27,7 @@ namespace Money
             services.Configure<Settings>(Configuration);
 
             services.Configure<CookiePolicyOptions>(options => {
-                options.CheckConsentNeeded = context => false;
+                options.CheckConsentNeeded = _ => false;
                 options.MinimumSameSitePolicy = SameSiteMode.Strict;
                 options.HttpOnly = HttpOnlyPolicy.Always;
                 options.Secure = CookieSecurePolicy.Always;
@@ -37,8 +37,6 @@ namespace Money
                 .AddCookie(authenticationScheme, options => {
                     options.LoginPath = "/users/login";
                     options.LogoutPath = "/users/logout";
-
-                    // options.AccessDeniedPath = "????";
                 });
 
             services.AddScoped<ViewRenderer>();
@@ -48,10 +46,10 @@ namespace Money
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDateTimeService, DateTimeService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllersWithViews();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             app.UseDeveloperExceptionPage();
 
@@ -63,11 +61,14 @@ namespace Money
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseRouting();
+
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
     }
 }

@@ -1,15 +1,8 @@
 @model DateTime
 
 @{
-
-    var par = new {
-        @class = "form-control date-picker" + ((ViewData["class"] != null) ? " " + ViewData["class"] : ""),
-
-        id = (ViewData["id"] != null) ? ViewData["id"] : Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName("")),
-
-        type = "date"
-    };
-
+    var cls = "form-control date-picker" + ((ViewData["class"] != null) ? " " + ViewData["class"] : "");
+    var id = (ViewData["id"] != null) ? ViewData["id"] : Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName(""));
 }
 
-@Html.TextBox("", Model.ToString("yyyy-MM-dd"), par)
+@Html.TextBox("", Model.ToString("yyyy-MM-dd"), new { @class = cls, id = id, type = "date" })

@@ -15,13 +15,16 @@ namespace Money.Support
     public class ViewRenderer
     {
         private readonly IRazorViewEngine _viewEngine;
+        private readonly ITempDataProvider _tempDataProvider;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public ViewRenderer(
             IRazorViewEngine viewEngine,
+            ITempDataProvider tempDataProvider,
             IHttpContextAccessor httpContextAccessor)
         {
             _viewEngine = viewEngine;
+            _tempDataProvider = tempDataProvider;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -52,7 +55,7 @@ namespace Money.Support
                     Model = model
                 };
 
-                var tempData = new TempDataDictionary(httpContext, new SessionStateTempDataProvider());
+                var tempData = new TempDataDictionary(httpContext, _tempDataProvider);
 
                 var viewContext = new ViewContext(actionContext, view, viewData, tempData, output, new HtmlHelperOptions());
 
