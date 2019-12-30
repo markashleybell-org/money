@@ -6,12 +6,16 @@ namespace Money.Entities
     {
         [Display(Name = "Current Accounts")]
         Current,
+
         [Display(Name = "Savings Accounts")]
         Savings,
+
         [Display(Name = "Credit Cards")]
         CreditCard,
+
         [Display(Name = "Loans")]
         Mortgage,
+
         [Display(Name = "Pensions")]
         Pension
     }

@@ -84,11 +84,10 @@ namespace Money.Controllers
             var updated = dto.WithUpdates(
                 name: model.Name,
                 type: model.Type,
-                isIncludedInNetWorth: model.IncludeInNetWorth,
-                isDormant: model.IsDormant,
                 startingBalance: model.StartingBalance,
-                displayOrder: model.DisplayOrder
-            );
+                displayOrder: model.DisplayOrder,
+                isIncludedInNetWorth: model.IncludeInNetWorth,
+                isDormant: model.IsDormant);
 
             Db.InsertOrUpdate(updated);
 

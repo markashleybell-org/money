@@ -49,24 +49,24 @@ namespace Money.Entities
         }
 
         [d.Key]
-        public int ID { get; private set; }
+        public int ID { get; }
 
-        public int UserID { get; private set; }
+        public int UserID { get; }
 
         [StringLength(64)]
-        public string Name { get; private set; }
+        public string Name { get; }
 
-        public AccountType Type { get; private set; }
+        public AccountType Type { get; }
 
-        public decimal StartingBalance { get; private set; }
+        public decimal StartingBalance { get; }
 
-        public bool IsMainAccount { get; private set; }
+        public bool IsMainAccount { get; }
 
-        public bool IsIncludedInNetWorth { get; private set; }
+        public bool IsIncludedInNetWorth { get; }
 
-        public bool IsDormant { get; private set; }
+        public bool IsDormant { get; }
 
-        public int DisplayOrder { get; private set; }
+        public int DisplayOrder { get; }
 
         public Account WithUpdates(
             string name,

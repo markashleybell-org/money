@@ -41,7 +41,7 @@ namespace Money
 
             services.AddScoped<ViewRenderer>();
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>(sp => new UnitOfWork(connectionString));
+            services.AddScoped<IUnitOfWork, UnitOfWork>(_ => new UnitOfWork(connectionString));
             services.AddScoped<IQueryHelper, QueryHelper>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDateTimeService, DateTimeService>();

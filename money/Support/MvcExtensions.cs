@@ -15,18 +15,11 @@ namespace Money.Support
     public static class MvcExtensions
     {
         private static Func<Expression, object> ValueFromExpression =>
-            (Expression e) => {
-                switch (e)
-                {
-                    case ConstantExpression ce:
-                        return ce.Value;
-                    case MemberExpression me:
-                        return me.GetValue();
-                    case UnaryExpression ue:
-                        return (ue.Operand as MemberExpression).GetValue();
-                }
-
-                return null;
+            (Expression e) => e switch {
+                ConstantExpression ce => ce.Value,
+                MemberExpression me => me.GetValue(),
+                UnaryExpression ue => (ue.Operand as MemberExpression).GetValue(),
+                _ => null,
             };
 
         public static string GetDisplayName(this Enum enumValue) =>
@@ -38,7 +31,8 @@ namespace Money.Support
 
         public static IEnumerable<SelectListItem> TypesSelectListItems(EntryType entryTypes, Func<IEnumerable<Account>> accountList)
         {
-            var types = Enum.GetNames(typeof(EntryType)).Where(n => n != EntryType.Transfer.ToString())
+            var types = Enum.GetNames(typeof(EntryType))
+                .Where(n => n != EntryType.Unknown.ToString() && n != EntryType.Transfer.ToString())
                 .Select(n => new SelectListItem { Value = n, Text = n }).ToList();
 
             if (entryTypes.HasFlag(EntryType.Transfer))
