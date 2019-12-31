@@ -1,7 +1,4 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+# Build Pipeline
 
 trigger:
 - master
@@ -13,19 +10,21 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    packageType: sdk
+    version: 3.1.100
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
 - task: MSBuild@1
+  displayName: 'Database Build'
   inputs:
     solution: '**/db.sqlproj'
     configuration: '$(buildConfiguration)'
     clean: true
     msbuildArguments: '/p:OutDir=$(Build.ArtifactStagingDirectory)'
-
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    command: build
-    projects: '**/money.csproj'
-    arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: Publish
@@ -35,8 +34,9 @@ steps:
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
 
-- task: PublishPipelineArtifact@0
+- task: PublishBuildArtifacts@1
   displayName: Push Artifact
   inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'money-publish-output'
-    targetPath: '$(Build.ArtifactStagingDirectory)'
+    publishLocation: 'Container'
