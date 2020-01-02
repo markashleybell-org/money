@@ -63,6 +63,7 @@
     <Folder Include="Tables\" />
     <Folder Include="Stored Procedures\" />
     <Folder Include="Publish" />
+    <Folder Include="Releases" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users.sql" />
@@ -78,11 +79,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish\db.publish.xml" />
-    <None Include="Publish\staging.publish.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Publish\live.publish.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
