@@ -46,7 +46,8 @@ namespace Money.Controllers
                 isMainAccount: model.IsMainAccount,
                 isIncludedInNetWorth: model.IncludeInNetWorth,
                 isDormant: false,
-                displayOrder: model.DisplayOrder
+                displayOrder: model.DisplayOrder,
+                numberLast4Digits: model.NumberLast4Digits
             );
 
             Db.InsertOrUpdate(account);
@@ -67,7 +68,8 @@ namespace Money.Controllers
                 StartingBalance = dto.StartingBalance,
                 IncludeInNetWorth = dto.IsIncludedInNetWorth,
                 DisplayOrder = dto.DisplayOrder,
-                IsDormant = dto.IsDormant
+                IsDormant = dto.IsDormant,
+                NumberLast4Digits = dto.NumberLast4Digits
             });
         }
 
@@ -87,7 +89,8 @@ namespace Money.Controllers
                 startingBalance: model.StartingBalance,
                 displayOrder: model.DisplayOrder,
                 isIncludedInNetWorth: model.IncludeInNetWorth,
-                isDormant: model.IsDormant);
+                isDormant: model.IsDormant,
+                numberLast4Digits: model.NumberLast4Digits);
 
             Db.InsertOrUpdate(updated);
 

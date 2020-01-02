@@ -14,7 +14,8 @@ namespace Money.Entities
             bool isMainAccount,
             bool isIncludedInNetWorth,
             bool isDormant,
-            int displayOrder)
+            int displayOrder,
+            string numberLast4Digits)
         {
             UserID = userID;
             Name = name;
@@ -24,6 +25,7 @@ namespace Money.Entities
             IsIncludedInNetWorth = isIncludedInNetWorth;
             IsDormant = isDormant;
             DisplayOrder = displayOrder;
+            NumberLast4Digits = numberLast4Digits;
         }
 
         public Account(
@@ -35,7 +37,8 @@ namespace Money.Entities
             bool isMainAccount,
             bool isIncludedInNetWorth,
             bool isDormant,
-            int displayOrder)
+            int displayOrder,
+            string numberLast4Digits)
         {
             ID = id;
             UserID = userId;
@@ -46,6 +49,7 @@ namespace Money.Entities
             IsIncludedInNetWorth = isIncludedInNetWorth;
             IsDormant = isDormant;
             DisplayOrder = displayOrder;
+            NumberLast4Digits = numberLast4Digits;
         }
 
         [d.Key]
@@ -68,13 +72,16 @@ namespace Money.Entities
 
         public int DisplayOrder { get; }
 
+        public string NumberLast4Digits { get; }
+
         public Account WithUpdates(
             string name,
             AccountType type,
             decimal startingBalance,
             int displayOrder,
             bool isIncludedInNetWorth,
-            bool isDormant) => new Account(
+            bool isDormant,
+            string numberLast4Digits) => new Account(
                 ID,
                 UserID,
                 name,
@@ -83,7 +90,8 @@ namespace Money.Entities
                 IsMainAccount,
                 isIncludedInNetWorth,
                 isDormant,
-                displayOrder
+                displayOrder,
+                numberLast4Digits
             );
     }
 }

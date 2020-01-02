@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Money.Entities;
 
@@ -19,5 +20,8 @@ namespace Money.Models
         public bool IncludeInNetWorth { get; set; }
 
         public bool IsDormant { get; set; }
+
+        [StringLength(4, MinimumLength = 4, ErrorMessage = "If entered, must be 4 digits")]
+        public string NumberLast4Digits { get; set; }
     }
 }

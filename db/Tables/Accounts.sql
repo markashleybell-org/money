@@ -8,6 +8,7 @@
     [IsIncludedInNetWorth] BIT             NOT NULL,
     [IsDormant]            BIT             NOT NULL,
     [DisplayOrder]         INT             NOT NULL,
+    [NumberLast4Digits]    NVARCHAR (4)    NULL,
     CONSTRAINT [PK_Accounts] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_Accounts_UserID_Users_ID] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([ID])
 );

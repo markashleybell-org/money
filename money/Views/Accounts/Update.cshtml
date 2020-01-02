@@ -19,6 +19,11 @@
                 </select>
             </div>
             <div class="form-group">
+                <label asp-for="NumberLast4Digits">Last 4 Digits of Account / Card No.</label>
+                <input asp-for="NumberLast4Digits" class="form-control" />
+                <span asp-validation-for="NumberLast4Digits"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="StartingBalance">Starting balance</label>
                 <input asp-for="StartingBalance" class="form-control" />
             </div>

@@ -79,5 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish\db.publish.xml" />
+    <None Include="Releases\001 Account or Card Numbers.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
