@@ -1,5 +1,5 @@
 ﻿
-CREATE PROC Dashboard 
+CREATE PROC Dashboard
     @UserID INT
 AS
 

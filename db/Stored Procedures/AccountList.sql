@@ -1,5 +1,5 @@
 ﻿
-CREATE PROC AccountList 
+CREATE PROC AccountList
     @UserID INT,
     @AccountID INT = NULL,
     @NonZeroBalanceOnly BIT = 0
@@ -8,21 +8,21 @@ AS
     SET NOCOUNT ON
 
     DECLARE @Accounts TABLE (
-        ID INT, 
-        Name NVARCHAR(64), 
-        Type INT, 
-        StartingBalance DECIMAL(18,2), 
-        CurrentBalance DECIMAL(18,2), 
-        IsIncludedInNetWorth BIT, 
-        IsDormant BIT, 
-        LatestMonthlyBudgetID INT DEFAULT 0, 
+        ID INT,
+        Name NVARCHAR(64),
+        Type INT,
+        StartingBalance DECIMAL(18,2),
+        CurrentBalance DECIMAL(18,2),
+        IsIncludedInNetWorth BIT,
+        IsDormant BIT,
+        LatestMonthlyBudgetID INT DEFAULT 0,
         BalanceAtStartOfMonthlyBudget DECIMAL(18,2) DEFAULT 0,
         DisplayOrder INT
     )
 
     INSERT INTO
         @Accounts
-    SELECT 
+    SELECT
         a.ID,
         a.Name,
         a.Type,
@@ -33,7 +33,7 @@ AS
         0 AS LatestMonthlyBudgetID,
         0 AS BalanceAtStartOfMonthlyBudget,
         a.DisplayOrder
-    FROM   
+    FROM
         Accounts a
     LEFT JOIN
         Entries e ON e.AccountID = a.ID
