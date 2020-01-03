@@ -15,7 +15,8 @@ AS
         IsDormant BIT,
         LatestMonthlyBudgetID INT DEFAULT 0,
         BalanceAtStartOfMonthlyBudget DECIMAL(18,2) DEFAULT 0,
-        DisplayOrder INT
+        DisplayOrder INT,
+        NumberLast4Digits NVARCHAR(4)
     )
 
     DECLARE @LatestMonthlyBudgets TABLE (

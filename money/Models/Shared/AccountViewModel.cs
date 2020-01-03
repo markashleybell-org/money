@@ -3,7 +3,7 @@ using Money.Entities;
 
 namespace Money.Models
 {
-    public class AccountViewModel
+    public class AccountViewModel : IAccount
     {
         public int ID { get; set; }
 
@@ -20,5 +20,7 @@ namespace Money.Models
         public IEnumerable<CategoryViewModel> Categories { get; set; }
 
         public int? UpdatedCategoryID { get; set; }
+
+        public string NumberLast4Digits { get; set; }
     }
 }

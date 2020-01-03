@@ -76,6 +76,9 @@
     <Build Include="Stored Procedures\AccountList.sql" />
     <Build Include="Stored Procedures\Dashboard.sql" />
     <Build Include="Stored Procedures\DashboardAccount.sql" />
+    <None Include="Releases\002 Last 4 Display.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish\db.publish.xml" />

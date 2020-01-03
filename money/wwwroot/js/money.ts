@@ -90,7 +90,9 @@ $(document).on('click', '.btn-add-entry', e => {
         remaining: button.attr('data-remaining') ? parseFloat(button.attr('data-remaining')) : 0
     };
 
-    modalTitle.html(accountName + (categoryName ? ': ' + categoryName : ''));
+    const title = accountName + (categoryName ? ': ' + categoryName : '');
+
+    modalTitle.html(title);
 
     showLoader();
 

@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col d-flex align-items-center">
         <div class="flex-grow-1">
-            <h2 class="account-name"><a asp-action="Index" asp-controller="Entries" asp-route-id="@Model.ID">@Model.Name</a></h2>
+            <h2 class="account-name"><a asp-action="Index" asp-controller="Entries" asp-route-id="@Model.ID">@Model.Name</a> @Model.SpanForNumberLast4Digits()</h2>
         </div>
         <div class="account-balance">
             @Model.CurrentBalance.ToString("0.00")

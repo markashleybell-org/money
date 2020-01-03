@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Money.Entities;
+using Money.Support;
 using static Money.Support.Globals;
 
 namespace Money.Support
@@ -39,10 +40,15 @@ namespace Money.Support
             {
                 var accounts = accountList()
                     .Where(a => !a.IsDormant)
-                    .Select(a => new SelectListItem
-                    {
-                        Value = $"Transfer-{a.ID}",
-                        Text = $"Transfer to {a.Name}"
+                    .Select(a => {
+                        var last4Display = !string.IsNullOrWhiteSpace(a.NumberLast4Digits)
+                            ? $" [●●{a.NumberLast4Digits}]"
+                            : string.Empty;
+
+                        return new SelectListItem {
+                            Value = $"Transfer-{a.ID}",
+                            Text = $"Transfer to {a.Name}{last4Display}"
+                        };
                     });
 
                 types.AddRange(accounts);

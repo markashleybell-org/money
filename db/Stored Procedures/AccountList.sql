@@ -17,7 +17,8 @@ AS
         IsDormant BIT,
         LatestMonthlyBudgetID INT DEFAULT 0,
         BalanceAtStartOfMonthlyBudget DECIMAL(18,2) DEFAULT 0,
-        DisplayOrder INT
+        DisplayOrder INT,
+        NumberLast4Digits NVARCHAR(4)
     )
 
     INSERT INTO
@@ -32,7 +33,8 @@ AS
         a.IsDormant,
         0 AS LatestMonthlyBudgetID,
         0 AS BalanceAtStartOfMonthlyBudget,
-        a.DisplayOrder
+        a.DisplayOrder,
+        a.NumberLast4Digits
     FROM
         Accounts a
     LEFT JOIN
@@ -48,7 +50,8 @@ AS
         a.StartingBalance,
         a.IsIncludedInNetWorth,
         a.IsDormant,
-        a.DisplayOrder
+        a.DisplayOrder,
+        a.NumberLast4Digits
     ORDER BY
         a.DisplayOrder
 
