@@ -11,25 +11,26 @@
             <div class="form-group">
                 <label asp-for="Name">Name</label>
                 <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Type">Type</label>
-                <select asp-for="Type" asp-items="Html.GetEnumSelectList(typeof(Money.Entities.AccountType))" class="form-control">
-                    <option value="">Please select...</option>
-                </select>
+                <select asp-for="Type" asp-items="Html.GetEnumSelectList(typeof(Money.Entities.AccountType))" class="form-control"></select>
             </div>
             <div class="form-group">
-                <label asp-for="NumberLast4Digits">Last 4 Digits of Account / Card No.</label>
+                <label asp-for="NumberLast4Digits">Last 4 digits of account / card no.</label>
                 <input asp-for="NumberLast4Digits" class="form-control" />
                 <span asp-validation-for="NumberLast4Digits"></span>
             </div>
             <div class="form-group">
                 <label asp-for="StartingBalance">Starting balance</label>
                 <input asp-for="StartingBalance" class="form-control" />
+                <span asp-validation-for="StartingBalance"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DisplayOrder">Display order</label>
                 <input asp-for="DisplayOrder" class="form-control" />
+                <span asp-validation-for="DisplayOrder"></span>
             </div>
             <div class="checkbox">
                 <label>

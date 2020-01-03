@@ -19,7 +19,8 @@ namespace Money.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
-        public decimal Amount { get; set; }
+        [Required(ErrorMessage = "Please enter an amount.")]
+        public decimal? Amount { get; set; }
 
         [StringLength(64)]
         public string Note { get; set; }

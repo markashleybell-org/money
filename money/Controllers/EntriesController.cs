@@ -121,12 +121,13 @@ namespace Money.Controllers
                 model.Categories = CategoriesSelectListItems(model.AccountID);
                 model.Parties = PartiesSelectListItems(model.AccountID);
 
+                // TODO: Improve this!
                 return Json(new { ok = false, msg = "Invalid form values" });
             }
 
             var ids = new int[0];
 
-            var amount = Math.Abs(model.Amount);
+            var amount = Math.Abs(model.Amount.Value);
 
             var monthlyBudgetID = GetLatestMonthlyBudget(model.AccountID);
 
@@ -240,7 +241,7 @@ namespace Money.Controllers
                 categoryID: model.CategoryID,
                 partyID: model.PartyID,
                 date: model.Date,
-                amount: model.Amount,
+                amount: model.Amount.Value,
                 note: model.Note
             );
 

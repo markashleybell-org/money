@@ -28,7 +28,7 @@ namespace Money.Controllers
             });
 
         public IActionResult Create() =>
-            View();
+            View(new CreateAccountViewModel());
 
         [HttpPost]
         public IActionResult Create(CreateAccountViewModel model)
@@ -42,11 +42,11 @@ namespace Money.Controllers
                 userID: UserID,
                 name: model.Name,
                 type: model.Type.Value,
-                startingBalance: model.StartingBalance,
+                startingBalance: model.StartingBalance.Value,
                 isMainAccount: model.IsMainAccount,
                 isIncludedInNetWorth: model.IncludeInNetWorth,
                 isDormant: false,
-                displayOrder: model.DisplayOrder,
+                displayOrder: model.DisplayOrder.Value,
                 numberLast4Digits: model.NumberLast4Digits
             );
 
@@ -86,8 +86,8 @@ namespace Money.Controllers
             var updated = dto.WithUpdates(
                 name: model.Name,
                 type: model.Type,
-                startingBalance: model.StartingBalance,
-                displayOrder: model.DisplayOrder,
+                startingBalance: model.StartingBalance.Value,
+                displayOrder: model.DisplayOrder.Value,
                 isIncludedInNetWorth: model.IncludeInNetWorth,
                 isDormant: model.IsDormant,
                 numberLast4Digits: model.NumberLast4Digits);

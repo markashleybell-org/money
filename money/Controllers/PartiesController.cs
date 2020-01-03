@@ -62,7 +62,7 @@ namespace Money.Controllers
             }
 
             Db.InsertOrUpdate(new Party(
-                accountID: model.AccountID,
+                accountID: model.AccountID.Value,
                 name: model.Name
             ));
 

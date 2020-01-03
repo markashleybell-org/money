@@ -62,7 +62,7 @@ namespace Money.Controllers
             }
 
             var category = new Category(
-                accountID: model.AccountID,
+                accountID: model.AccountID.Value,
                 name: model.Name
             );
 
