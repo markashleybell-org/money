@@ -53,26 +53,26 @@ namespace Money.Entities
         }
 
         [d.Key]
-        public int ID { get; }
+        public int ID { get; private set; }
 
-        public int UserID { get; }
+        public int UserID { get; private set; }
 
         [StringLength(64)]
-        public string Name { get; }
+        public string Name { get; private set; }
 
-        public AccountType Type { get; }
+        public AccountType Type { get; private set; }
 
-        public decimal StartingBalance { get; }
+        public decimal StartingBalance { get; private set; }
 
-        public bool IsMainAccount { get; }
+        public bool IsMainAccount { get; private set; }
 
-        public bool IsIncludedInNetWorth { get; }
+        public bool IsIncludedInNetWorth { get; private set; }
 
-        public bool IsDormant { get; }
+        public bool IsDormant { get; private set; }
 
-        public int DisplayOrder { get; }
+        public int DisplayOrder { get; private set; }
 
-        public string NumberLast4Digits { get; }
+        public string NumberLast4Digits { get; private set; }
 
         public Account WithUpdates(
             string name,
