@@ -4,7 +4,7 @@ using d = Dapper.Contrib.Extensions;
 namespace Money.Entities
 {
     [d.Table("Parties")]
-    public partial class Party : IEntity
+    public class Party : IEntity
     {
         public Party(int accountID, string name)
         {

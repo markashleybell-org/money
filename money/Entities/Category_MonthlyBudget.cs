@@ -3,7 +3,7 @@ using d = Dapper.Contrib.Extensions;
 namespace Money.Entities
 {
     [d.Table("Categories_MonthlyBudgets")]
-    public partial class Category_MonthlyBudget
+    public class Category_MonthlyBudget
     {
         public Category_MonthlyBudget(
             int monthlyBudgetId,

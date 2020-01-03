@@ -5,7 +5,7 @@ using d = Dapper.Contrib.Extensions;
 namespace Money.Entities
 {
     [d.Table("Entries")]
-    public partial class Entry : IEntity
+    public class Entry : IEntity
     {
         public Entry(
             int accountID,
