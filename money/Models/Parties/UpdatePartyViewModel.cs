@@ -6,7 +6,7 @@ namespace Money.Models
     {
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter a party name.")]
         public string Name { get; set; }
     }
 }

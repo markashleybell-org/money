@@ -9,7 +9,7 @@ namespace Money.Models
         [HiddenInput(DisplayValue = false)]
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter an account name.")]
         public string Name { get; set; }
 
         public AccountType Type { get; set; }

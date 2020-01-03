@@ -107,21 +107,6 @@ namespace Money.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var types = EntryType.Debit | EntryType.Credit | EntryType.Transfer;
-
-                if (model.IsCredit.HasValue)
-                {
-                    types = !model.IsCredit.Value
-                        ? EntryType.Debit | EntryType.Transfer
-                        : EntryType.Credit;
-                }
-
-                model.Types = TypesSelectListItems(types, _accountList(model.AccountID));
-                model.MonthlyBudgets = MonthlyBudgetsSelectListItems(model.AccountID);
-                model.Categories = CategoriesSelectListItems(model.AccountID);
-                model.Parties = PartiesSelectListItems(model.AccountID);
-
-                // TODO: Improve this!
                 return Json(new { ok = false, msg = "Invalid form values" });
             }
 

@@ -48,8 +48,12 @@ modal.on('click', '.btn-primary', e => {
     xhr(Method.POST, ADD_ENTRY_URL, form.serialize(), response => {
         hideLoader();
 
+        if (!form.valid()) {
+            return;
+        }
+
         if (!response.ok) {
-            alert('Form Invalid');
+            alert(response.msg);
         } else {
             response.updated.forEach((u: any) => $('#account-' + u.id).html(u.html));
             netWorth.load(NET_WORTH_URL);
@@ -92,6 +96,7 @@ $(document).on('click', '.btn-add-entry', e => {
 
     xhr(Method.GET, ADD_ENTRY_URL, data, html => {
         modalContent.html(html);
+        $.validator.unobtrusive.parse(modalContent.find('form'));
         modal.modal('show');
         hideLoader();
     });
