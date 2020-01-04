@@ -46,7 +46,7 @@ namespace Money.Support
 
                         return new SelectListItem {
                             Value = $"Transfer-{a.ID}",
-                            Text = $"Transfer to {a.Name}{last4Display}"
+                            Text = $"To {a.Name}{last4Display}"
                         };
                     });
 

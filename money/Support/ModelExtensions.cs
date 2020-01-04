@@ -16,10 +16,9 @@ namespace Money.Support
             switch (account.Type)
             {
                 case AccountType.CreditCard:
-                    return $"[●●●● ●●●● ●●●● {account.NumberLast4Digits}]";
                 case AccountType.Current:
                 case AccountType.Savings:
-                    return $"[●●●●{account.NumberLast4Digits}]";
+                    return $"[●●{account.NumberLast4Digits}]";
                 default:
                     return default;
             }
