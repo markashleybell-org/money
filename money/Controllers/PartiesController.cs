@@ -29,6 +29,7 @@ namespace Money.Controllers
         {
             var sql = @"SELECT
                             p.ID,
+                            a.ID AS AccountID,
                             a.Name AS Account,
                             p.Name,
                             p.Deleted
@@ -43,13 +44,14 @@ namespace Money.Controllers
             var parties = Db.Query(conn => conn.Query<ListPartiesPartyViewModel>(sql));
 
             return View(new ListPartiesViewModel {
-                Parties = parties.GroupBy(p => p.Account)
+                Parties = parties.GroupBy(p => (p.AccountID, p.Account))
             });
         }
 
-        public IActionResult Create() =>
+        public IActionResult Create(int? id = null) =>
             View(new CreatePartyViewModel {
-                Accounts = AccountsSelectListItems()
+                Accounts = AccountsSelectListItems(),
+                AccountID = id
             });
 
         [HttpPost]

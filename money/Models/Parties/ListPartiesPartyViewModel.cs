@@ -6,6 +6,8 @@ namespace Money.Models
     {
         public int ID { get; set; }
 
+        public int AccountID { get; set; }
+
         public string Account { get; set; }
 
         public string Name { get; set; }

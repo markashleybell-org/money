@@ -29,6 +29,7 @@ namespace Money.Controllers
         {
             var sql = @"SELECT
                             c.ID,
+                            a.ID AS AccountID,
                             a.Name AS Account,
                             c.Name,
                             c.Deleted
@@ -43,13 +44,14 @@ namespace Money.Controllers
             var categories = Db.Query(conn => conn.Query<ListCategoriesCategoryViewModel>(sql));
 
             return View(new ListCategoriesViewModel {
-                Categories = categories.GroupBy(c => c.Account)
+                Categories = categories.GroupBy(c => (c.AccountID, c.Account))
             });
         }
 
-        public IActionResult Create() =>
+        public IActionResult Create(int? id = null) =>
             View(new CreateCategoryViewModel {
-                Accounts = AccountsSelectListItems()
+                Accounts = AccountsSelectListItems(),
+                AccountID = id
             });
 
         [HttpPost]

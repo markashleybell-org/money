@@ -16,9 +16,12 @@
             </thead>
             @foreach (var partyGroup in Model.Parties)
             {
+                var (accountID, accountName) = partyGroup.Key;
+
                 <thead class="thead-dark">
                     <tr>
-                        <th colspan="2">@partyGroup.Key</th>
+                        <th class="align-middle">@accountName</th>
+                        <th class="text-right"><a asp-action="Create" asp-route-id="@accountID" class="btn btn-primary btn-sm">Add</a></th>
                     </tr>
                 </thead>
                 <tbody>
