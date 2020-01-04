@@ -162,6 +162,13 @@ body {
     text-decoration: line-through;
 }
 
+.entry-modal-type-info {
+    color: #999;
+    display: inline-block;
+    padding-top: 4px;
+    font-size: 0.8em;
+}
+
 @media (min-width: 600px) {
     .container {
         width: 600px;

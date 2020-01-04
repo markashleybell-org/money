@@ -23,7 +23,10 @@ namespace Money.Support
             };
 
         public static string GetDisplayName(this Enum enumValue) =>
-            enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>().Name;
+            enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>()?.Name;
+
+        public static string GetDescription(this Enum enumValue) =>
+            enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>()?.Description;
 
         public static ActionResult RedirectTo<T>(Expression<Func<T, IActionResult>> action)
             where T : ControllerBase =>
@@ -31,22 +34,25 @@ namespace Money.Support
 
         public static IEnumerable<SelectListItem> TypesSelectListItems(EntryType entryTypes, Func<IEnumerable<Account>> accountList)
         {
-            var types = Enum.GetNames(typeof(EntryType))
-                .Where(n => n != EntryType.Unknown.ToString() && n != EntryType.Transfer.ToString())
-                .Select(n => new SelectListItem { Value = n, Text = n }).ToList();
+            var types = // Enum.GetNames(typeof(EntryType))
+                ((EntryType[])Enum.GetValues(typeof(EntryType)))
+                .Where(t => t != EntryType.Unknown && t != EntryType.Transfer)
+                .Select(n => new SelectListItem {
+                    Value = n.ToString(),
+                    Text = $"{n} ({n.GetDescription() ?? "--"})".Trim()
+                })
+                .ToList();
 
             if (entryTypes.HasFlag(EntryType.Transfer))
             {
                 var accounts = accountList()
                     .Where(a => !a.IsDormant)
                     .Select(a => {
-                        var last4Display = !string.IsNullOrWhiteSpace(a.NumberLast4Digits)
-                            ? $" [●●{a.NumberLast4Digits}]"
-                            : string.Empty;
-
+                        var last4 = a.NumberLast4DigitsForDisplay();
+                        var info = a.Name + (!string.IsNullOrWhiteSpace(last4) ? $" [{last4}]" : string.Empty);
                         return new SelectListItem {
                             Value = $"Transfer-{a.ID}",
-                            Text = $"To {a.Name}{last4Display}"
+                            Text = $"To {a.Name} (Transfer to {info})".Trim()
                         };
                     });
 

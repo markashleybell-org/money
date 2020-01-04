@@ -75,7 +75,12 @@ namespace Money.Controllers
             });
         }
 
-        public IActionResult Create(int accountID, int? categoryID = null, bool? isCredit = null, bool showCategorySelector = true, decimal remaining = 0)
+        public IActionResult Create(
+            int accountID,
+            int? categoryID = null,
+            bool? isCredit = null,
+            bool showCategorySelector = true,
+            decimal remaining = 0)
         {
             var types = EntryType.Debit | EntryType.Credit | EntryType.Transfer;
 

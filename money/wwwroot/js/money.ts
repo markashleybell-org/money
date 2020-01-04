@@ -63,6 +63,16 @@ modal.on('click', '.btn-primary', e => {
     });
 });
 
+function setTransactionTypeInfo(select: HTMLSelectElement) {
+    const selectedOption = select.selectedOptions.item(0);
+    modal.find('.entry-modal-type-info').html(selectedOption.getAttribute('data-info'));
+}
+
+modal.on('change', 'select[name=Type]', e => {
+    const select = e.target as HTMLSelectElement;
+    setTransactionTypeInfo(select);
+});
+
 $(document).on('click', '.btn-add-entry', e => {
     e.preventDefault();
 
@@ -98,8 +108,30 @@ $(document).on('click', '.btn-add-entry', e => {
 
     xhr(Method.GET, ADD_ENTRY_URL, data, html => {
         modalContent.html(html);
-        $.validator.unobtrusive.parse(modalContent.find('form'));
+
+        const form = modalContent.find('form');
+
+        $.validator.unobtrusive.parse(form);
+
+        const typeSelect = form.find('select[name=Type]');
+
+        if (typeSelect.length) {
+            const infoRegex = /\s+\((.*?)\)/gi;
+
+            typeSelect.find('option').get().forEach(el => {
+                const info = infoRegex.exec(el.innerText);
+
+                if (info) {
+                    el.innerText = el.innerText.replace(infoRegex, '');
+                    el.setAttribute('data-info', info[1]);
+                }
+            });
+
+            setTransactionTypeInfo(typeSelect.get(0) as HTMLSelectElement);
+        }
+
         modal.modal('show');
+
         hideLoader();
     });
 });
