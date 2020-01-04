@@ -275,6 +275,11 @@ body {
     margin-left: 8px;
 }
 
+.soft-deleted {
+    color: #999;
+    text-decoration: line-through;
+}
+
 @media (min-width: 600px) {
     .container {
         width: 600px;

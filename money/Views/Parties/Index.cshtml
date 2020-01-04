@@ -25,7 +25,7 @@
                     @foreach (var party in partyGroup)
                     {
                         <tr>
-                            <td class="align-middle">@party.Name</td>
+                            <td class="align-middle">@party.NameWithDeletedStatus()</td>
                             <td class="text-right"><a asp-action="Update" asp-route-id="@party.ID" class="btn btn-primary btn-sm">Edit</a></td>
                         </tr>
                     }

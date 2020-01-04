@@ -4,7 +4,7 @@ using d = Dapper.Contrib.Extensions;
 namespace Money.Entities
 {
     [d.Table("Parties")]
-    public class Party : IEntity
+    public class Party : IEntity, ISoftDeletable<Party>
     {
         public Party(int accountID, string name)
         {
@@ -22,6 +22,18 @@ namespace Money.Entities
             Name = name;
         }
 
+        private Party(
+            int id,
+            int accountId,
+            string name,
+            bool deleted)
+        {
+            ID = id;
+            AccountID = accountId;
+            Name = name;
+            Deleted = deleted;
+        }
+
         [d.Key]
         public int ID { get; private set; }
 
@@ -30,12 +42,22 @@ namespace Money.Entities
         [StringLength(64)]
         public string Name { get; private set; }
 
+        public bool Deleted { get; private set; }
+
         public Party WithUpdates(
             string name)
             => new Party(
                 id: ID,
                 accountId: AccountID,
                 name: name
+            );
+
+        public Party ForDeletion() =>
+            new Party(
+                ID,
+                AccountID,
+                Name,
+                deleted: true
             );
     }
 }

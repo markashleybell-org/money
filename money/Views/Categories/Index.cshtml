@@ -25,7 +25,7 @@
                     @foreach (var category in accountGroup)
                     {
                         <tr>
-                            <td class="align-middle">@category.Name</td>
+                            <td class="align-middle">@category.NameWithDeletedStatus()</td>
                             <td class="text-right"><a asp-action="Update" asp-route-id="@category.ID" class="btn btn-primary btn-sm">Edit</a></td>
                         </tr>
                     }

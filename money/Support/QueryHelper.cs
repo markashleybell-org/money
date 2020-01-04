@@ -65,6 +65,15 @@ namespace Money.Support
 
         public void Delete<T>(T dto)
             where T : class, IEntity =>
-                Execute((conn, transaction) => conn.Delete(dto, transaction));
+                Execute((conn, transaction) => {
+                    if (dto is ISoftDeletable<T> d)
+                    {
+                        conn.Update(d.ForDeletion(), transaction);
+                    }
+                    else
+                    {
+                        conn.Delete(dto);
+                    }
+                });
     }
 }

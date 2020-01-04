@@ -27,13 +27,14 @@ namespace Money.Controllers
 
         public IActionResult Index()
         {
-            var sql = @"SELECT 
-                            c.ID, 
-                            a.Name AS Account, 
-                            c.Name 
-                        FROM 
-                            Categories c 
-                        INNER JOIN 
+            var sql = @"SELECT
+                            c.ID,
+                            a.Name AS Account,
+                            c.Name,
+                            c.Deleted
+                        FROM
+                            Categories c
+                        INNER JOIN
                             Accounts a ON a.ID = c.AccountID
                         ORDER BY
                             a.DisplayOrder,

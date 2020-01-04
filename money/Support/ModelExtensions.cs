@@ -4,7 +4,7 @@ using Money.Models;
 
 namespace Money.Support
 {
-    public static class AccountExtensions
+    public static class ModelExtensions
     {
         public static string NumberLast4DigitsForDisplay(this IAccount account)
         {
@@ -33,5 +33,10 @@ namespace Money.Support
                 ? new HtmlString($"<span class=\"last-4\">{displayString}</span>")
                 : new HtmlString(string.Empty);
         }
+
+        public static HtmlString NameWithDeletedStatus(this ISoftDeletableLookupData item) =>
+            item.Deleted
+                ? new HtmlString($"<span class=\"soft-deleted\">{item.Name}</span>")
+                : new HtmlString(item.Name);
     }
 }
