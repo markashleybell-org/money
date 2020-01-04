@@ -352,3 +352,6 @@ launchSettings.json
 
 # Database releases
 !db/Releases/
+
+# Development settings
+appsettings.*.json
