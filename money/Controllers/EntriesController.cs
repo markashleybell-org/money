@@ -33,13 +33,13 @@ namespace Money.Controllers
         {
             _viewRenderer = viewRenderer;
 
-            var sql = @"SELECT 
+            var sql = @"SELECT
                             *
-                        FROM 
-                            Accounts 
-                        WHERE 
-                            ID != @AccountID 
-                        ORDER BY 
+                        FROM
+                            Accounts
+                        WHERE
+                            ID != @AccountID
+                        ORDER BY
                             DisplayOrder";
 
             _accountList = accountID => () => Db.Query(conn => conn.Query<Account>(sql, new { accountID }));
@@ -47,25 +47,25 @@ namespace Money.Controllers
 
         public IActionResult Index(int id)
         {
-            var sql = @"SELECT 
+            var sql = @"SELECT
                             e.ID,
                             a.Name AS Account,
                             e.Date,
                             p.Name AS Party,
                             c.Name AS Category,
                             e.Amount
-                        FROM 
-                            Entries e 
-                        INNER JOIN 
+                        FROM
+                            Entries e
+                        INNER JOIN
                             Accounts a ON a.ID = e.AccountID
-                        LEFT JOIN 
+                        LEFT JOIN
                             Parties p ON p.ID = e.PartyID
-                        LEFT JOIN 
+                        LEFT JOIN
                             Categories c ON c.ID = e.CategoryID
-                        WHERE 
+                        WHERE
                             e.AccountID = @ID
                         ORDER BY
-                            e.Date DESC, 
+                            e.Date DESC,
                             e.ID DESC";
 
             var entries = Db.Query(conn => conn.Query<ListEntriesEntryViewModel>(sql, new { id }));
