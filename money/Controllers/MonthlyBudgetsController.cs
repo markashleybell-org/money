@@ -28,13 +28,13 @@ namespace Money.Controllers
 
         public IActionResult Index(int id)
         {
-            var sql = @"SELECT 
-                            * 
+            var sql = @"SELECT
+                            *
                         FROM
                             MonthlyBudgets
                         WHERE
-                            AccountID = @ID 
-                        ORDER BY 
+                            AccountID = @ID
+                        ORDER BY
                             StartDate DESC";
 
             return View(new ListMonthlyBudgetsViewModel {
@@ -184,7 +184,7 @@ namespace Money.Controllers
 
         private string AccountName(int accountID)
         {
-            var sql = @"SELECT 
+            var sql = @"SELECT
                             Name
                         FROM
                             Accounts a
@@ -196,10 +196,11 @@ namespace Money.Controllers
 
         private IEnumerable<MonthlyBudgetCategoryViewModel> Categories(int accountID, int monthlyBudgetID = 0)
         {
-            var sql = @"SELECT 
+            var sql = @"SELECT
                             c.ID AS CategoryID,
                             c.Name,
-                            b.Amount
+                            b.Amount,
+                            c.Deleted AS CategoryDeleted
                         FROM
                             Categories c
                         LEFT JOIN

@@ -1,11 +1,20 @@
 @model MonthlyBudgetCategoryViewModel
 
-@{ 
+@{
     var fieldID = Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName(nameof(Model.CategoryID)));
 }
 
-<div class="form-group row">
-    <label for="@fieldID" class="col-sm-4 col-form-label">@Model.Name</label>
+<div class="form-group row@(Model.CategoryDeleted && Model.Amount == 0 ? " d-none" : string.Empty)">
+    <label for="@fieldID" class="col-sm-4 col-form-label">
+        @if (Model.CategoryDeleted)
+        {
+            <span class="soft-deleted">@Model.Name</span>
+        }
+        else
+        {
+            @Model.Name
+        }
+    </label>
     <div class="col-sm-4">
         @Html.HiddenFor(x => x.CategoryID)
         @Html.EditorFor(x => x.Amount)
