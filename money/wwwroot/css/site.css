@@ -287,6 +287,10 @@ body {
     font-size: 0.8em;
 }
 
+.entry-modal-type-info > span {
+    margin-left: 5px;
+}
+
 @media (min-width: 600px) {
     .container {
         width: 600px;

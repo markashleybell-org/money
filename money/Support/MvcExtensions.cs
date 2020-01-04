@@ -49,7 +49,7 @@ namespace Money.Support
                     .Where(a => !a.IsDormant)
                     .Select(a => {
                         var last4 = a.NumberLast4DigitsForDisplay();
-                        var info = a.Name + (!string.IsNullOrWhiteSpace(last4) ? $" [{last4}]" : string.Empty);
+                        var info = a.Name + (!string.IsNullOrWhiteSpace(last4) ? $" <span>[{last4}]</span>" : string.Empty);
                         return new SelectListItem {
                             Value = $"Transfer-{a.ID}",
                             Text = $"To {a.Name} (Transfer to {info})".Trim()
