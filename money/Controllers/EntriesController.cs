@@ -99,7 +99,7 @@ namespace Money.Controllers
                 Types = typeSelectListItems,
                 Type = typeSelectListItems.Count() == 1 ? typeSelectListItems.Single().Value : null,
                 MonthlyBudgets = MonthlyBudgetsSelectListItems(accountID),
-                Categories = CategoriesSelectListItems(accountID),
+                Categories = Enumerable.Empty<SelectListItem>(),
                 Parties = PartiesSelectListItems(accountID),
                 IsCredit = isCredit,
                 ShowCategorySelector = showCategorySelector,
