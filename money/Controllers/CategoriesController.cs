@@ -25,21 +25,28 @@ namespace Money.Controllers
         {
         }
 
-        public IActionResult Index()
+        public IActionResult Index(bool? showDeleted = false)
         {
-            var sql = @"SELECT
-                            c.ID,
-                            a.ID AS AccountID,
-                            a.Name AS Account,
-                            c.Name,
-                            c.Deleted
-                        FROM
-                            Categories c
-                        INNER JOIN
-                            Accounts a ON a.ID = c.AccountID
-                        ORDER BY
-                            a.DisplayOrder,
-                            c.DisplayOrder";
+            var whereClause = showDeleted == true
+                ? "Deleted = 1 OR Deleted = 0"
+                : "Deleted = 0";
+
+            var sql = @$"
+SELECT
+    c.ID,
+    a.ID AS AccountID,
+    a.Name AS Account,
+    c.Name,
+    c.Deleted
+FROM
+    Categories c
+INNER JOIN
+    Accounts a ON a.ID = c.AccountID
+WHERE
+    {whereClause}
+ORDER BY
+    a.DisplayOrder,
+    c.DisplayOrder";
 
             var categories = Db.Query(conn => conn.Query<ListCategoriesCategoryViewModel>(sql));
 

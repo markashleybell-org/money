@@ -25,21 +25,28 @@ namespace Money.Controllers
         {
         }
 
-        public IActionResult Index()
+        public IActionResult Index(bool? showDeleted = false)
         {
-            var sql = @"SELECT
-                            p.ID,
-                            a.ID AS AccountID,
-                            a.Name AS Account,
-                            p.Name,
-                            p.Deleted
-                        FROM
-                            Parties p
-                        INNER JOIN
-                            Accounts a ON a.ID = p.AccountID
-                        ORDER BY
-                            a.DisplayOrder,
-                            p.Name";
+            var whereClause = showDeleted == true
+                ? "Deleted = 1 OR Deleted = 0"
+                : "Deleted = 0";
+
+            var sql = $@"
+SELECT
+    p.ID,
+    a.ID AS AccountID,
+    a.Name AS Account,
+    p.Name,
+    p.Deleted
+FROM
+    Parties p
+INNER JOIN
+    Accounts a ON a.ID = p.AccountID
+WHERE
+    {whereClause}
+ORDER BY
+    a.DisplayOrder,
+    p.Name";
 
             var parties = Db.Query(conn => conn.Query<ListPartiesPartyViewModel>(sql));
 
