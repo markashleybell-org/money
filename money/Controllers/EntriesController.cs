@@ -287,11 +287,11 @@ namespace Money.Controllers
         }
 
         private IEnumerable<SelectListItem> CategoriesSelectListItems(int accountID) =>
-            Db.Query(conn => conn.Query<Category>("SELECT * FROM Categories WHERE AccountID = @AccountID ORDER BY Name", new { accountID }))
+            Db.Query(conn => conn.Query<Category>("SELECT * FROM Categories WHERE AccountID = @AccountID AND Deleted = 0 ORDER BY Name", new { accountID }))
                .Select(c => new SelectListItem { Value = c.ID.ToString(), Text = c.Name });
 
         private IEnumerable<SelectListItem> PartiesSelectListItems(int accountID) =>
-            Db.Query(conn => conn.Query<Party>("SELECT * FROM Parties WHERE AccountID = @AccountID ORDER BY Name", new { accountID }))
+            Db.Query(conn => conn.Query<Party>("SELECT * FROM Parties WHERE AccountID = @AccountID AND Deleted = 0 ORDER BY Name", new { accountID }))
                .Select(p => new SelectListItem { Value = p.ID.ToString(), Text = p.Name });
 
         private IEnumerable<SelectListItem> MonthlyBudgetsSelectListItems(int accountID) =>
