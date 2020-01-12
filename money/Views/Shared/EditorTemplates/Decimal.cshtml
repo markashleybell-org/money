@@ -1,10 +1,3 @@
 @model decimal?
 
-<div class="input-group">
-    <div class="input-group-prepend">
-        <div class="input-group-text">&pound;</div>
-    </div>
-    @Html.TextBox("", Model?.ToString("0.00"), new { @class = "form-control", type = "number", step = "0.01", autocomplete = "off" })
-</div>
-
-@Html.ValidationMessage("")
+@Html.TextBox("", Model?.ToString("0.00"), new { @class = "form-control", type = "number", step = "0.01", autocomplete = "off", placeholder = "0.00" })

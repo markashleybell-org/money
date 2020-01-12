@@ -15,12 +15,13 @@ namespace Money.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Please enter a date.")]
         public DateTime Date { get; set; } = DateTime.Now;
 
         public string Type { get; set; }
 
         [Required(ErrorMessage = "Please enter an amount.")]
-        public decimal? Amount { get; set; } = 0.00M;
+        public decimal? Amount { get; set; }
 
         [StringLength(64)]
         public string Note { get; set; }

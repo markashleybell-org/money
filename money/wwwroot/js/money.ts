@@ -73,6 +73,10 @@ modal.on('change', 'select[name=Type]', e => {
     setTransactionTypeInfo(select);
 });
 
+modal.on('shown.bs.modal', () => {
+    modal.find('input[name=Amount]').focus();
+});
+
 $(document).on('click', '.btn-add-entry', e => {
     e.preventDefault();
 
@@ -134,13 +138,6 @@ $(document).on('click', '.btn-add-entry', e => {
 
         hideLoader();
     });
-});
-
-$(document).on('focus', '#Amount', e => {
-    const input = $(e.currentTarget);
-    if (parseFloat(input.val() as string) === 0) {
-        input.val('');
-    }
 });
 
 $(document).on('click', '.btn-date-preset', e => {

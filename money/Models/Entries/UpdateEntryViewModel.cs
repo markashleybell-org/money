@@ -17,6 +17,7 @@ namespace Money.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Please enter a date.")]
         public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "Please enter an amount.")]
