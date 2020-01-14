@@ -9,18 +9,19 @@
 <form asp-controller="Entries" asp-action="Create" method="post">
     <input type="hidden" asp-for="AccountID" />
     <div class="form-row">
-        <div class="form-group col-5">
+        <div class="form-group col-4">
             <label asp-for="Amount">@(isCredit ? "Credit Amount" : "Amount")</label>
             <editor for="Amount" />
             <span asp-validation-for="Amount"></span>
         </div>
-        <div class="form-group-nolabel col-7">
+        <div class="form-group-nolabel col-8">
             @if (!isCredit)
             {
                 <div class="btn-group d-flex" role="group">
-                    <button type="button" class="btn btn-light btn-amount-preset" data-amount="-10.00">£10</button>
-                    <button type="button" class="btn btn-light btn-amount-preset" data-amount="-20.00">£20</button>
-                    <button type="button" class="btn btn-light btn-amount-preset" data-amount="@Model.Remaining.ToString("0.00")" @(Model.Remaining == 0 ? "disabled" : "")>All</button>
+                    <button type="button" class="btn btn-light btn-amount-preset" data-amount="-5.00">-5</button>
+                    <button type="button" class="btn btn-light btn-amount-preset" data-amount="-10.00">-10</button>
+                    <button type="button" class="btn btn-light btn-amount-preset" data-amount="-20.00">-20</button>
+                    <button type="button" class="btn btn-light btn-amount-preset btn-amount-preset-all" data-amount="@Model.Remaining.ToString("0.00")" @(Model.Remaining == 0 ? "disabled" : "")>All</button>
                 </div>
             }
         </div>

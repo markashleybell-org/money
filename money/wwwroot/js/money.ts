@@ -147,5 +147,18 @@ $(document).on('click', '.btn-date-preset', e => {
 
 $(document).on('click', '.btn-amount-preset', e => {
     e.preventDefault();
-    $('#Amount').val($(e.currentTarget).data('amount'));
+
+    const button = $(e.currentTarget);
+    const amountInput = modal.find('#Amount');
+
+    const amount = parseFloat(button.data('amount'));
+
+    if (button.hasClass('btn-amount-preset-all')) {
+        amountInput.val(amount.toFixed(2));
+    } else {
+        const currentAmount = parseFloat((amountInput.val() as string) || '0');
+        const newValue = (currentAmount + amount).toFixed(2);
+
+        amountInput.val(newValue);
+    }
 });
