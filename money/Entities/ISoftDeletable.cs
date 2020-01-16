@@ -6,5 +6,7 @@ namespace Money.Entities
         bool Deleted { get; }
 
         T ForDeletion();
+
+        T ForUndeletion();
     }
 }

@@ -8,5 +8,7 @@ namespace Money.Models
 
         [Required(ErrorMessage = "Please enter a party name.")]
         public string Name { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

@@ -59,5 +59,13 @@ namespace Money.Entities
                 Name,
                 deleted: true
             );
+
+        public Party ForUndeletion() =>
+            new Party(
+                ID,
+                AccountID,
+                Name,
+                deleted: false
+            );
     }
 }

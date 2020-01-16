@@ -75,5 +75,9 @@ namespace Money.Support
                         conn.Delete(dto);
                     }
                 });
+
+        public void Undelete<T>(T dto)
+            where T : class, IEntity, ISoftDeletable<T> =>
+                Execute((conn, transaction) => conn.Update(dto.ForUndeletion(), transaction));
     }
 }

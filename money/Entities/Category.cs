@@ -66,5 +66,14 @@ namespace Money.Entities
                 DisplayOrder,
                 deleted: true
             );
+
+        public Category ForUndeletion() =>
+            new Category(
+                ID,
+                AccountID,
+                Name,
+                DisplayOrder,
+                deleted: false
+            );
     }
 }

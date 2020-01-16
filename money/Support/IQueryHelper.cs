@@ -13,6 +13,9 @@ namespace Money.Support
         void Delete<T>(T dto)
             where T : class, IEntity;
 
+        void Undelete<T>(T dto)
+            where T : class, IEntity, ISoftDeletable<T>;
+
         void Execute(Action<IDbConnection, IDbTransaction> body);
 
         int InsertOrUpdate<T>(T dto)

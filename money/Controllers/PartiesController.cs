@@ -87,7 +87,8 @@ ORDER BY
 
             return View(new UpdatePartyViewModel {
                 ID = dto.ID,
-                Name = dto.Name
+                Name = dto.Name,
+                IsDeleted = dto.Deleted
             });
         }
 
@@ -116,6 +117,18 @@ ORDER BY
             var dto = Db.Get<Party>(id);
 
             Db.Delete(dto);
+
+            UnitOfWork.CommitChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult Undelete(int id)
+        {
+            var dto = Db.Get<Party>(id);
+
+            Db.Undelete(dto);
 
             UnitOfWork.CommitChanges();
 

@@ -20,9 +20,9 @@
 
 <div class="row">
     <div class="col">
-        <form asp-controller="Parties" asp-action="Delete" method="post" class="delete-form">
+        <form asp-controller="Parties" asp-action="@(Model.IsDeleted ? "Undelete" : "Delete")" method="post" class="delete-form">
             <input type="hidden" asp-for="ID" id="Delete_ID" />
-            <button type="submit" class="btn btn-danger">Delete</button>
+            <button type="submit" class="btn btn-danger">@(Model.IsDeleted ? "Undelete" : "Delete")</button>
         </form>
     </div>
 </div>
