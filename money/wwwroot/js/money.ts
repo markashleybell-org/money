@@ -73,9 +73,15 @@ modal.on('change', 'select[name=Type]', e => {
     setTransactionTypeInfo(select);
 });
 
-modal.on('shown.bs.modal', () => {
-    modal.find('input[name=Amount]').focus();
-});
+if (window.matchMedia("(min-width: 900px)").matches) {
+    // Only do this at desktop widths, because mobile keyboards are a massive pain...
+    // And yes, this is *very* basic... but until there's actually a good, reliable
+    // way to detect what device is being used, this will do.
+
+    modal.on('shown.bs.modal', () => {
+        modal.find('input[name=Amount]').focus();
+    });
+}
 
 $(document).on('click', '.btn-add-entry', e => {
     e.preventDefault();
