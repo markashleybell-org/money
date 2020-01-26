@@ -103,7 +103,7 @@ namespace Money.Support
 
             Execute((conn, transaction) => {
                 var updates = order.Select((id, i) => $"UPDATE {tableAttribute.Name} SET DisplayOrder = {i} WHERE {keyProperty.Name} = {id}");
-                conn.Execute(string.Join("; ", updates), transaction: transaction);
+                conn.Execute($"UPDATE {tableAttribute.Name} SET DisplayOrder = -1 WHERE Deleted = 1; " + string.Join("; ", updates), transaction: transaction);
             });
         }
     }
