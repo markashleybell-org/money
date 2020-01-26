@@ -25,10 +25,10 @@
                         <th class="text-right"><a asp-action="Create" asp-route-id="@accountID" class="btn btn-primary btn-sm">Add</a></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="sortable-rows" data-persist-url="@Url.Action("UpdateDisplayOrder", "Categories")">
                     @foreach (var category in accountGroup)
                     {
-                        <tr>
+                        <tr data-id="@category.ID">
                             <td class="align-middle">@category.NameWithDeletedStatus()</td>
                             <td class="text-right"><a asp-action="Update" asp-route-id="@category.ID" class="btn btn-primary btn-sm">Edit</a></td>
                         </tr>
@@ -39,3 +39,7 @@
         <p><a asp-action="Create" class="btn btn-primary btn-new">Add New Category</a></p>
     </div>
 </div>
+
+@section scripts {
+    <script src="~/js/dist/list.js" asp-append-version="true"></script>
+}

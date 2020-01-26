@@ -173,6 +173,18 @@ body {
     }
 }
 
+.drag-ghost {
+    background-color: #feff81 !important;
+
+    td {
+        border-color: #424242 !important;
+    }
+
+    + tr td {
+        border-color: #424242 !important;
+    }
+}
+
 @media (min-width: 600px) {
     .container {
         width: 600px;

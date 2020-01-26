@@ -8,6 +8,7 @@
         "@types/jquery-validation-unobtrusive": "3.2.32",
         "@types/jquery.validation": "1.16.6",
         "@types/js-cookie": "2.2.4",
+        "@types/sortablejs": "^1.10.2",
         "clean-webpack-plugin": "3.0.0",
         "gulp": "4.0.2",
         "gulp-autoprefixer": "7.0.1",
@@ -25,6 +26,7 @@
         "jquery-validation": "1.19.1",
         "jquery-validation-unobtrusive": "3.2.11",
         "js-cookie": "2.2.1",
+        "sortablejs": "^1.10.2",
         "tslib": "1.10.0"
     },
     "scripts": {

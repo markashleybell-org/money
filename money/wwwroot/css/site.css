@@ -291,6 +291,18 @@ body {
     margin-left: 5px;
 }
 
+.drag-ghost {
+    background-color: #feff81 !important;
+}
+
+.drag-ghost td {
+    border-color: #424242 !important;
+}
+
+.drag-ghost + tr td {
+    border-color: #424242 !important;
+}
+
 @media (min-width: 600px) {
     .container {
         width: 600px;

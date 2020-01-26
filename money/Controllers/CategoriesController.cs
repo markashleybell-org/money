@@ -114,6 +114,16 @@ ORDER BY
         }
 
         [HttpPost]
+        public IActionResult UpdateDisplayOrder(DisplayOrderUpdateModel model)
+        {
+            Db.UpdateDisplayOrder<Category>(model.ItemOrder);
+
+            UnitOfWork.CommitChanges();
+
+            return Ok();
+        }
+
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             var dto = Db.Get<Category>(id);

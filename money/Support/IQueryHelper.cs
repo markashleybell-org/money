@@ -24,5 +24,8 @@ namespace Money.Support
         IEnumerable<T> Query<T>(Func<IDbConnection, IEnumerable<T>> body);
 
         T Query<T>(Func<IDbConnection, T> body);
+
+        void UpdateDisplayOrder<T>(IEnumerable<int> order)
+            where T : class, IEntity, IOrderable<T>;
     }
 }

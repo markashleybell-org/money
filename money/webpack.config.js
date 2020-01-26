@@ -8,7 +8,8 @@ module.exports = {
         library: 'Money'
     },
     entry: {
-        'money': './wwwroot/js/money.ts'
+        'money': './wwwroot/js/money.ts',
+        'list': './wwwroot/js/list.ts'
     },
     devtool: 'source-map',
     plugins: [

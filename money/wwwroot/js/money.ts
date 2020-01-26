@@ -19,7 +19,7 @@ const netWorth = $('#net-worth');
 const defaultAjaxErrorCallback: XHRErrorCallback = (request, status, error) =>
     alert('XHR ERROR: ' + error + ', STATUS: ' + status);
 
-const xhr = (method: Method, url: string, data: any, successCallback?: (data: any) => void, errorCallback?: XHRErrorCallback) => {
+export const xhr = (method: Method, url: string, data: any, successCallback?: (data: any) => void, errorCallback?: XHRErrorCallback) => {
     const options = {
         type: Method[method],
         url: url,
