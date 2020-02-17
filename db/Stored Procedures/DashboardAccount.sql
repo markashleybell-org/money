@@ -158,7 +158,7 @@ AS
     SELECT
         0 AS ID,
         a.ID AS AccountID,
-        'Uncategorised' AS Name,
+        'Available' AS Name,
         (a.BalanceAtStartOfMonthlyBudget +
         ISNULL((SELECT SUM(e.Amount) FROM @Entries e WHERE e.AccountID = a.ID AND e.Amount > 0), 0) +
         ISNULL((SELECT SUM(bc.Amount) FROM @BudgetCategories bc WHERE bc.AccountID = a.ID), 0)) * -1 AS Amount,
