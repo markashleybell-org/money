@@ -75,7 +75,7 @@ namespace Money.Support
                     }
                     else
                     {
-                        conn.Delete(dto);
+                        conn.Delete(dto, transaction);
                     }
                 });
 
