@@ -355,3 +355,6 @@ launchSettings.json
 
 # Development settings
 appsettings.*.json
+
+# Client-side build artifacts
+**/wwwroot/js/dist/
