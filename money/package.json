@@ -31,6 +31,7 @@
     },
     "scripts": {
         "build": "webpack --mode=production --display-modules",
+        "build-css": "gulp sass",
         "watch": "webpack --watch --mode=production"
     },
     "browserslist": [
