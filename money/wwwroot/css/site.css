@@ -193,12 +193,10 @@ body {
 }
 
 .progress-bar {
-    -webkit-transition: background-color 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
     transition: background-color 3s cubic-bezier(0.91, 0.065, 0.95, 0.54);
 }
 
 .updated {
-    -webkit-transition: background-color 0 cubic-bezier(0.91, 0.065, 0.95, 0.54);
     transition: background-color 0 cubic-bezier(0.91, 0.065, 0.95, 0.54);
     background-color: #ff6a00;
 }

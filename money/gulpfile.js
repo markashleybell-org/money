@@ -16,5 +16,5 @@ gulp.task('sass', () =>
         .pipe(autoprefixer({ cascade: false }))
         .pipe(gulp.dest('./wwwroot/css')));
 
-gulp.task('watch-scss', () => 
+gulp.task('watch-scss', () =>
     gulp.watch('./wwwroot/css/**/*.scss', gulp.series('sass')));
