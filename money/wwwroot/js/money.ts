@@ -1,5 +1,6 @@
 declare var ADD_ENTRY_URL: string;
 declare var NET_WORTH_URL: string;
+declare var DESCRIPTION_DELIMITER_REGEX: RegExp;
 
 enum Method {
     GET,
@@ -126,13 +127,11 @@ $(document).on('click', '.btn-add-entry', e => {
         const typeSelect = form.find('select[name=Type]');
 
         if (typeSelect.length) {
-            const infoRegex = /\s+\((.*?)\)/gi;
-
             typeSelect.find('option').get().forEach(el => {
-                const info = infoRegex.exec(el.innerText);
+                const info = DESCRIPTION_DELIMITER_REGEX.exec(el.innerText);
 
                 if (info) {
-                    el.innerText = el.innerText.replace(infoRegex, '');
+                    el.innerText = el.innerText.replace(DESCRIPTION_DELIMITER_REGEX, '');
                     el.setAttribute('data-info', info[1]);
                 }
             });

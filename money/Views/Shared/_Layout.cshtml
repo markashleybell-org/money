@@ -68,6 +68,7 @@
     <script>
         const ADD_ENTRY_URL = '@Url.Action("Create", "Entries")';
         const NET_WORTH_URL = '@Url.Action("NetWorth", "Home")';
+        const DESCRIPTION_DELIMITER_REGEX = @Html.Raw(Constants.DESCRIPTION_DELIMITER_REGEX);
     </script>
 
     <script src="~/js/dist/money.js" asp-append-version="true"></script>

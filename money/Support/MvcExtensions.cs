@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Money.Entities;
-using static Money.Support.Globals;
+using static Money.Support.Constants;
 
 namespace Money.Support
 {
@@ -39,7 +39,7 @@ namespace Money.Support
                 .Where(t => t != EntryType.Unknown && t != EntryType.Transfer)
                 .Select(n => new SelectListItem {
                     Value = n.ToString(),
-                    Text = $"{n} ({n.GetDescription() ?? "--"})".Trim()
+                    Text = $"{n} {DESCRIPTION_DELIMITER_START}{n.GetDescription() ?? "--"}{DESCRIPTION_DELIMITER_END}".Trim()
                 })
                 .ToList();
 
@@ -52,7 +52,7 @@ namespace Money.Support
                         var info = a.Name + (!string.IsNullOrWhiteSpace(last4) ? $" <span>[{last4}]</span>" : string.Empty);
                         return new SelectListItem {
                             Value = $"Transfer-{a.ID}",
-                            Text = $"To {a.Name} (Transfer to {info})".Trim()
+                            Text = $"To {a.Name} {DESCRIPTION_DELIMITER_START}Transfer to {info}{DESCRIPTION_DELIMITER_END}".Trim()
                         };
                     });
 
