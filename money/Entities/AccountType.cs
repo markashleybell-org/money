@@ -16,7 +16,7 @@ namespace Money.Entities
         [Display(Name = "Loans")]
         Mortgage,
 
-        [Display(Name = "Pensions")]
-        Pension
+        [Display(Name = "Investments")]
+        Investment
     }
 }
