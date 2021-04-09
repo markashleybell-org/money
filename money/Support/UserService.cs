@@ -37,9 +37,15 @@ namespace Money.Support
             return new ClaimsPrincipal(identity);
         }
 
-        public (bool valid, int? id) ValidateLogin(string email, string password)
+        public (bool Valid, int? ID) ValidateLogin(string email, string password)
         {
-            var sql = "SELECT * FROM Users WHERE Email = @Email";
+            const string sql = @"
+SELECT
+    *
+FROM
+    Users
+WHERE
+    Email = @Email";
 
             var user = _db.Query(conn => conn.QuerySingleOrDefault<User>(sql, new { email }));
 

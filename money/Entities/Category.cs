@@ -51,7 +51,7 @@ namespace Money.Entities
         public bool Deleted { get; private set; }
 
         public Category WithUpdates(string name) =>
-            new Category(
+            new(
                 ID,
                 AccountID,
                 name,
@@ -59,7 +59,7 @@ namespace Money.Entities
             );
 
         public Category ForDeletion() =>
-            new Category(
+            new(
                 ID,
                 AccountID,
                 Name,
@@ -68,7 +68,7 @@ namespace Money.Entities
             );
 
         public Category ForUndeletion() =>
-            new Category(
+            new(
                 ID,
                 AccountID,
                 Name,

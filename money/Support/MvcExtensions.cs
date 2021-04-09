@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Routing;
 using Money.Entities;
 using static Money.Support.Constants;
 
+#pragma warning disable RCS1224 // Make method an extension method.
+
 namespace Money.Support
 {
     public static class MvcExtensions
@@ -23,10 +25,10 @@ namespace Money.Support
             };
 
         public static string GetDisplayName(this Enum enumValue) =>
-            enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>()?.Name;
+            enumValue.GetType().GetMember(enumValue.ToString())[0].GetCustomAttribute<DisplayAttribute>()?.Name;
 
         public static string GetDescription(this Enum enumValue) =>
-            enumValue.GetType().GetMember(enumValue.ToString()).First().GetCustomAttribute<DisplayAttribute>()?.Description;
+            enumValue.GetType().GetMember(enumValue.ToString())[0].GetCustomAttribute<DisplayAttribute>()?.Description;
 
         public static ActionResult RedirectTo<T>(Expression<Func<T, IActionResult>> action)
             where T : ControllerBase =>
@@ -43,7 +45,7 @@ namespace Money.Support
                 })
                 .ToList();
 
-            if (entryTypes.HasFlag(EntryType.Transfer))
+            if ((entryTypes & EntryType.Transfer) != 0)
             {
                 var accounts = accountList()
                     .Where(a => !a.IsDormant)
@@ -59,12 +61,12 @@ namespace Money.Support
                 types.AddRange(accounts);
             }
 
-            if (!entryTypes.HasFlag(EntryType.Debit))
+            if ((entryTypes & EntryType.Debit) == 0)
             {
                 types.RemoveAll(t => t.Value == EntryType.Debit.ToString());
             }
 
-            if (!entryTypes.HasFlag(EntryType.Credit))
+            if ((entryTypes & EntryType.Credit) == 0)
             {
                 types.RemoveAll(t => t.Value == EntryType.Credit.ToString());
             }
@@ -75,7 +77,7 @@ namespace Money.Support
         private static RouteValueDictionary GetRouteValuesFor<T>(Expression<Func<T, IActionResult>> action)
             where T : ControllerBase
         {
-            if (!(action.Body is MethodCallExpression methodCallExpression)
+            if (action.Body is not MethodCallExpression methodCallExpression
                 || !methodCallExpression.Method.ReturnType.IsAssignableFrom(typeof(IActionResult)))
             {
                 throw new ArgumentException("Redirect action must be a method call which returns IActionResult", nameof(action));

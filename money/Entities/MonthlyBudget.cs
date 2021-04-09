@@ -39,8 +39,8 @@ namespace Money.Entities
 
         public MonthlyBudget WithUpdates(
             DateTime startDate,
-            DateTime endDate)
-            => new MonthlyBudget(
+            DateTime endDate) =>
+            new(
                 id: ID,
                 accountId: AccountID,
                 startDate: startDate,

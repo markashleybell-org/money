@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Money.Models;
 using Money.Support;
+using static Money.Support.MvcExtensions;
 
 namespace Money.Controllers
 {
@@ -27,7 +27,8 @@ namespace Money.Controllers
             _userService = userService;
 
         [AllowAnonymous]
-        public IActionResult Login() => View();
+        public IActionResult Login() =>
+            View();
 
         [HttpPost]
         [AllowAnonymous]
@@ -54,14 +55,14 @@ namespace Money.Controllers
 
             await HttpContext.SignInAsync(principal, authenticationProperties);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectTo<HomeController>(c => c.Index());
         }
 
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectTo<HomeController>(c => c.Index());
         }
     }
 }

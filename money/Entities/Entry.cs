@@ -106,8 +106,8 @@ namespace Money.Entities
             int? partyID,
             DateTime date,
             decimal amount,
-            string note)
-            => new Entry(
+            string note) =>
+            new(
                 id: ID,
                 accountId: AccountID,
                 monthlyBudgetId: MonthlyBudgetID,

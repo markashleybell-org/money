@@ -50,16 +50,22 @@ ORDER BY
 
             var categories = Db.Query(conn => conn.Query<ListCategoriesCategoryViewModel>(sql));
 
-            return View(new ListCategoriesViewModel {
+            var model = new ListCategoriesViewModel {
                 Categories = categories.GroupBy(c => (c.AccountID, c.Account))
-            });
+            };
+
+            return View(model);
         }
 
-        public IActionResult Create(int? id = null) =>
-            View(new CreateCategoryViewModel {
+        public IActionResult Create(int? id = null)
+        {
+            var model = new CreateCategoryViewModel {
                 Accounts = AccountsSelectListItems(),
                 AccountID = id
-            });
+            };
+
+            return View(model);
+        }
 
         [HttpPost]
         public IActionResult Create(CreateCategoryViewModel model)
@@ -87,11 +93,13 @@ ORDER BY
         {
             var dto = Db.Get<Category>(id);
 
-            return View(new UpdateCategoryViewModel {
+            var model = new UpdateCategoryViewModel {
                 ID = dto.ID,
                 Name = dto.Name,
                 IsDeleted = dto.Deleted
-            });
+            };
+
+            return View(model);
         }
 
         [HttpPost]

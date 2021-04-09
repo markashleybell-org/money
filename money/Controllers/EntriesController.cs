@@ -33,46 +33,50 @@ namespace Money.Controllers
         {
             _viewRenderer = viewRenderer;
 
-            var sql = @"SELECT
-                            *
-                        FROM
-                            Accounts
-                        WHERE
-                            ID != @AccountID
-                        ORDER BY
-                            DisplayOrder";
+            const string sql = @"
+SELECT
+    *
+FROM
+    Accounts
+WHERE
+    ID != @AccountID
+ORDER BY
+    DisplayOrder";
 
             _accountList = accountID => () => Db.Query(conn => conn.Query<Account>(sql, new { accountID }));
         }
 
         public IActionResult Index(int id)
         {
-            var sql = @"SELECT
-                            e.ID,
-                            a.Name AS Account,
-                            e.Date,
-                            p.Name AS Party,
-                            c.Name AS Category,
-                            e.Amount
-                        FROM
-                            Entries e
-                        INNER JOIN
-                            Accounts a ON a.ID = e.AccountID
-                        LEFT JOIN
-                            Parties p ON p.ID = e.PartyID
-                        LEFT JOIN
-                            Categories c ON c.ID = e.CategoryID
-                        WHERE
-                            e.AccountID = @ID
-                        ORDER BY
-                            e.Date DESC,
-                            e.ID DESC";
+            const string sql = @"
+SELECT
+    e.ID,
+    a.Name AS Account,
+    e.Date,
+    p.Name AS Party,
+    c.Name AS Category,
+    e.Amount
+FROM
+    Entries e
+INNER JOIN
+    Accounts a ON a.ID = e.AccountID
+LEFT JOIN
+    Parties p ON p.ID = e.PartyID
+LEFT JOIN
+    Categories c ON c.ID = e.CategoryID
+WHERE
+    e.AccountID = @ID
+ORDER BY
+    e.Date DESC,
+    e.ID DESC";
 
             var entries = Db.Query(conn => conn.Query<ListEntriesEntryViewModel>(sql, new { id }));
 
-            return View(new ListEntriesViewModel {
+            var model = new ListEntriesViewModel {
                 Entries = entries.GroupBy(e => e.Date)
-            });
+            };
+
+            return View(model);
         }
 
         public IActionResult Create(
@@ -93,7 +97,7 @@ namespace Money.Controllers
 
             var typeSelectListItems = TypesSelectListItems(types, _accountList(accountID));
 
-            return View(new CreateEntryViewModel {
+            var model = new CreateEntryViewModel {
                 AccountID = accountID,
                 CategoryID = categoryID,
                 Types = typeSelectListItems,
@@ -104,7 +108,9 @@ namespace Money.Controllers
                 IsCredit = isCredit,
                 ShowCategorySelector = showCategorySelector,
                 Remaining = remaining
-            });
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -115,7 +121,7 @@ namespace Money.Controllers
                 return Json(new { ok = false, msg = "Invalid form values" });
             }
 
-            var ids = new int[0];
+            var ids = Array.Empty<int>();
 
             var amount = Math.Abs(model.Amount.Value);
 
@@ -202,7 +208,7 @@ namespace Money.Controllers
         {
             var dto = Db.Get<Entry>(id);
 
-            return View(new UpdateEntryViewModel {
+            var model = new UpdateEntryViewModel {
                 ID = dto.ID,
                 CategoryID = dto.CategoryID,
                 PartyID = dto.PartyID,
@@ -211,7 +217,9 @@ namespace Money.Controllers
                 Note = dto.Note,
                 Categories = CategoriesSelectListItems(dto.AccountID),
                 Parties = PartiesSelectListItems(dto.AccountID)
-            });
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -262,19 +270,18 @@ namespace Money.Controllers
             };
 
             var model = Db.Query(conn => {
-                using (var reader = conn.QueryMultipleSP("DashboardAccount", parameters))
-                {
-                    var account = reader.ReadSingle<AccountViewModel>();
-                    var categories = reader.Read<CategoryViewModel>();
+                using var reader = conn.QueryMultipleSP("DashboardAccount", parameters);
 
-                    return new AccountViewModel {
-                        ID = account.ID,
-                        Name = account.Name,
-                        CurrentBalance = account.CurrentBalance,
-                        Categories = categories,
-                        UpdatedCategoryID = updatedCategoryID
-                    };
-                }
+                var account = reader.ReadSingle<AccountViewModel>();
+                var categories = reader.Read<CategoryViewModel>();
+
+                return new AccountViewModel {
+                    ID = account.ID,
+                    Name = account.Name,
+                    CurrentBalance = account.CurrentBalance,
+                    Categories = categories,
+                    UpdatedCategoryID = updatedCategoryID
+                };
             });
 
             return await _viewRenderer.Render("_Account", model);
@@ -282,7 +289,19 @@ namespace Money.Controllers
 
         private int? GetLatestMonthlyBudget(int accountID)
         {
-            var sql = "SELECT TOP 1 ID FROM MonthlyBudgets WHERE AccountID = @AccountID AND GETDATE() <= EndDate ORDER BY EndDate DESC, ID DESC";
+            const string sql = @"
+SELECT TOP 1
+    ID
+FROM
+    MonthlyBudgets
+WHERE
+    AccountID = @AccountID
+AND
+    GETDATE() <= EndDate
+ORDER BY
+    EndDate DESC,
+    ID DESC";
+
             return Db.Query(conn => conn.QuerySingleOrDefault<int?>(sql, new { accountID }));
         }
 

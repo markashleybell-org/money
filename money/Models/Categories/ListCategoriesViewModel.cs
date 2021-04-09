@@ -5,6 +5,6 @@ namespace Money.Models
 {
     public class ListCategoriesViewModel
     {
-        public IEnumerable<IGrouping<(int accountID, string accountName), ListCategoriesCategoryViewModel>> Categories { get; set; }
+        public IEnumerable<IGrouping<(int AccountID, string AccountName), ListCategoriesCategoryViewModel>> Categories { get; set; }
     }
 }

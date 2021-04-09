@@ -24,22 +24,20 @@ namespace Money.Support
 
         public T Query<T>(Func<IDbConnection, T> body)
         {
-            using (var conn = new SqlConnection(_unitOfWork.ConnectionString))
-            {
-                conn.Open();
+            using var conn = new SqlConnection(_unitOfWork.ConnectionString);
 
-                return body(conn);
-            }
+            conn.Open();
+
+            return body(conn);
         }
 
         public IEnumerable<T> Query<T>(Func<IDbConnection, IEnumerable<T>> body)
         {
-            using (var conn = new SqlConnection(_unitOfWork.ConnectionString))
-            {
-                conn.Open();
+            using var conn = new SqlConnection(_unitOfWork.ConnectionString);
 
-                return body(conn);
-            }
+            conn.Open();
+
+            return body(conn);
         }
 
         public void Execute(Action<IDbConnection, IDbTransaction> body)

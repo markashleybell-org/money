@@ -50,16 +50,22 @@ ORDER BY
 
             var parties = Db.Query(conn => conn.Query<ListPartiesPartyViewModel>(sql));
 
-            return View(new ListPartiesViewModel {
+            var model = new ListPartiesViewModel {
                 Parties = parties.GroupBy(p => (p.AccountID, p.Account))
-            });
+            };
+
+            return View(model);
         }
 
-        public IActionResult Create(int? id = null) =>
-            View(new CreatePartyViewModel {
+        public IActionResult Create(int? id = null)
+        {
+            var model = new CreatePartyViewModel {
                 Accounts = AccountsSelectListItems(),
                 AccountID = id
-            });
+            };
+
+            return View(model);
+        }
 
         [HttpPost]
         public IActionResult Create(CreatePartyViewModel model)
@@ -85,11 +91,13 @@ ORDER BY
         {
             var dto = Db.Get<Party>(id);
 
-            return View(new UpdatePartyViewModel {
+            var model = new UpdatePartyViewModel {
                 ID = dto.ID,
                 Name = dto.Name,
                 IsDeleted = dto.Deleted
-            });
+            };
+
+            return View(model);
         }
 
         [HttpPost]

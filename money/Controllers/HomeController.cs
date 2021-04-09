@@ -24,24 +24,23 @@ namespace Money.Controllers
         public IActionResult Index()
         {
             var model = Db.Query(conn => {
-                using (var reader = conn.QueryMultipleSP("Dashboard", new { UserID }))
+                using var reader = conn.QueryMultipleSP("Dashboard", new { UserID });
+
+                var netWorthAccounts = reader.Read<AccountViewModel>();
+                var accounts = reader.Read<AccountViewModel>();
+                var categories = reader.Read<CategoryViewModel>();
+
+                foreach (var account in accounts)
                 {
-                    var netWorthAccounts = reader.Read<AccountViewModel>();
-                    var accounts = reader.Read<AccountViewModel>();
-                    var categories = reader.Read<CategoryViewModel>();
-
-                    foreach (var account in accounts)
-                    {
-                        account.Categories = categories.Where(c => c.AccountID == account.ID);
-                    }
-
-                    return new IndexViewModel {
-                        Accounts = accounts.Where(a => !a.IsDormant),
-                        NetWorthViewModel = new NetWorthViewModel {
-                            Accounts = netWorthAccounts
-                        }
-                    };
+                    account.Categories = categories.Where(c => c.AccountID == account.ID);
                 }
+
+                return new IndexViewModel {
+                    Accounts = accounts.Where(a => !a.IsDormant),
+                    NetWorthViewModel = new NetWorthViewModel {
+                        Accounts = netWorthAccounts
+                    }
+                };
             });
 
             return View(model);

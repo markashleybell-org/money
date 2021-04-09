@@ -6,6 +6,6 @@ namespace Money.Support
     {
         ClaimsPrincipal GetClaimsPrincipal(int id, string email);
 
-        (bool valid, int? id) ValidateLogin(string email, string password);
+        (bool Valid, int? ID) ValidateLogin(string email, string password);
     }
 }

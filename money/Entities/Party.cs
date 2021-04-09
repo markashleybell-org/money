@@ -45,15 +45,15 @@ namespace Money.Entities
         public bool Deleted { get; private set; }
 
         public Party WithUpdates(
-            string name)
-            => new Party(
+            string name) =>
+            new(
                 id: ID,
                 accountId: AccountID,
                 name: name
             );
 
         public Party ForDeletion() =>
-            new Party(
+            new(
                 ID,
                 AccountID,
                 Name,
@@ -61,7 +61,7 @@ namespace Money.Entities
             );
 
         public Party ForUndeletion() =>
-            new Party(
+            new(
                 ID,
                 AccountID,
                 Name,

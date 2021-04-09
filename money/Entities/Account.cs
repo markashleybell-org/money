@@ -81,7 +81,8 @@ namespace Money.Entities
             int displayOrder,
             bool isIncludedInNetWorth,
             bool isDormant,
-            string numberLast4Digits) => new Account(
+            string numberLast4Digits) =>
+            new(
                 ID,
                 UserID,
                 name,

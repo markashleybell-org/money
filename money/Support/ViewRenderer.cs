@@ -46,23 +46,21 @@ namespace Money.Support
                 throw new InvalidOperationException($"Couldn't find view {viewPath}");
             }
 
-            using (var output = new StringWriter())
-            {
-                var view = viewEngineResult.View;
+            using var output = new StringWriter();
 
-                var viewData = new ViewDataDictionary<TModel>(new EmptyModelMetadataProvider(), new ModelStateDictionary())
-                {
-                    Model = model
-                };
+            var view = viewEngineResult.View;
 
-                var tempData = new TempDataDictionary(httpContext, _tempDataProvider);
+            var viewData = new ViewDataDictionary<TModel>(new EmptyModelMetadataProvider(), new ModelStateDictionary()) {
+                Model = model
+            };
 
-                var viewContext = new ViewContext(actionContext, view, viewData, tempData, output, new HtmlHelperOptions());
+            var tempData = new TempDataDictionary(httpContext, _tempDataProvider);
 
-                await view.RenderAsync(viewContext);
+            var viewContext = new ViewContext(actionContext, view, viewData, tempData, output, new HtmlHelperOptions());
 
-                return output.ToString();
-            }
+            await view.RenderAsync(viewContext);
+
+            return output.ToString();
         }
     }
 }

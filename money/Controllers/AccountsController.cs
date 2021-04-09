@@ -22,13 +22,21 @@ namespace Money.Controllers
         {
         }
 
-        public IActionResult Index() =>
-            View(new ListAccountsViewModel {
+        public IActionResult Index()
+        {
+            var model = new ListAccountsViewModel {
                 Accounts = Db.Query(conn => conn.Query<Account>("SELECT * FROM Accounts"))
-            });
+            };
 
-        public IActionResult Create() =>
-            View(new CreateAccountViewModel());
+            return View(model);
+        }
+
+        public IActionResult Create()
+        {
+            var model = new CreateAccountViewModel();
+
+            return View(model);
+        }
 
         [HttpPost]
         public IActionResult Create(CreateAccountViewModel model)
@@ -61,7 +69,7 @@ namespace Money.Controllers
         {
             var dto = Db.Get<Account>(id);
 
-            return View(new UpdateAccountViewModel {
+            var model = new UpdateAccountViewModel {
                 ID = dto.ID,
                 Name = dto.Name,
                 Type = dto.Type,
@@ -70,7 +78,9 @@ namespace Money.Controllers
                 DisplayOrder = dto.DisplayOrder,
                 IsDormant = dto.IsDormant,
                 NumberLast4Digits = dto.NumberLast4Digits
-            });
+            };
+
+            return View(model);
         }
 
         [HttpPost]

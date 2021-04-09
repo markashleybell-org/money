@@ -5,6 +5,6 @@ namespace Money.Models
 {
     public class ListPartiesViewModel
     {
-        public IEnumerable<IGrouping<(int accountID, string accountName), ListPartiesPartyViewModel>> Parties { get; set; }
+        public IEnumerable<IGrouping<(int AccountID, string AccountName), ListPartiesPartyViewModel>> Parties { get; set; }
     }
 }

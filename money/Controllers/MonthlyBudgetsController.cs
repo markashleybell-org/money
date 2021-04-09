@@ -28,30 +28,37 @@ namespace Money.Controllers
 
         public IActionResult Index(int id)
         {
-            var sql = @"SELECT
-                            *
-                        FROM
-                            MonthlyBudgets
-                        WHERE
-                            AccountID = @ID
-                        ORDER BY
-                            StartDate DESC";
+            const string sql = @"
+SELECT
+    *
+FROM
+    MonthlyBudgets
+WHERE
+    AccountID = @ID
+ORDER BY
+    StartDate DESC";
 
-            return View(new ListMonthlyBudgetsViewModel {
+            var model = new ListMonthlyBudgetsViewModel {
                 AccountID = id,
                 AccountName = AccountName(accountID: id),
                 MonthlyBudgets = Db.Query(conn => conn.Query<MonthlyBudget>(sql, new { id }))
-            });
+            };
+
+            return View(model);
         }
 
-        public IActionResult Create(int id) =>
-            View(new CreateMonthlyBudgetViewModel {
+        public IActionResult Create(int id)
+        {
+            var model = new CreateMonthlyBudgetViewModel {
                 AccountID = id,
                 AccountName = AccountName(accountID: id),
                 StartDate = DateTime.Now.FirstDayOfMonth(),
                 EndDate = DateTime.Now.LastDayOfMonth(),
                 Categories = Categories(accountID: id)
-            });
+            };
+
+            return View(model);
+        }
 
         [HttpPost]
         public IActionResult Create(CreateMonthlyBudgetViewModel model)
@@ -90,14 +97,16 @@ namespace Money.Controllers
         {
             var dto = Db.Get<MonthlyBudget>(id);
 
-            return View(new UpdateMonthlyBudgetViewModel {
+            var model = new UpdateMonthlyBudgetViewModel {
                 ID = dto.ID,
                 AccountID = dto.AccountID,
                 AccountName = AccountName(accountID: dto.AccountID),
                 StartDate = dto.StartDate,
                 EndDate = dto.EndDate,
                 Categories = Categories(accountID: dto.AccountID, monthlyBudgetID: dto.ID)
-            });
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -143,7 +152,11 @@ namespace Money.Controllers
         {
             var dto = Db.Get<MonthlyBudget>(id);
 
-            var sql = "DELETE FROM Categories_MonthlyBudgets WHERE MonthlyBudgetID = @ID";
+            const string sql = @"
+DELETE FROM
+    Categories_MonthlyBudgets
+WHERE
+    MonthlyBudgetID = @ID";
 
             Db.Execute((conn, tran) => conn.Execute(sql, new { id }, tran));
 
@@ -184,33 +197,35 @@ namespace Money.Controllers
 
         private string AccountName(int accountID)
         {
-            var sql = @"SELECT
-                            Name
-                        FROM
-                            Accounts a
-                        WHERE
-                            a.ID = @AccountID";
+            const string sql = @"
+SELECT
+    Name
+FROM
+    Accounts a
+WHERE
+    a.ID = @AccountID";
 
             return Db.Query(conn => conn.QuerySingleOrDefault<string>(sql, new { accountID }));
         }
 
         private IEnumerable<MonthlyBudgetCategoryViewModel> Categories(int accountID, int monthlyBudgetID = 0)
         {
-            var sql = @"SELECT
-                            c.ID AS CategoryID,
-                            c.Name,
-                            b.Amount,
-                            c.Deleted AS CategoryDeleted
-                        FROM
-                            Categories c
-                        LEFT JOIN
-                            Categories_MonthlyBudgets b
-                        ON
-                            b.CategoryID = c.ID
-                        AND
-                            b.MonthlyBudgetID = @MonthlyBudgetID
-                        WHERE
-                            c.AccountID = @AccountID";
+            const string sql = @"
+SELECT
+    c.ID AS CategoryID,
+    c.Name,
+    b.Amount,
+    c.Deleted AS CategoryDeleted
+FROM
+    Categories c
+LEFT JOIN
+    Categories_MonthlyBudgets b
+ON
+    b.CategoryID = c.ID
+AND
+    b.MonthlyBudgetID = @MonthlyBudgetID
+WHERE
+    c.AccountID = @AccountID";
 
             var parameters = new { accountID, monthlyBudgetID };
 
