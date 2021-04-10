@@ -4,7 +4,7 @@ using d = Dapper.Contrib.Extensions;
 namespace Money.Entities
 {
     [d.Table("Accounts")]
-    public class Account : IEntity, IAccount, ISoftDeletable<Account>
+    public class Account : IEntity, IAccount, ISoftDeletable<Account>, IOrderable<Account>
     {
         public Account(
             int userID,

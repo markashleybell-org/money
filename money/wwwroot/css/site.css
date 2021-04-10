@@ -301,6 +301,10 @@ body {
     border-color: #424242 !important;
 }
 
+.sortable-rows tr {
+    cursor: move;
+}
+
 @media (min-width: 600px) {
     .container {
         width: 600px;

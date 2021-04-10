@@ -23,11 +23,11 @@
                         <th colspan="5">@typeGroup.Key.GetDisplayName()</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var account in typeGroup)
+                <tbody class="sortable-rows" data-persist-url="@Url.Action("UpdateDisplayOrder", "Accounts")">
+                    @foreach (var account in typeGroup.OrderBy(a => a.DisplayOrder))
                     {
-                        <tr class="@(account.IsDormant ? "dormant text-muted" : "")">
-                            <td class="align-middle">@account.Name @(account.IsDormant ? "[Dormant]" : "")</td>
+                        <tr class="@(account.IsDormant ? "dormant text-muted" : "")" data-id="@account.ID">
+                            <td class="align-middle">@account.NameWithDeletedStatus() @(account.IsDormant ? "[Dormant]" : "")</td>
                             <td class="text-center align-middle">@(account.IsIncludedInNetWorth ? "Yes" : "No")</td>
                             <td class="text-right"><a asp-action="Update" asp-route-id="@account.ID" class="btn btn-primary btn-sm">Edit</a></td>
                             <td class="text-right"><a asp-action="Index" asp-controller="MonthlyBudgets" asp-route-id="@account.ID" class="btn btn-primary btn-sm">Budgets</a></td>
@@ -39,3 +39,7 @@
         <p><a asp-action="Create" class="btn btn-primary btn-new">Add New Account</a></p>
     </div>
 </div>
+
+@section scripts {
+    <script src="~/js/dist/list.js" asp-append-version="true"></script>
+}

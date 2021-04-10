@@ -88,6 +88,9 @@
     <None Include="Releases\005 Account Soft Delete.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Releases\006 Ordering Updates.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish\db.publish.xml" />

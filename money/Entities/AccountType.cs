@@ -5,18 +5,18 @@ namespace Money.Entities
     public enum AccountType
     {
         [Display(Name = "Current Accounts")]
-        Current,
+        Current = 10,
 
         [Display(Name = "Savings Accounts")]
-        Savings,
-
-        [Display(Name = "Credit Cards")]
-        CreditCard,
-
-        [Display(Name = "Loans")]
-        Mortgage,
+        Savings = 20,
 
         [Display(Name = "Investments")]
-        Investment
+        Investment = 30,
+
+        [Display(Name = "Credit Cards")]
+        CreditCard = 40,
+
+        [Display(Name = "Loans")]
+        Loans = 50
     }
 }

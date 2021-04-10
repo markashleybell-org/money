@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        foreach (var account in accountGroup)
+        foreach (var account in accountGroup.OrderBy(a => a.DisplayOrder))
         {
             <div class="row">
                 <div class="col-8">
@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-            foreach (var account in group)
+            foreach (var account in group.OrderBy(a => a.DisplayOrder))
             {
                 <div class="row">
                     <div class="col-8">

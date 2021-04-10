@@ -22,5 +22,7 @@ namespace Money.Models
         public int? UpdatedCategoryID { get; set; }
 
         public string NumberLast4Digits { get; set; }
+
+        public int DisplayOrder { get; set; }
     }
 }

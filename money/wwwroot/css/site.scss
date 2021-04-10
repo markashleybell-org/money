@@ -185,6 +185,10 @@ body {
     }
 }
 
+.sortable-rows tr {
+    cursor: move;
+}
+
 @media (min-width: 600px) {
     .container {
         width: 600px;
