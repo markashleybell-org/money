@@ -10,7 +10,7 @@
     <input type="hidden" asp-for="AccountID" />
     <div class="form-row">
         <div class="form-group col-4">
-            <label asp-for="Amount">@(isCredit ? "Credit Amount" : "Amount")</label>
+            <label asp-for="Amount">@(isCredit ? "Credit" : "Debit") <span class="d-none d-sm-inline">Amount</span></label>
             <editor for="Amount" />
             <span asp-validation-for="Amount"></span>
         </div>
