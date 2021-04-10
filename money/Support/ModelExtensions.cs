@@ -16,5 +16,10 @@ namespace Money.Support
             item.Deleted
                 ? new HtmlString($"<span class=\"soft-deleted\">{item.Name}</span>")
                 : new HtmlString(item.Name);
+
+        public static HtmlString NameWithDeletedStatus(this Account account) =>
+            account.Deleted
+                ? new HtmlString($"<span class=\"soft-deleted\">{account.Name}</span>")
+                : new HtmlString(account.Name);
     }
 }

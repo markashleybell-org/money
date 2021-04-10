@@ -110,6 +110,16 @@ namespace Money.Controllers
         }
 
         [HttpPost]
+        public IActionResult UpdateDisplayOrder(DisplayOrderUpdateModel model)
+        {
+            Db.UpdateDisplayOrder<Account>(model.ItemOrder);
+
+            UnitOfWork.CommitChanges();
+
+            return Ok();
+        }
+
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             var dto = Db.Get<Account>(id);

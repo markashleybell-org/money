@@ -28,8 +28,8 @@ namespace Money.Controllers
         public IActionResult Index(bool? showDeleted = false)
         {
             var whereClause = showDeleted == true
-                ? "Deleted = 1 OR Deleted = 0"
-                : "Deleted = 0";
+                ? "p.Deleted = 1 OR p.Deleted = 0"
+                : "p.Deleted = 0";
 
             var sql = $@"
 SELECT

@@ -4,7 +4,7 @@ using d = Dapper.Contrib.Extensions;
 namespace Money.Entities
 {
     [d.Table("Accounts")]
-    public class Account : IEntity, IAccount
+    public class Account : IEntity, IAccount, ISoftDeletable<Account>
     {
         public Account(
             int userID,
@@ -52,6 +52,32 @@ namespace Money.Entities
             NumberLast4Digits = numberLast4Digits;
         }
 
+        private Account(
+            int id,
+            int userId,
+            string name,
+            AccountType type,
+            decimal startingBalance,
+            bool isMainAccount,
+            bool isIncludedInNetWorth,
+            bool isDormant,
+            int displayOrder,
+            string numberLast4Digits,
+            bool deleted)
+        {
+            ID = id;
+            UserID = userId;
+            Name = name;
+            Type = type;
+            StartingBalance = startingBalance;
+            IsMainAccount = isMainAccount;
+            IsIncludedInNetWorth = isIncludedInNetWorth;
+            IsDormant = isDormant;
+            DisplayOrder = displayOrder;
+            NumberLast4Digits = numberLast4Digits;
+            Deleted = deleted;
+        }
+
         [d.Key]
         public int ID { get; private set; }
 
@@ -74,6 +100,8 @@ namespace Money.Entities
 
         public string NumberLast4Digits { get; private set; }
 
+        public bool Deleted { get; private set; }
+
         public Account WithUpdates(
             string name,
             AccountType type,
@@ -93,6 +121,36 @@ namespace Money.Entities
                 isDormant,
                 displayOrder,
                 numberLast4Digits
+            );
+
+        public Account ForDeletion() =>
+            new(
+                ID,
+                UserID,
+                Name,
+                Type,
+                StartingBalance,
+                IsMainAccount,
+                IsIncludedInNetWorth,
+                IsDormant,
+                DisplayOrder,
+                NumberLast4Digits,
+                deleted: true
+            );
+
+        public Account ForUndeletion() =>
+            new(
+                ID,
+                UserID,
+                Name,
+                Type,
+                StartingBalance,
+                IsMainAccount,
+                IsIncludedInNetWorth,
+                IsDormant,
+                DisplayOrder,
+                NumberLast4Digits,
+                deleted: false
             );
     }
 }
