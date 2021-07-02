@@ -275,8 +275,17 @@ body {
     border-color: #424242 !important;
 }
 
-.sortable-rows tr {
+.sortable-rows .drag-handle {
     cursor: move;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.drag-control {
+    width: 10px;
 }
 
 @media (min-width: 600px) {

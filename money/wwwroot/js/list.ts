@@ -19,6 +19,7 @@ document.querySelectorAll('.sortable-rows').forEach((el: HTMLElement) => {
         draggable: 'tr',
         direction: 'vertical',
         ghostClass: 'drag-ghost',
+        handle: '.drag-handle',
         store: {
             get: null,
             set: persistOrder(el.getAttribute('data-persist-url'))

@@ -185,8 +185,17 @@ body {
     }
 }
 
-.sortable-rows tr {
+.sortable-rows .drag-handle {
     cursor: move;
+    display: block;
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+.drag-control {
+    width: 10px;
 }
 
 @media (min-width: 600px) {

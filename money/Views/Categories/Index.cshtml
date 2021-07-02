@@ -13,6 +13,7 @@
                 <tr>
                     <th>Name</th>
                     <th class="text-right"><span class="sr-only">Edit</span></th>
+                    <th class="text-right"><span class="sr-only">Order</span></th>
                 </tr>
             </thead>
             @foreach (var accountGroup in Model.Categories)
@@ -23,6 +24,7 @@
                     <tr>
                         <th class="align-middle">@accountName</th>
                         <th class="text-right"><a asp-action="Create" asp-route-id="@accountID" class="btn btn-primary btn-sm">Add</a></th>
+                        <th class="text-right">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody class="sortable-rows" data-persist-url="@Url.Action("UpdateDisplayOrder", "Categories")">
@@ -31,6 +33,7 @@
                         <tr data-id="@category.ID">
                             <td class="align-middle">@category.NameWithDeletedStatus()</td>
                             <td class="text-right"><a asp-action="Update" asp-route-id="@category.ID" class="btn btn-primary btn-sm">Edit</a></td>
+                            <td class="text-right drag-control"><span class="drag-handle btn btn-link"><i class="fa fa-arrows"></i></span></td>
                         </tr>
                     }
                 </tbody>
