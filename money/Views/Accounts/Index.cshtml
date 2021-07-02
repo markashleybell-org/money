@@ -11,7 +11,6 @@
             <thead class="thead-light">
                 <tr>
                     <th>Name</th>
-                    <th class="text-center">Net Worth</th>
                     <th class="text-right"><span class="sr-only">Edit</span></th>
                     <th class="text-right"><span class="sr-only">Budgets</span></th>
                     <th class="text-right"><span class="sr-only">Order</span></th>
@@ -21,7 +20,7 @@
             {
                 <thead class="thead-dark">
                     <tr>
-                        <th colspan="5">@typeGroup.Key.GetDisplayName()</th>
+                        <th colspan="4">@typeGroup.Key.GetDisplayName()</th>
                     </tr>
                 </thead>
                 <tbody class="sortable-rows" data-persist-url="@Url.Action("UpdateDisplayOrder", "Accounts")">
@@ -29,7 +28,6 @@
                     {
                         <tr class="@(account.IsDormant ? "dormant text-muted" : "")" data-id="@account.ID">
                             <td class="align-middle">@account.NameWithDeletedStatus() @(account.IsDormant ? "[Dormant]" : "")</td>
-                            <td class="text-center align-middle">@(account.IsIncludedInNetWorth ? "Yes" : "No")</td>
                             <td class="text-right"><a asp-action="Update" asp-route-id="@account.ID" class="btn btn-primary btn-sm">Edit</a></td>
                             <td class="text-right"><a asp-action="Index" asp-controller="MonthlyBudgets" asp-route-id="@account.ID" class="btn btn-primary btn-sm">Budgets</a></td>
                             <td class="text-right drag-control"><span class="drag-handle btn btn-link"><i class="fa fa-arrows"></i></span></td>
