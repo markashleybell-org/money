@@ -1,67 +1,77 @@
+import Modal from 'bootstrap/js/dist/modal';
+import { DOM, dom } from 'mab-dom';
+
 declare var ADD_ENTRY_URL: string;
 declare var NET_WORTH_URL: string;
 declare var DESCRIPTION_DELIMITER_REGEX: RegExp;
 
-enum Method {
-    GET,
-    POST
-}
-
-type XHRErrorCallback = (request: JQueryXHR, status: string, error: string) => void;
-
 const loadIndicatorSelector = '.spinner-border';
 const loaderHideClass = 'spinner-border-hidden';
 
-const modal = $('#add-entry-modal');
+const modal = dom('#add-entry-modal');
 const modalTitle = modal.find('.modal-title');
 const modalContent = modal.find('.modal-body');
-const netWorth = $('#net-worth');
 
-const defaultAjaxErrorCallback: XHRErrorCallback = (request, status, error) =>
-    alert('XHR ERROR: ' + error + ', STATUS: ' + status);
+const bsModal = modal.get() ? new Modal(modal.get()) : null;
 
-export const xhr = (method: Method, url: string, data: any, successCallback?: (data: any) => void, errorCallback?: XHRErrorCallback) => {
-    const options = {
-        type: Method[method],
-        url: url,
-        data: data,
-        cache: false
-    };
+const netWorth = dom('#net-worth');
 
-    $.ajax(options).done(successCallback).fail(errorCallback || defaultAjaxErrorCallback);
-};
+const showLoader = () => dom(loadIndicatorSelector).removeClass(loaderHideClass);
 
-const showLoader = () => $(loadIndicatorSelector).removeClass(loaderHideClass);
+const hideLoader = () => dom(loadIndicatorSelector).addClass(loaderHideClass);
 
-const hideLoader = () => $(loadIndicatorSelector).addClass(loaderHideClass);
+dom('.needs-validation').on('submit', e => {
+    const form = e.targetElement as HTMLFormElement;
 
-$.ajaxSetup({
-    cache: false
+    if (!form.checkValidity()) {
+        e.preventDefault()
+        e.stopPropagation()
+    }
+
+    form.classList.add('was-validated');
 });
 
-modal.on('click', '.btn-primary', e => {
+modal.onchild('.btn-primary', 'click',  e => {
     e.preventDefault();
 
     showLoader();
 
-    const form = modalContent.find('form');
+    const form = modalContent.find('form').get() as HTMLFormElement;
 
-    xhr(Method.POST, ADD_ENTRY_URL, form.serialize(), response => {
-        hideLoader();
+    if (!form.checkValidity()) {
+        return;
+    }
 
-        if (!form.valid()) {
-            return;
-        }
+    const options = {
+        method: 'POST',
+        body: new FormData(form)
+    };
 
-        if (!response.ok) {
-            alert(response.msg);
-        } else {
-            response.updated.forEach((u: any) => $('#account-' + u.id).html(u.html));
-            netWorth.load(NET_WORTH_URL);
-            modal.modal('hide');
-            setTimeout(() => $('.progress-bar').removeClass('updated'), 1000);
-        }
-    });
+    fetch(ADD_ENTRY_URL, options)
+        .then(async response => {
+            const json = await response.json();
+            hideLoader();
+            if (!json.ok) {
+                alert(json.msg);
+            } else {
+                json.updated.forEach((u: any) => dom('#account-' + u.id).html(u.html));
+
+                fetch(NET_WORTH_URL, { method: 'GET' })
+                    .then(async response => {
+                        const html = await response.text();
+
+                        netWorth.html(html);
+
+                        bsModal.hide();
+                        setTimeout(() => dom('.progress-bar').removeClass('updated'), 1000);
+
+                    }).catch(error => {
+                        console.log(error);
+                    });
+            }
+        }).catch(error => {
+            console.log(error);
+        });
 });
 
 function setTransactionTypeInfo(select: HTMLSelectElement) {
@@ -69,7 +79,7 @@ function setTransactionTypeInfo(select: HTMLSelectElement) {
     modal.find('.entry-modal-type-info').html(selectedOption.getAttribute('data-info'));
 }
 
-modal.on('change', 'select[name=Type]', e => {
+modal.onchild('select[name=Type]', 'change', e => {
     const select = e.target as HTMLSelectElement;
     setTransactionTypeInfo(select);
 });
@@ -84,10 +94,12 @@ if (window.matchMedia("(min-width: 900px)").matches) {
     });
 }
 
-$(document).on('click', '.btn-add-entry', e => {
+dom('body').onchild('.btn-add-entry', 'click', e => {
     e.preventDefault();
 
-    const button = $(e.currentTarget);
+    const button = dom(e.targetElement);
+
+    const buttonEl = button.get();
 
     const accountID = parseInt(button.data('accountid'), 10);
     const accountName = button.data('accountname');
@@ -98,17 +110,17 @@ $(document).on('click', '.btn-add-entry', e => {
     // clicked, so there is a bit of nastiness here which works around the fact that
     // uncategorised categories are returned with an ID of 0 by the stored procedure
 
-    const categoryID = button.attr('data-categoryid') ? parseInt(button.data('categoryid'), 10) : null;
+    const categoryID = buttonEl.hasAttribute('data-categoryid') ? parseInt(button.data('categoryid'), 10) : null;
     const categoryName = button.data('categoryname');
 
-    const isCredit = button.attr('data-iscredit') ? button.data('iscredit') as boolean : null;
+    const isCredit = buttonEl.hasAttribute('data-iscredit') ? button.data('iscredit') === 'true' : null;
 
     const data = {
         accountID: accountID,
         categoryID: categoryID !== 0 ? categoryID : null,
         isCredit: isCredit,
         showCategorySelector: false,
-        remaining: button.attr('data-remaining') ? parseFloat(button.attr('data-remaining')) : 0
+        remaining: buttonEl.hasAttribute('data-remaining') ? parseFloat(button.data('data-remaining')) : 0
     };
 
     const title = accountName + (categoryName ? ': ' + categoryName : '');
@@ -117,48 +129,62 @@ $(document).on('click', '.btn-add-entry', e => {
 
     showLoader();
 
-    xhr(Method.GET, ADD_ENTRY_URL, data, html => {
-        modalContent.html(html);
+    const options = {
+        method: 'GET'
+    };
 
-        const form = modalContent.find('form');
+    const queryString = Object.entries(data)
+        .filter(e => e[1])
+        .map(e => `${e[0]}=${e[1]}`)
+        .join('&');
 
-        $.validator.unobtrusive.parse(form);
+    fetch(ADD_ENTRY_URL + '?' + queryString, options)
+        .then(async response => {
+            const html = await response.text();
 
-        const typeSelect = form.find('select[name=Type]');
+            modalContent.html(html);
 
-        if (typeSelect.length) {
-            typeSelect.find('option').get().forEach(el => {
-                const info = DESCRIPTION_DELIMITER_REGEX.exec(el.innerText);
+            const form = modalContent.find('form');
 
-                if (info) {
-                    el.innerText = el.innerText.replace(DESCRIPTION_DELIMITER_REGEX, '');
-                    el.setAttribute('data-info', info[1]);
-                }
+            const typeSelect = form.find('select[name=Type]');
+
+            typeSelect.each(ts => {
+                ts.find('option').each(option => {
+                    const el = option.get();
+
+                    const info = DESCRIPTION_DELIMITER_REGEX.exec(el.innerText);
+
+                    if (info) {
+                        el.innerText = el.innerText.replace(DESCRIPTION_DELIMITER_REGEX, '');
+                        el.setAttribute('data-info', info[1]);
+                    }
+                });
+
+                setTransactionTypeInfo(typeSelect.get(0) as HTMLSelectElement);
             });
 
-            setTransactionTypeInfo(typeSelect.get(0) as HTMLSelectElement);
-        }
-
-        modal.modal('show');
-
-        hideLoader();
-    });
+            bsModal.show();
+            hideLoader();
+        }).catch(error => {
+            console.log(error);
+        });
 });
 
-$(document).on('click', '.btn-date-preset', e => {
+
+dom('body').onchild('.btn-date-preset', 'click', e => {
     e.preventDefault();
-    $('#Date').val($(e.currentTarget).data('date'));
+    dom('#Date').val(dom(e.targetElement).data('date'));
 });
 
-$(document).on('click', '.btn-amount-preset', e => {
+dom('body').onchild('.btn-amount-preset', 'click', e => {
     e.preventDefault();
 
-    const button = $(e.currentTarget);
+    const button = dom(e.targetElement);
     const amountInput = modal.find('#Amount');
 
     const amount = parseFloat(button.data('amount'));
 
-    if (button.hasClass('btn-amount-preset-all')) {
+    if (button.get().classList.contains('btn-amount-preset-all')) {
         amountInput.val(amount.toFixed(2));
     } else {
         const currentAmount = parseFloat((amountInput.val() as string) || '0');

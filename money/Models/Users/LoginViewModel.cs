@@ -4,11 +4,11 @@ namespace Money.Models
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Please enter your email address.")]
+        [Required]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Please enter your password.")]
+        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

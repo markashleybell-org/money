@@ -1,4 +1,3 @@
-const { ProvidePlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
@@ -13,13 +12,7 @@ module.exports = {
     },
     devtool: 'source-map',
     plugins: [
-        new CleanWebpackPlugin(),
-        // This automatically adds aliases to the application scope for the specified packages
-        // So packages which look for the 'jQuery' global alias still work within our app closure
-        new ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery'
-        })
+        new CleanWebpackPlugin()
     ],
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json']
@@ -31,8 +24,5 @@ module.exports = {
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'
             { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' }
         ]
-    },
-    externals: {
-        jquery: 'jQuery'
     }
 };
