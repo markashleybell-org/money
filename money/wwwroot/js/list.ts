@@ -2,13 +2,16 @@ import Sortable from 'sortablejs';
 
 function persistOrder(persistUrl: string): (sortable: Sortable) => void {
     return function (sortable) {
-        var order = sortable.toArray().map(id => parseInt(id, 10));
+        const payload = {
+            itemOrder: sortable.toArray().map(id => parseInt(id, 10))
+        };
 
         const options = {
             method: 'POST',
-            body: JSON.stringify(order),
+            body: JSON.stringify(payload),
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json;charset=utf-8',
+                'Content-Type': 'application/json;charset=utf-8'
             }
         };
 

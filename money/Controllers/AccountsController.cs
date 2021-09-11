@@ -110,7 +110,7 @@ namespace Money.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateDisplayOrder(DisplayOrderUpdateModel model)
+        public IActionResult UpdateDisplayOrder([FromBody] DisplayOrderUpdateModel model)
         {
             Db.UpdateDisplayOrder<Account>(model.ItemOrder);
 
