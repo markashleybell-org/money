@@ -225,7 +225,9 @@ ON
 AND
     b.MonthlyBudgetID = @MonthlyBudgetID
 WHERE
-    c.AccountID = @AccountID";
+    c.AccountID = @AccountID
+ORDER BY
+    c.DisplayOrder";
 
             var parameters = new { accountID, monthlyBudgetID };
 
