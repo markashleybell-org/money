@@ -4,7 +4,7 @@
     "private": true,
     "devDependencies": {
         "@tsconfig/recommended": "^1.0.1",
-        "@types/bootstrap": "^4.5.0",
+        "@types/bootstrap": "^5.1.4",
         "@types/jquery": "^3.5.6",
         "@types/jquery-validation-unobtrusive": "3.2.32",
         "@types/jquery.validation": "^1.16.7",
@@ -23,7 +23,7 @@
     },
     "dependencies": {
         "autoprefixer": "^10.3.4",
-        "bootstrap": "^4.6.0",
+        "bootstrap": "^5.1.1",
         "jquery": "^3.6.0",
         "jquery-validation": "^1.19.3",
         "jquery-validation-unobtrusive": "^3.2.12",
