@@ -19,8 +19,9 @@ namespace Money
 
         public void ConfigureServices(IServiceCollection services)
         {
+            const string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
             var connectionString = Configuration.GetValue<string>("ConnectionString");
-            var authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
             services.AddHttpContextAccessor();
 
