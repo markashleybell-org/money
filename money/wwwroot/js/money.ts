@@ -8,6 +8,8 @@ declare var DESCRIPTION_DELIMITER_REGEX: RegExp;
 const loadIndicatorSelector = '.spinner-border';
 const loaderHideClass = 'spinner-border-hidden';
 
+const body = dom('body');
+
 const modal = dom('#add-entry-modal');
 const modalTitle = modal.find('.modal-title');
 const modalContent = modal.find('.modal-body');
@@ -21,7 +23,7 @@ const showLoader = () => dom(loadIndicatorSelector).removeClass(loaderHideClass)
 const hideLoader = () => dom(loadIndicatorSelector).addClass(loaderHideClass);
 
 dom('.needs-validation').on('submit', e => {
-    const form = e.targetElement as HTMLFormElement;
+    const form = e.handlerTriggeredByElement as HTMLFormElement;
 
     if (!form.checkValidity()) {
         e.preventDefault()
@@ -94,10 +96,10 @@ if (window.matchMedia("(min-width: 900px)").matches) {
     });
 }
 
-dom('body').onchild('.btn-add-entry', 'click', e => {
+body.onchild('.btn-add-entry', 'click', e => {
     e.preventDefault();
 
-    const button = dom(e.targetElement);
+    const button = dom(e.handlerElement);
 
     const buttonEl = button.get();
 
@@ -171,15 +173,15 @@ dom('body').onchild('.btn-add-entry', 'click', e => {
 });
 
 
-dom('body').onchild('.btn-date-preset', 'click', e => {
+body.onchild('.btn-date-preset', 'click', e => {
     e.preventDefault();
-    dom('#Date').val(dom(e.targetElement).data('date'));
+    dom('#Date').val(dom(e.handlerElement).data('date'));
 });
 
-dom('body').onchild('.btn-amount-preset', 'click', e => {
+body.onchild('.btn-amount-preset', 'click', e => {
     e.preventDefault();
 
-    const button = dom(e.targetElement);
+    const button = dom(e.handlerElement);
     const amountInput = modal.find('#Amount');
 
     const amount = parseFloat(button.data('amount'));
