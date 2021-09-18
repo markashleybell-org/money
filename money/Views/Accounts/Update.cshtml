@@ -8,39 +8,37 @@
     <div class="col">
         <h1>Update Account</h1>
         <form asp-controller="Accounts" asp-action="Update" method="post">
-            <div class="form-group">
-                <label asp-for="Name">Name</label>
+            <div class="mb-2">
+                <label asp-for="Name" class="form-label">Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Type">Type</label>
-                <select asp-for="Type" asp-items="Html.GetEnumSelectList(typeof(Money.Entities.AccountType))" class="form-control"></select>
+            <div class="mb-2">
+                <label asp-for="Type" class="form-label">Type</label>
+                <select asp-for="Type" asp-items="Html.GetEnumSelectList(typeof(Money.Entities.AccountType))" class="form-select"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="NumberLast4Digits">Last 4 digits of account / card no.</label>
+            <div class="mb-2">
+                <label asp-for="NumberLast4Digits" class="form-label">Last 4 digits of account / card no.</label>
                 <input asp-for="NumberLast4Digits" class="form-control" />
                 <span asp-validation-for="NumberLast4Digits"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StartingBalance">Starting balance</label>
+            <div class="mb-2">
+                <label asp-for="StartingBalance" class="form-label">Starting balance</label>
                 <input asp-for="StartingBalance" class="form-control" />
                 <span asp-validation-for="StartingBalance"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DisplayOrder">Display order</label>
+            <div class="mb-4">
+                <label asp-for="DisplayOrder" class="form-label">Display order</label>
                 <input asp-for="DisplayOrder" class="form-control" />
                 <span asp-validation-for="DisplayOrder"></span>
             </div>
-            <div class="checkbox">
-                <label>
-                    <input asp-for="IncludeInNetWorth" /> Include balance in net worth
-                </label>
+            <div class="form-check mb-2">
+                <input asp-for="IncludeInNetWorth" class="form-check-input">
+                <label asp-for="IncludeInNetWorth" class="form-check-label">Include balance in net worth</label>
             </div>
-            <div class="checkbox">
-                <label>
-                    <input asp-for="IsDormant" /> Account is dormant
-                </label>
+            <div class="form-check mb-4">
+                <input asp-for="IsDormant" class="form-check-input">
+                <label asp-for="IsDormant" class="form-check-label">Account is dormant</label>
             </div>
             <input asp-for="ID" />
             <button type="submit" class="btn btn-primary btn-submit">Update</button>
