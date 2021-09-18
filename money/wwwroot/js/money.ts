@@ -1,5 +1,6 @@
 import Modal from 'bootstrap/js/dist/modal';
-import { DOM, dom } from 'mab-dom';
+import Collapse from 'bootstrap/js/dist/collapse';
+import { dom } from 'mab-dom';
 
 declare var ADD_ENTRY_URL: string;
 declare var NET_WORTH_URL: string;
@@ -15,6 +16,9 @@ const modalTitle = modal.find('.modal-title');
 const modalContent = modal.find('.modal-body');
 
 const bsModal = modal.get() ? new Modal(modal.get()) : null;
+
+// We have to include this or the nav won't work...
+const bsCollapse = new Collapse(document.querySelector('.collapse'), { toggle: false });
 
 const netWorth = dom('#net-worth');
 

@@ -8,8 +8,8 @@
 
 <form asp-controller="Entries" asp-action="Create" method="post">
     <input type="hidden" asp-for="AccountID" />
-    <div class="form-row">
-        <div class="mb-2 col-4">
+    <div class="row">
+        <div class="mb-2 col-md-4">
             <label asp-for="Amount" class="form-label">
                 @if (isCredit)
                 {
@@ -20,7 +20,7 @@
             <editor for="Amount" />
             <span asp-validation-for="Amount"></span>
         </div>
-        <div class="mb-2-nolabel col-8">
+        <div class="mb-2 nolabel col-md-8">
             @if (!isCredit)
             {
                 <div class="btn-group d-flex" role="group">
@@ -40,25 +40,25 @@
     {
         <div class="mb-2">
             <label asp-for="Type" class="form-label">Transaction Type</label>
-            <select asp-for="Type" asp-items="Model.Types" class="form-control"></select>
+            <select asp-for="Type" asp-items="Model.Types" class="form-select"></select>
             <span class="entry-modal-type-info"></span>
         </div>
     }
-    <div class="form-row">
-        <div class="mb-2 col-7">
+    <div class="row">
+        <div class="mb-2 col-md-7">
             <label asp-for="Date" class="form-label">Date</label>
             <editor for="Date" />
             <span asp-validation-for="Date"></span>
         </div>
-        <div class="mb-2-nolabel col-5">
-            <button class="btn btn-light btn-block btn-date-preset" data-date="@DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd")">Yesterday</button>
+        <div class="mb-2 nolabel col-md-5">
+            <button class="btn btn-light w-100 btn-date-preset" data-date="@DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd")">Yesterday</button>
         </div>
     </div>
     @if (Model.ShowCategorySelector)
     {
         <div class="mb-2">
             <label asp-for="CategoryID" class="form-label">Category</label>
-            <select asp-for="CategoryID" asp-items="Model.Categories" class="form-control">
+            <select asp-for="CategoryID" asp-items="Model.Categories" class="form-select">
                 <option value="">--</option>
             </select>
         </div>
@@ -69,7 +69,7 @@
     }
     <div class="mb-2">
         <label asp-for="PartyID" class="form-label">Party</label>
-        <select asp-for="PartyID" asp-items="Model.Parties" class="form-control">
+        <select asp-for="PartyID" asp-items="Model.Parties" class="form-select">
             <option value="">--</option>
         </select>
     </div>

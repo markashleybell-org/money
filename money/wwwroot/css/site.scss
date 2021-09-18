@@ -116,6 +116,12 @@ body {
     }
 }
 
+@media (min-width: 768px) {
+    .nolabel {
+        padding-top: 32px;
+    }
+}
+
 @media (min-width: 600px) {
     .container {
         width: 600px;

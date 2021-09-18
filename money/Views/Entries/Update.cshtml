@@ -8,32 +8,32 @@
     <div class="col">
         <h1>Update Entry</h1>
         <form asp-controller="Entries" asp-action="Update" method="post">
-            <div class="form-row">
-                <div class="mb-2 col-5">
+            <div class="row">
+                <div class="mb-2 col-md-4">
                     <label asp-for="Amount" class="form-label">Amount</label>
                     <editor for="Amount" />
                     <span asp-validation-for="Amount"></span>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="mb-2 col-7">
+            <div class="row">
+                <div class="mb-2 col-md-7">
                     <label asp-for="Date" class="form-label">Date</label>
                     <editor for="Date" />
                     <span asp-validation-for="Date"></span>
                 </div>
-                <div class="mb-2-nolabel col-5">
-                    <button class="btn btn-light btn-block btn-date-preset" data-date="@DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd")">Yesterday</button>
+                <div class="mb-2 nolabel col-md-5">
+                    <button class="btn btn-light w-100 btn-date-preset" data-date="@DateTime.Now.Date.AddDays(-1).ToString("yyyy-MM-dd")">Yesterday</button>
                 </div>
             </div>
             <div class="mb-2">
                 <label asp-for="CategoryID" class="form-label">Category</label>
-                <select asp-for="CategoryID" asp-items="Model.Categories" class="form-control">
+                <select asp-for="CategoryID" asp-items="Model.Categories" class="form-select">
                     <option value="">--</option>
                 </select>
             </div>
-            <div class="mb-2">
+            <div class="mb-4">
                 <label asp-for="PartyID" class="form-label">Party</label>
-                <select asp-for="PartyID" asp-items="Model.Parties" class="form-control">
+                <select asp-for="PartyID" asp-items="Model.Parties" class="form-select">
                     <option value="">--</option>
                 </select>
             </div>

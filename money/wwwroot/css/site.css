@@ -135,6 +135,9 @@
     font-weight: bold;
     margin: 0;
 }
+.account-name a {
+    text-decoration: none;
+}
 
 .account-balance {
     font-weight: bold;
@@ -284,6 +287,11 @@ body {
     padding: 3px 5px;
 }
 
+@media (min-width: 768px) {
+    .nolabel {
+        padding-top: 32px;
+    }
+}
 @media (min-width: 600px) {
     .container {
         width: 600px;
