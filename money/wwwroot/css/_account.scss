@@ -62,13 +62,16 @@
     }
 }
 
-.progress-bar {
-    transition: background-color 3s cubic-bezier(0.910, 0.065, 0.950, 0.540);
+.progress-bar.bg-success {
+    background-color: #28a745 !important;
 }
 
-.updated {
-    transition: background-color 0 cubic-bezier(0.910, 0.065, 0.950, 0.540);
-    background-color: #ff6a00;
+.progress-bar.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.progress-bar.updated {
+    background-color: #ff6a00 !important;
 }
 
 .dormant {

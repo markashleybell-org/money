@@ -69,6 +69,7 @@ modal.onchild('.btn-primary', 'click',  e => {
                         netWorth.html(html);
 
                         bsModal.hide();
+
                         setTimeout(() => dom('.progress-bar').removeClass('updated'), 1000);
 
                     }).catch(error => {
@@ -126,7 +127,7 @@ body.onchild('.btn-add-entry', 'click', e => {
         categoryID: categoryID !== 0 ? categoryID : null,
         isCredit: isCredit,
         showCategorySelector: false,
-        remaining: buttonEl.hasAttribute('data-remaining') ? parseFloat(button.data('data-remaining')) : 0
+        remaining: buttonEl.hasAttribute('data-remaining') ? parseFloat(button.data('remaining')) : 0
     };
 
     const title = accountName + (categoryName ? ': ' + categoryName : '');
@@ -140,7 +141,7 @@ body.onchild('.btn-add-entry', 'click', e => {
     };
 
     const queryString = Object.entries(data)
-        .filter(e => e[1])
+        .filter(e => e[1] !== null)
         .map(e => `${e[0]}=${e[1]}`)
         .join('&');
 
