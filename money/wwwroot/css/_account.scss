@@ -1,0 +1,76 @@
+﻿@import "variables";
+
+.account {
+    padding-bottom: $vertical-gutter;
+    margin-bottom: $vertical-gutter;
+    border-bottom: $divider-border;
+
+    .row {
+        padding-top: $vertical-gutter-half;
+        padding-bottom: $vertical-gutter-half;
+    }
+
+    .btn.btn-add-entry {
+        padding: 0;
+        width: $progress-bar-height;
+        height: $progress-bar-height;
+    }
+}
+
+.account-type {
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: $vertical-gutter;
+    margin-top: $vertical-gutter-double;
+    margin-bottom: $vertical-gutter;
+    border-bottom: $divider-border;
+}
+
+.account-name {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.account-balance {
+    font-weight: bold;
+    padding-right: $progress-bar-padding + $horizontal-gutter-double;
+}
+
+.progress {
+    position: relative;
+    font-size: 1rem;
+    height: auto;
+    margin-right: $horizontal-gutter-double;
+    height: $progress-bar-height;
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 0 $progress-bar-padding;
+
+        :last-child {
+            text-align: right;
+        }
+    }
+}
+
+.progress-bar {
+    transition: background-color 3s cubic-bezier(0.910, 0.065, 0.950, 0.540);
+}
+
+.updated {
+    transition: background-color 0 cubic-bezier(0.910, 0.065, 0.950, 0.540);
+    background-color: #ff6a00;
+}
+
+.dormant {
+    background-color: #f3f9ff !important;
+
+    .btn-primary {
+        opacity: 0.6 !important;
+    }
+}

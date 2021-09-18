@@ -1,12 +1,6 @@
 @import "font";
-
-$horizontal-gutter: 10px;
-$horizontal-gutter-double: $horizontal-gutter * 2;
-$vertical-gutter: 10px;
-$vertical-gutter-half: $vertical-gutter / 2;
-$vertical-gutter-double: $vertical-gutter * 2;
-$divider-border: solid 1px #e0e0e0;
-$progress-bar-padding: 14px;
+@import "variables";
+@import "account";
 
 body {
     font-family: 'Public Sans', Arial, sans-serif;
@@ -20,77 +14,6 @@ body {
 
 .form-group-nolabel {
     padding-top: 32px;
-}
-
-.account {
-    padding-bottom: $vertical-gutter;
-    margin-bottom: $vertical-gutter;
-    border-bottom: $divider-border;
-
-    .row {
-        padding-top: $vertical-gutter-half;
-        padding-bottom: $vertical-gutter-half;
-    }
-}
-
-.account-type {
-    font-size: 18px;
-    font-weight: bold;
-    padding-bottom: $vertical-gutter;
-    margin-top: $vertical-gutter-double;
-    margin-bottom: $vertical-gutter;
-    border-bottom: $divider-border;
-}
-
-.account-name {
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 0;
-}
-
-.account-balance {
-    font-weight: bold;
-    padding-right: $progress-bar-padding + $horizontal-gutter-double;
-}
-
-.progress {
-    position: relative;
-    font-size: 1rem;
-    height: auto;
-    margin-right: $horizontal-gutter-double;
-
-    .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-        div {
-            padding: $progress-bar-padding;
-        }
-
-        :last-child {
-            text-align: right;
-        }
-    }
-}
-
-.progress-bar {
-    transition: background-color 3s cubic-bezier(0.910, 0.065, 0.950, 0.540);
-}
-
-.updated {
-    transition: background-color 0 cubic-bezier(0.910, 0.065, 0.950, 0.540);
-    background-color: #ff6a00;
-}
-
-.dormant {
-    background-color: #f3f9ff !important;
-
-    .btn-primary {
-        opacity: 0.6 !important;
-    }
 }
 
 .btn-submit, .btn-new {
@@ -185,17 +108,16 @@ body {
     }
 }
 
-.sortable-rows .drag-handle {
-    cursor: move;
-    display: block;
-    padding: .25rem .5rem;
-    font-size: .875rem;
-    line-height: 1.5;
-    border-radius: .2rem;
-}
+.sortable-rows {
+    td:first-child {
+        width: 100%;
+    }
 
-.drag-control {
-    width: 10px;
+    .drag-handle {
+        cursor: move;
+        display: block;
+        padding: 3px 5px;
+    }
 }
 
 @media (min-width: 600px) {

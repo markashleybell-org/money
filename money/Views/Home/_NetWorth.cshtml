@@ -15,8 +15,8 @@
 
 <h1>
     Net Worth:
-    <span class="text-right net-worth-balance @ClassForValue(Model.NetWorth)">@Model.NetWorth.ToString("0.00")</span>
-    <span class="text-right net-worth-total-balance @ClassForValue(Model.NetWorthTotal)">@Model.NetWorthTotal.ToString("0.00")</span>
+    <span class="text-end net-worth-balance @ClassForValue(Model.NetWorth)">@Model.NetWorth.ToString("0.00")</span>
+    <span class="text-end net-worth-total-balance @ClassForValue(Model.NetWorthTotal)">@Model.NetWorthTotal.ToString("0.00")</span>
 </h1>
 
 @foreach (var accountGroup in Model.Accounts.GroupBy(a => a.IsIncludedInNetWorth))
@@ -27,7 +27,7 @@
             <div class="col-8">
                 <h2 class="net-worth-header">Excluded From Net Worth</h2>
             </div>
-            <div class="col-4 text-right">
+            <div class="col-4 text-end">
                 <h2 class="net-worth-header">@accountGroup.Sum(a => a.CurrentBalance)</h2>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <div class="col-8">
                     @account.Name
                 </div>
-                <div class="col-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
+                <div class="col-4 text-end net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
                     @account.CurrentBalance
                 </div>
             </div>
@@ -52,7 +52,7 @@
                 <div class="col-8">
                     <h2 class="net-worth-header">@group.Key.GetDisplayName()</h2>
                 </div>
-                <div class="col-4 text-right">
+                <div class="col-4 text-end">
                     <h2 class="net-worth-header">@group.Sum(a => a.CurrentBalance)</h2>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                     <div class="col-8">
                         @account.Name
                     </div>
-                    <div class="col-4 text-right net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
+                    <div class="col-4 text-end net-worth-balance @(account.CurrentBalance == 0 ? "text-muted" : account.CurrentBalance < 0 ? "text-danger" : "text-success")">
                         @account.CurrentBalance
                     </div>
                 </div>

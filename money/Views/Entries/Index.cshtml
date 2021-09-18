@@ -7,19 +7,19 @@
 <div class="row">
     <div class="col">
         <h1>@(Model?.Entries?.FirstOrDefault()?.FirstOrDefault()?.Account)</h1>
-        <table class="table table-sm table-striped">
-            <thead class="thead-light">
+        <table class="table table-sm table-striped table-borderless">
+            <thead>
                 <tr>
                     <th>Category/Party</th>
-                    <th class="text-right">Amount</th>
+                    <th class="text-end">Amount</th>
                 </tr>
             </thead>
             @foreach (var group in Model.Entries)
             {
-                <thead class="thead-dark">
+                <thead class="table-dark">
                     <tr>
                         <th>@group.Key.ToString("dd/MM/yyyy")</th>
-                        <th class="text-right">@*@group.Sum(g => g.Amount).ToString("0.00")*@</th>
+                        <th class="text-end">@*@group.Sum(g => g.Amount).ToString("0.00")*@</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,7 @@
 
                         <tr>
                             <td>@partyAndCategory <span class="entry-edit">[<a asp-action="Update" asp-route-id="@entry.ID">Edit</a>]</span></td>
-                            <td class="text-right">@entry.Amount.ToString("0.00")</td>
+                            <td class="text-end">@entry.Amount.ToString("0.00")</td>
                         </tr>
                     }
                 </tbody>

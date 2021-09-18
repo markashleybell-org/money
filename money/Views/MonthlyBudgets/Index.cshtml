@@ -8,13 +8,13 @@
     <div class="col">
         <h1>Monthly Budgets</h1>
         <h2>@Model.AccountName</h2>
-        <table class="table table-striped">
+        <table class="table table-striped table-borderless">
             <thead>
                 <tr>
                     <th>Start</th>
                     <th>End</th>
-                    <th class="text-right"><span class="sr-only">Edit</span></th>
-                    <th class="text-right"><span class="sr-only">Copy</span></th>
+                    <th class="text-end"><span class="visually-hidden">Edit</span></th>
+                    <th class="text-end"><span class="visually-hidden">Copy</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -23,8 +23,8 @@
                     <tr>
                         <td class="align-middle">@monthlyBudget.StartDate.ToString("dd/MM/yyyy")</td>
                         <td class="align-middle">@monthlyBudget.EndDate.ToString("dd/MM/yyyy")</td>
-                        <td class="text-right"><a asp-action="Update" asp-route-id="@monthlyBudget.ID" class="btn btn-primary btn-sm">Edit</a></td>
-                        <td class="text-right"><a asp-action="Copy" asp-route-id="@monthlyBudget.ID" class="btn btn-primary btn-sm">Copy</a></td>
+                        <td class="align-middle text-end"><a asp-action="Update" asp-route-id="@monthlyBudget.ID" class="btn btn-primary btn-sm">Edit</a></td>
+                        <td class="align-middle text-end"><a asp-action="Copy" asp-route-id="@monthlyBudget.ID" class="btn btn-primary btn-sm">Copy</a></td>
                     </tr>
                 }
             </tbody>
