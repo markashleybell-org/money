@@ -122,7 +122,7 @@ ORDER BY
         }
 
         [HttpPost]
-        public IActionResult UpdateDisplayOrder(DisplayOrderUpdateModel model)
+        public IActionResult UpdateDisplayOrder([FromBody] DisplayOrderUpdateModel model)
         {
             Db.UpdateDisplayOrder<Category>(model.ItemOrder);
 

@@ -9,17 +9,17 @@
         <h1>Create Monthly Budget</h1>
         <h2>@Model.AccountName</h2>
         <form asp-controller="MonthlyBudgets" asp-action="Create" method="post">
-            <div class="form-group">
-                <label asp-for="StartDate">Start budget on</label>
+            <div class="mb-2">
+                <label asp-for="StartDate" class="form-label">Start budget on</label>
                 <editor for="StartDate" />
             </div>
-            <div class="form-group">
-                <label asp-for="EndDate">End budget on</label>
+            <div class="mb-4">
+                <label asp-for="EndDate" class="form-label">End budget on</label>
                 <editor for="EndDate" />
             </div>
             <editor for="Categories" />
             <input type="hidden" asp-for="AccountID" />
-            <button type="submit" class="btn btn-primary btn-submit">Create</button>
+            <button type="submit" class="mt-4 btn btn-primary btn-submit">Create</button>
         </form>
     </div>
 </div>

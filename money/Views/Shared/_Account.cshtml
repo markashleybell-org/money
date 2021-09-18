@@ -16,7 +16,7 @@
             @Model.CurrentBalance.ToString("0.00")
         </div>
         <div>
-            <button data-accountid="@Model.ID" data-accountname="@Model.Name" @Html.Raw(hasBudget ? "data-iscredit=\"true\"" : "") data-remaining="@Model.CurrentBalance" class="btn btn-primary btn-add-entry"><i class="fa fa-plus"></i></button>
+            <button data-accountid="@Model.ID" data-accountname="@Model.Name" @Html.Raw(hasBudget ? "data-iscredit=\"true\"" : "") data-remaining="@Model.CurrentBalance" class="btn btn-primary btn-add-entry"><i class="bi bi-plus"></i></button>
         </div>
     </div>
 </div>
@@ -33,10 +33,10 @@
                         <div class="flex-fill">@((-category.Remaining).ToString("0.00"))</div>
                     </div>
                     <div class="progress-bar bg-@(category.Remaining <= 0 ? "success" : "danger") @(Model.UpdatedCategoryID == category.ID ? "updated" : "")" role="progressbar" aria-valuenow="@category.PercentageSpent" aria-valuemin="0" aria-valuemax="100" style="width: @(category.PercentageSpent > 100 ? 100 : category.PercentageSpent)%">
-                        <span class="sr-only">@category.PercentageSpent%</span>
+                        <span class="visually-hidden">@category.PercentageSpent%</span>
                     </div>
                 </div>
-                <button class="btn btn-primary btn-add-entry" data-accountid="@Model.ID" data-accountname="@Model.Name" data-iscredit="false" data-categoryid="@category.ID" data-categoryname="@category.Name" data-remaining="@category.Remaining"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-primary btn-add-entry" data-accountid="@Model.ID" data-accountname="@Model.Name" data-iscredit="false" data-categoryid="@category.ID" data-categoryname="@category.Name" data-remaining="@category.Remaining"><i class="bi bi-dash"></i></button>
             </div>
         </div>
     }

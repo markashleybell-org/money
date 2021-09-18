@@ -8,21 +8,16 @@
     <div class="col">
         <h1>Parties</h1>
         <p><a asp-action="Index" asp-route-showDeleted="true">Show Deleted</a></p>
-        <table class="table table-striped">
-            <thead class="thead-light">
-                <tr>
-                    <th>Name</th>
-                    <th class="text-right"><span class="sr-only">Edit</span></th>
-                </tr>
-            </thead>
-            @foreach (var partyGroup in Model.Parties)
-            {
-                var (accountID, accountName) = partyGroup.Key;
 
-                <thead class="thead-dark">
+        @foreach (var partyGroup in Model.Parties)
+        {
+            var (accountID, accountName) = partyGroup.Key;
+
+            <table class="table table-striped table-borderless">
+                <thead class="table-dark">
                     <tr>
                         <th class="align-middle">@accountName</th>
-                        <th class="text-right"><a asp-action="Create" asp-route-id="@accountID" class="btn btn-primary btn-sm">Add</a></th>
+                        <th class="text-end"><a asp-action="Create" asp-route-id="@accountID" class="btn btn-primary btn-sm">Add</a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,12 +25,13 @@
                     {
                         <tr>
                             <td class="align-middle">@party.NameWithDeletedStatus()</td>
-                            <td class="text-right"><a asp-action="Update" asp-route-id="@party.ID" class="btn btn-primary btn-sm">Edit</a></td>
+                            <td class="text-end"><a asp-action="Update" asp-route-id="@party.ID" class="btn btn-primary btn-sm">Edit</a></td>
                         </tr>
                     }
                 </tbody>
-            }
-        </table>
+            </table>
+        }
+
         <p><a asp-action="Create" class="btn btn-primary btn-new">Add New Party</a></p>
     </div>
 </div>

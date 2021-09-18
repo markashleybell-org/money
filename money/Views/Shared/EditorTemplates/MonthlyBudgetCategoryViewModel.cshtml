@@ -4,7 +4,7 @@
     var fieldID = Html.GenerateIdFromName(ViewData.TemplateInfo.GetFullHtmlFieldName(nameof(Model.CategoryID)));
 }
 
-<div class="form-group row@(Model.CategoryDeleted && Model.Amount == 0 ? " d-none" : string.Empty)">
+<div class="mb-2 row@(Model.CategoryDeleted && Model.Amount == 0 ? " d-none" : string.Empty)">
     <label for="@fieldID" class="col-sm-4 col-form-label">
         @if (Model.CategoryDeleted)
         {

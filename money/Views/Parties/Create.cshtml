@@ -8,15 +8,15 @@
     <div class="col">
         <h1>Create Party</h1>
         <form asp-controller="Parties" asp-action="Create" method="post">
-            <div class="form-group">
-                <label asp-for="AccountID">Account</label>
-                <select asp-for="AccountID" asp-items="Model.Accounts" class="form-control">
+            <div class="mb-2">
+                <label asp-for="AccountID" class="form-label">Account</label>
+                <select asp-for="AccountID" asp-items="Model.Accounts" class="form-select">
                     <option value="">Please select...</option>
                 </select>
                 <span asp-validation-for="AccountID"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Name">Name</label>
+            <div class="mb-4">
+                <label asp-for="Name" class="form-label">Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name"></span>
             </div>
