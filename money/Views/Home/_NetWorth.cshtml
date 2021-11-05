@@ -72,3 +72,17 @@
     }
 }
 
+<div class="row">
+    <div class="col-12">
+        <h2 class="net-worth-header">Totals</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-8">
+        Savings/Investments
+    </div>
+    <div class="col-4 text-end net-worth-balance @(Model.SavingsTotal == 0 ? "text-muted" : Model.SavingsTotal < 0 ? "text-danger" : "text-success")">
+        @Model.SavingsTotal
+    </div>
+</div>

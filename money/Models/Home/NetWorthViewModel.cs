@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Money.Entities;
 
 namespace Money.Models
 {
@@ -13,6 +14,9 @@ namespace Money.Models
 
         public decimal NetWorthTotal =>
             Accounts.Sum(a => a.CurrentBalance);
+
+        public decimal SavingsTotal =>
+            Accounts.Where(a => a.IsIncludedInNetWorth && (a.Type == AccountType.Savings || a.Type == AccountType.Investment)).Sum(a => a.CurrentBalance);
 
         public IEnumerable<AccountViewModel> Accounts { get; set; }
     }
