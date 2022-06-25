@@ -353,8 +353,8 @@ launchSettings.json
 # Database releases
 !db/Releases/
 
-# Development settings
-appsettings.*.json
+# Settings
+appsettings.Production.json
 
 # Client-side build artifacts
 **/wwwroot/js/dist/
