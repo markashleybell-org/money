@@ -1,7 +1,9 @@
-﻿$horizontal-gutter: 10px;
+﻿@use "sass:math";
+
+$horizontal-gutter: 10px;
 $horizontal-gutter-double: $horizontal-gutter * 2;
 $vertical-gutter: 10px;
-$vertical-gutter-half: $vertical-gutter / 2;
+$vertical-gutter-half: math.div($vertical-gutter, 2);
 $vertical-gutter-double: $vertical-gutter * 2;
 $divider-border: solid 1px #e0e0e0;
 $progress-bar-height: 38px;
