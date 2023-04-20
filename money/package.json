@@ -3,27 +3,27 @@
     "name": "money",
     "private": true,
     "devDependencies": {
-        "@tsconfig/recommended": "^1.0.1",
-        "@types/bootstrap": "^5.1.5",
-        "@types/sortablejs": "^1.10.7",
+        "@tsconfig/recommended": "^1.0.2",
+        "@types/bootstrap": "^5.2.6",
+        "@types/sortablejs": "^1.15.1",
         "clean-webpack-plugin": "^4.0.0",
         "gulp": "4.0.2",
         "gulp-autoprefixer": "^8.0.0",
         "gulp-sass": "^5.0.0",
-        "sass": "^1.41.1",
-        "source-map-loader": "^4.0.0",
-        "ts-loader": "^9.2.5",
-        "ts-node": "^10.2.1",
-        "typescript": "^4.4.3",
-        "webpack": "^5.53.0",
-        "webpack-cli": "^4.8.0"
+        "sass": "^1.62.0",
+        "source-map-loader": "^4.0.1",
+        "ts-loader": "^9.4.2",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.0.4",
+        "webpack": "^5.80.0",
+        "webpack-cli": "^5.0.1"
     },
     "dependencies": {
-        "autoprefixer": "^10.3.4",
-        "bootstrap": "^5.1.1",
+        "autoprefixer": "^10.4.14",
+        "bootstrap": "^5.2.3",
         "mab-dom": "^0.12.0",
         "sortablejs": "^1.14.0",
-        "tslib": "^2.3.1"
+        "tslib": "^2.5.0"
     },
     "scripts": {
         "build": "webpack --mode=production",
