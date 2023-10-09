@@ -1,4 +1,5 @@
 {
+    "id": "money",
     "name": "Money",
     "short_name": "Money",
     "description": "Personal budgeting app.",
@@ -27,6 +28,6 @@
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone",
-    "scope": "/",
-    "start_url": "/"
+    "scope": "https://money.markb.uk/",
+    "start_url": "https://money.markb.uk/"
 }
