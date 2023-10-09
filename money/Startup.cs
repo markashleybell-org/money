@@ -29,7 +29,7 @@ namespace Money
 
             services.Configure<CookiePolicyOptions>(options => {
                 options.CheckConsentNeeded = _ => false;
-                options.MinimumSameSitePolicy = SameSiteMode.Strict;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
                 options.HttpOnly = HttpOnlyPolicy.Always;
                 options.Secure = CookieSecurePolicy.Always;
             });
