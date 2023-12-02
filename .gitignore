@@ -354,7 +354,7 @@ MigrationBackup/
 !db/Releases/
 
 # Settings
-appsettings.Production.json
+appsettings.*.json
 
 # Client-side build artifacts
 **/wwwroot/js/dist/
