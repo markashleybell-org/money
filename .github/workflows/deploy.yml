@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      DOTNET_PROJECT_FOLDER: ${{ github.workspace }}/src/money
-      DATABASE_RELEASE_FOLDER: ${{ github.workspace }}/src/db/Releases
+      DOTNET_PROJECT_FOLDER: ${{ github.workspace }}/money
+      DATABASE_RELEASE_FOLDER: ${{ github.workspace }}/db/Releases
       PUBLISH_OUTPUT_FOLDER: ${{ github.workspace }}/publish-output
     defaults:
       run:
