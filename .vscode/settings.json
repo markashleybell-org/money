@@ -1,3 +1,4 @@
 {
-    "explorer.excludeGitIgnore": true
+    "explorer.excludeGitIgnore": true,
+    "dotnet.backgroundAnalysis.analyzerDiagnosticsScope": "fullSolution"
 }
