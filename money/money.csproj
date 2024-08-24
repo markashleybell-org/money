@@ -15,8 +15,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Remove="package.json" />
-        <Content Remove="package-lock.json" />
+        <Content Remove="package.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+        <Content Remove="package-lock.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+        <Content Update="tsconfig.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+        <Content Update="tslint.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+        <Content Update="appsettings.*.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Never" />
+        <Content Update="appsettings.*.EXAMPLE.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Never" />
     </ItemGroup>
 
     <ItemGroup>
